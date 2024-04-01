@@ -7,6 +7,10 @@ declare global {
       get: Request['get']
     }
   }
+  declare const $: {
+    post: Request['post']
+    get: Request['get']
+  }
 }
 
 export interface CustomConfig {
