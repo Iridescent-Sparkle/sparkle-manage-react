@@ -70,6 +70,16 @@ const Menuitems = [
     icon: IconAperture,
     href: '/sample-page',
   },
+  {
+    navlabel: true,
+    subheader: '标签管理',
+  },
+  {
+    id: uniqueId(),
+    title: '福利标签',
+    icon: IconAperture,
+    href: '/welfare-label',
+  },
 ]
 
 export default Menuitems

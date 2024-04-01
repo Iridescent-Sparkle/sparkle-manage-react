@@ -8,7 +8,7 @@ import useFetchData from './useFetchData'
 import styles from './index.module.less'
 import { ColumnsType } from 'antd/es/table'
 import ZoomOutTable from './components/ZoomOutTable'
-import { omitNullObj } from '../../utils'
+import { omitNullObj } from '../utils'
 
 const isMobile = () => {
   const mobileWidth = 768 // 移动端设备的宽度
