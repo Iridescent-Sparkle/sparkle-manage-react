@@ -1,8 +1,10 @@
 import { Typography } from '@mui/material';
 import { TableColumnsType } from 'antd';
 import ProTable from 'src/components/ProTable';
+import useTableConfig from './config';
 
 function WelfarePage() {
+  const { search} = useTableConfig()
   const data = {
     code: 200,
     message: 'success',
@@ -206,6 +208,7 @@ function WelfarePage() {
     <>
       <ProTable
         columns={columns}
+        search={search}
         scroll={{ x: 'max-content' }}
         rowKey="id"
         pagination={{
