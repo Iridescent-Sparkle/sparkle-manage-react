@@ -30,12 +30,12 @@ function AuthLogin({ title, subtitle, subtext }) {
             variant="subtitle1"
             fontWeight={600}
             component="label"
-            htmlFor="username"
+            htmlFor="phone"
             mb="5px"
           >
-            Username
+            手机号
           </Typography>
-          <CustomTextField id="username" variant="outlined" fullWidth />
+          <CustomTextField id="phone" variant="outlined" fullWidth />
         </Box>
         <Box mt="25px">
           <Typography
@@ -45,7 +45,7 @@ function AuthLogin({ title, subtitle, subtext }) {
             htmlFor="password"
             mb="5px"
           >
-            Password
+            密码
           </Typography>
           <CustomTextField id="password" type="password" variant="outlined" fullWidth />
         </Box>
@@ -53,7 +53,7 @@ function AuthLogin({ title, subtitle, subtext }) {
           <FormGroup>
             <FormControlLabel
               control={<Checkbox defaultChecked />}
-              label="Remeber this Device"
+              label="记住密码"
             />
           </FormGroup>
           <Typography
@@ -65,7 +65,7 @@ function AuthLogin({ title, subtitle, subtext }) {
               color: 'primary.main',
             }}
           >
-            Forgot Password ?
+            忘记密码 ?
           </Typography>
         </Stack>
       </Stack>
@@ -79,7 +79,7 @@ function AuthLogin({ title, subtitle, subtext }) {
           to="/"
           type="submit"
         >
-          Sign In
+          登录
         </Button>
       </Box>
       {subtitle}

@@ -42,13 +42,13 @@ function Login2() {
               <AuthLogin
                 subtext={(
                   <Typography variant="subtitle1" textAlign="center" color="textSecondary" mb={1}>
-                    Your Social Campaigns
+                    您的社交活动
                   </Typography>
                 )}
                 subtitle={(
                   <Stack direction="row" spacing={1} justifyContent="center" mt={3}>
                     <Typography color="textSecondary" variant="h6" fontWeight="500">
-                      New to Modernize?
+                      现代化的新手?
                     </Typography>
                     <Typography
                       component={Link}
@@ -59,7 +59,7 @@ function Login2() {
                         color: 'primary.main',
                       }}
                     >
-                      Create an account
+                      创建帐户
                     </Typography>
                   </Stack>
                 )}
