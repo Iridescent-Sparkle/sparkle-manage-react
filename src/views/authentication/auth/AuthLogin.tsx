@@ -12,6 +12,9 @@ import { Link } from 'react-router-dom'
 import CustomTextField from '../../../components/forms/theme-elements/CustomTextField'
 
 function AuthLogin({ title, subtitle, subtext }) {
+  const submit =()=>{
+    console.log('submit')
+  }
   return (
     <>
       {title
@@ -75,9 +78,8 @@ function AuthLogin({ title, subtitle, subtext }) {
           variant="contained"
           size="large"
           fullWidth
-          component={Link}
-          to="/"
           type="submit"
+          onClick={() => submit()}
         >
           登录
         </Button>
