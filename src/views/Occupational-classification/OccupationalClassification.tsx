@@ -1,9 +1,9 @@
-import { Typography } from '@mui/material';
 import { TableColumnsType } from 'antd';
+import React from 'react'
 import ProTable from 'src/components/ProTable';
 import useTableConfig from './config';
 
-function WelfarePage() {
+const OccupationalClassification = () => {
   const { search} = useTableConfig()
   const data = {
     code: 200,
@@ -236,5 +236,4 @@ function WelfarePage() {
     </>
   );
 }
-
-export default WelfarePage;
+export default OccupationalClassification
