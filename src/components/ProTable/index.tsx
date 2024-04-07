@@ -99,7 +99,8 @@ const ProTable = (props: Props) => {
       propsPagination?.onShowSizeChange?.(pageInfo.current, pageInfo.pageSize)
     },
   })
-
+  console.log(action,'121');
+  
   const onPageChange = (current: number, pageSize: number) => {
     action.setPageInfo({
       current: current,
@@ -153,7 +154,8 @@ const ProTable = (props: Props) => {
     },
     formRef: form,
   })
-
+  console.log(action?.dataSource,'12');
+  
   return (
     <div className={ClassNames(styles.proTable, propsClassName)}>
       {!!search && (

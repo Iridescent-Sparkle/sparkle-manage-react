@@ -67,15 +67,15 @@ const useFetchData = (
     try {
       const pageParams = options?.pageInfo ? { current: currentPageNum, pageSize } : undefined
       const { data = [], success, total = 0, ...rest } = (await isLoadData?.(pageParams)) || {}
-      if (data) {
-        setTableDataList(data)
+      if (data.data) {
+        setTableDataList(data.data)
         if (pageInfo?.total !== total) {
           setPageInfo({
             ...pageInfo,
-            total: total || data.length,
+            total: total || data.data.length,
           })
         }
-        return data
+        return data.data
       } else {
         return []
       }
