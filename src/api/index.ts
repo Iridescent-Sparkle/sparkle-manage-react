@@ -70,7 +70,7 @@ export class Request {
 }
 
 export const request = new Request({
-  baseURL: 'https://api.iridescent.icu',
+  baseURL: 'http://localhost:5173/api',
 })
 
 window.$ = {

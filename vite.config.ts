@@ -10,4 +10,14 @@ export default defineConfig({
       src: path.resolve(__dirname, 'src'),
     },
   },
+  server: {
+    proxy: {
+      '/api': {
+        // target: 'https://api.iridescent.icu',
+        target: 'https://api.iridescent.icu',
+        changeOrigin: true,
+        rewrite: path => path.replace(/^\/api/, ''),
+      },
+    },
+  },
 })

@@ -6,41 +6,42 @@ import {
   FormGroup,
   Stack,
   Typography,
-} from '@mui/material';
-import { Link } from 'react-router-dom';
+} from '@mui/material'
+import { Link } from 'react-router-dom'
 
-import CustomTextField from '../../../components/forms/theme-elements/CustomTextField';
-import { useState } from 'react';
+import { useState } from 'react'
+import CustomTextField from '../../../components/forms/theme-elements/CustomTextField'
 
 function AuthLogin({ title, subtitle, subtext }) {
-  const [passWord, setPassword] = useState('');
-  const [phone, setPhone] = useState('');
+  const [passWord, setPassword] = useState('')
+  const [phone, setPhone] = useState('')
   const submit = async () => {
-    console.log(passWord, phone);
-    const a=await $.post({
-      phone: phone,
+    console.log(passWord, phone)
+    const a = await $.post({
+      username: phone,
       password: passWord,
     }, {
       url: '/admin/user/admin/login',
     })
-    console.log(a,'121');
-    
-  };
+    console.log(a, '121')
+  }
   /* 密码 */
   const ChangePassWord = (value: any) => {
-    setPassword(value.target.value);
-  };
+    setPassword(value.target.value)
+  }
   /* 账号 */
   const ChangePhone = (value: any) => {
-    setPhone(value.target.value);
-  };
+    setPhone(value.target.value)
+  }
   return (
     <>
-      {title ? (
-        <Typography fontWeight="700" variant="h2" mb={1}>
-          {title}
-        </Typography>
-      ) : null}
+      {title
+        ? (
+          <Typography fontWeight="700" variant="h2" mb={1}>
+            {title}
+          </Typography>
+          )
+        : null}
 
       {subtext}
 
@@ -119,7 +120,7 @@ function AuthLogin({ title, subtitle, subtext }) {
       </Box>
       {subtitle}
     </>
-  );
+  )
 }
 
-export default AuthLogin;
+export default AuthLogin
