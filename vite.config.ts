@@ -13,9 +13,10 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        // target: 'https://api.iridescent.icu',
-        target: 'https://api.iridescent.icu',
+        target: 'https://iridescent.icu/',
         changeOrigin: true,
+        secure: false,
+        protocolRewrite:"https",
         rewrite: path => path.replace(/^\/api/, ''),
       },
     },

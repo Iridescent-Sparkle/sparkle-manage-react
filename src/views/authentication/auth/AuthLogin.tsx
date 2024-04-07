@@ -7,24 +7,34 @@ import {
   Stack,
   Typography,
 } from '@mui/material'
-import { Link } from 'react-router-dom'
-
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import CustomTextField from '../../../components/forms/theme-elements/CustomTextField'
+import { message } from 'antd'
 
 function AuthLogin({ title, subtitle, subtext }) {
   const [passWord, setPassword] = useState('')
   const [phone, setPhone] = useState('')
   const submit = async () => {
-    console.log(passWord, phone)
-    const a = await $.post({
-      username: phone,
-      password: passWord,
-    }, {
-      url: '/admin/user/admin/login',
-    })
-    console.log(a, '121')
+    try{
+      const {data} = await $.post({
+        username: phone,
+        password: passWord,
+      }, {
+        url: '/admin/user/login',
+      })
+      if (data && data.accessToken) {
+        localStorage.setItem('token', data.accessToken);
+        window.location.href='/' 
+      }
+    }catch{
+      message.info('账号或密码错误')
+     return null;
+    }
+    
   }
+  useEffect(()=>{
+    localStorage.removeItem('token')
+  },[])
   /* 密码 */
   const ChangePassWord = (value: any) => {
     setPassword(value.target.value)
@@ -94,8 +104,6 @@ function AuthLogin({ title, subtitle, subtext }) {
             />
           </FormGroup>
           <Typography
-            component={Link}
-            to="/"
             fontWeight="500"
             sx={{
               textDecoration: 'none',
