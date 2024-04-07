@@ -6,24 +6,41 @@ import {
   FormGroup,
   Stack,
   Typography,
-} from '@mui/material'
-import { Link } from 'react-router-dom'
+} from '@mui/material';
+import { Link } from 'react-router-dom';
 
-import CustomTextField from '../../../components/forms/theme-elements/CustomTextField'
+import CustomTextField from '../../../components/forms/theme-elements/CustomTextField';
+import { useState } from 'react';
 
 function AuthLogin({ title, subtitle, subtext }) {
-  const submit =()=>{
-    console.log('submit')
-  }
+  const [passWord, setPassword] = useState('');
+  const [phone, setPhone] = useState('');
+  const submit = async () => {
+    console.log(passWord, phone);
+    const a=await $.post({
+      phone: phone,
+      password: passWord,
+    }, {
+      url: '/admin/user/admin/login',
+    })
+    console.log(a,'121');
+    
+  };
+  /* 密码 */
+  const ChangePassWord = (value: any) => {
+    setPassword(value.target.value);
+  };
+  /* 账号 */
+  const ChangePhone = (value: any) => {
+    setPhone(value.target.value);
+  };
   return (
     <>
-      {title
-        ? (
-          <Typography fontWeight="700" variant="h2" mb={1}>
-            {title}
-          </Typography>
-          )
-        : null}
+      {title ? (
+        <Typography fontWeight="700" variant="h2" mb={1}>
+          {title}
+        </Typography>
+      ) : null}
 
       {subtext}
 
@@ -38,7 +55,12 @@ function AuthLogin({ title, subtitle, subtext }) {
           >
             手机号
           </Typography>
-          <CustomTextField id="phone" variant="outlined" fullWidth />
+          <CustomTextField
+            id="phone"
+            onChange={(value: any) => ChangePhone(value)}
+            variant="outlined"
+            fullWidth
+          />
         </Box>
         <Box mt="25px">
           <Typography
@@ -50,9 +72,20 @@ function AuthLogin({ title, subtitle, subtext }) {
           >
             密码
           </Typography>
-          <CustomTextField id="password" type="password" variant="outlined" fullWidth />
+          <CustomTextField
+            id="password"
+            onChange={(value: any) => ChangePassWord(value)}
+            type="password"
+            variant="outlined"
+            fullWidth
+          />
         </Box>
-        <Stack justifyContent="space-between" direction="row" alignItems="center" my={2}>
+        <Stack
+          justifyContent="space-between"
+          direction="row"
+          alignItems="center"
+          my={2}
+        >
           <FormGroup>
             <FormControlLabel
               control={<Checkbox defaultChecked />}
@@ -86,7 +119,7 @@ function AuthLogin({ title, subtitle, subtext }) {
       </Box>
       {subtitle}
     </>
-  )
+  );
 }
 
-export default AuthLogin
+export default AuthLogin;
