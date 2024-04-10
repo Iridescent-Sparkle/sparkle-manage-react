@@ -66,13 +66,15 @@ const useFetchData = (
     const { pageSize } = pageInfo || {}
     try {
       const pageParams = options?.pageInfo ? { current: currentPageNum, pageSize } : undefined
-      const { data = [], success, total = 0, ...rest } = (await isLoadData?.(pageParams)) || {}
+      const { data = [], success, ...rest } = (await isLoadData?.(pageParams)) || {}
+      console.log((await isLoadData?.(pageParams)) || {},'datra');
+      
       if (data.data) {
         setTableDataList(data.data)
-        if (pageInfo?.total !== total) {
+        if (pageInfo?.total !== data.total) {
           setPageInfo({
             ...pageInfo,
-            total: total || data.data.length,
+            total: data.total || data.data.length,
           })
         }
         return data.data

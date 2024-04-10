@@ -68,7 +68,6 @@ const ProTable = (props: Props) => {
 
   /** 需要初始化 不然默认可能报错 这里取了 defaultCurrent 和 current 为了保证不会重复刷新 */
   const fetchPagination = typeof propsPagination === 'object' ? propsPagination : { defaultCurrent: 1, defaultPageSize: 20, pageSize: 20, current: 1 }
-
   const fetchData = useMemo(() => {
     if (!request) return undefined
     return async (pageParams?: Record<string, any>) => {
@@ -84,7 +83,6 @@ const ProTable = (props: Props) => {
       return response as any
     }
   }, [formSearch, params, request])
-
   const action = useFetchData(fetchData, [], {
     pageInfo: propsPagination ? fetchPagination : false,
     loading: props?.loading,
@@ -154,7 +152,6 @@ const ProTable = (props: Props) => {
     },
     formRef: form,
   })
-  console.log(action?.dataSource,'12');
   
   return (
     <div className={ClassNames(styles.proTable, propsClassName)}>

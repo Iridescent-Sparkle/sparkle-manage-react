@@ -13,7 +13,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'https://iridescent.icu/',
+        target: 'http://f3b9409.r3.cpolar.cn/',
         changeOrigin: true,
         secure: false,
         protocolRewrite:"https",

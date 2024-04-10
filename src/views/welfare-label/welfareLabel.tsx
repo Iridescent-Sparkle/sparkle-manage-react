@@ -41,14 +41,6 @@ function WelfarePage() {
       key: 'operate',
     },
   ];
-  const a=async ()=>{
-    const loginRes = await $.post({}, {
-      url: '/boss/bonus/all',
-    })
-    return loginRes
-  }
-  console.log(a(),'a');
-  
   return (
     <>
       <ProTable
@@ -58,6 +50,7 @@ function WelfarePage() {
         rowKey="id"
         pagination={{
           pageSize: 15,
+          current:1
         }}
         sticky={{
           offsetHeader: 0,
