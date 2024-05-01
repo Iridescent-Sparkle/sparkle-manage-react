@@ -35,32 +35,32 @@ function Register2() {
           >
             <Card elevation={9} sx={{ p: 4, zIndex: 1, width: '100%', maxWidth: '500px' }}>
               <Box display="flex" alignItems="center" justifyContent="center">
-                <Logo />
+                {/* <Logo /> */}
               </Box>
               <AuthRegister
                 subtext={(
-              <Typography variant="subtitle1" textAlign="center" color="textSecondary" mb={1}>
-                  您的社交活动
-                </Typography>
-            )}
+                  <Typography variant="subtitle1" textAlign="center" color="textSecondary" mb={1}>
+                    {/* 您的社交活动 */}
+                  </Typography>
+                )}
                 subtitle={(
-              <Stack direction="row" justifyContent="center" spacing={1} mt={3}>
-                  <Typography color="textSecondary" variant="h6" fontWeight="400">
-                  已经有帐户?
-                  </Typography>
-                  <Typography
-                    component={Link}
-                    to="/auth/login"
-                    fontWeight="500"
-                    sx={{
-                      textDecoration: 'none',
-                      color: 'primary.main',
-                    }}
-                  >
-                    登录
-                  </Typography>
-                </Stack>
-            )}
+                  <Stack direction="row" justifyContent="center" spacing={1} mt={3}>
+                    <Typography color="textSecondary" variant="h6" fontWeight="400">
+                      已经有帐户?
+                    </Typography>
+                    <Typography
+                      component={Link}
+                      to="/auth/login"
+                      fontWeight="500"
+                      sx={{
+                        textDecoration: 'none',
+                        color: 'primary.main',
+                      }}
+                    >
+                      登录
+                    </Typography>
+                  </Stack>
+                )}
               />
             </Card>
           </Grid>

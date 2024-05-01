@@ -1,37 +1,84 @@
-import { Box, Button, Typography } from '@mui/material'
-import { Link } from 'react-router-dom'
-
-import { Stack } from '@mui/system'
-import CustomTextField from '../../../components/forms/theme-elements/CustomTextField'
-import { useEffect, useRef, useState } from 'react';
+import { Box, Button, Typography } from '@mui/material';
+import { Stack } from '@mui/system';
+import { message } from 'antd';
+import { ComponentProps, useEffect, useState } from 'react';
+import CustomTextField from '../../../components/forms/theme-elements/CustomTextField';
+import { useNavigate } from "react-router-dom";
+import { useUserStore } from 'src/store/user';
 
 function AuthRegister({ title, subtitle, subtext }) {
-	const [countdown, setCountdown] = useState(0);
-  const inputRef = useRef<HTMLInputElement>(null);
+  const userStore = useUserStore()
+
+  const navigate = useNavigate()
+
+  const [countdown, setCountdown] = useState(0);
+
+  const [phone, setPhone] = useState('')
+
+  const [password, setPassword] = useState('')
+
+  const [confirmPassword, setConfirmPassword] = useState('')
+
+  const [captcha, setCaptcha] = useState('')
+
   /* 获取验证码 */
-  const LoginLgnore =(value)=>{
-    console.log(121);
-    
+  const GetVerificationCode = async () => {
+    if (!phone) {
+      return message.error('请输入手机号')
+    }
+
+    const { data } = await $.get({
+      phone
+    }, {
+      url: '/admin/user/register-smsCode'
+    })
+
+    setCountdown(data.countDown);
+  };
+
+  useEffect(() => {
+    let timer: number
+    if (countdown > 0) {
+      console.log(countdown)
+      timer = setTimeout(() => {
+        setCountdown(countdown - 1);
+      }, 1000);
+    }
+    return () => clearTimeout(timer); // 清除定时器
+  }, [countdown]);
+
+  const submit = async () => {
+    if (!captcha) {
+      return message.warning('请输入验证码')
+    }
+    if (!phone) {
+      return message.warning('请输入手机号')
+    }
+    if (!password) {
+      return message.warning('请输入密码')
+    }
+    if (!confirmPassword) {
+      return message.warning('请确认密码')
+    }
+    if (password !== confirmPassword) {
+      return message.warning('两次输入的密码不一致')
+    }
+
+    await userStore.register({
+      username: phone,
+      password,
+      captcha
+    })
+
+    message.success('注册成功')
+
+    navigate({
+      pathname: '/auth/login',
+    }, {
+      replace: true
+    })
   }
-  const GetVerificationCode = () => {
-		const RealNumber = inputRef.current?.value;
-			LoginLgnore(RealNumber);
-			if (countdown === 0) {
-				// 开始倒计时
-				setCountdown(60);
-				// 这里添加发送验证码的代码
-			}
-	};
-	// 每秒检查倒计时是否应该结束
-	useEffect(() => {
-		let timer: any;
-		if (countdown > 0) {
-			timer = setTimeout(() => {
-				setCountdown(countdown - 1);
-			}, 1000);
-		}
-		return () => clearTimeout(timer); // 清除定时器
-	}, [countdown]);
+
   return (
     <>
       {title
@@ -39,7 +86,7 @@ function AuthRegister({ title, subtitle, subtext }) {
           <Typography fontWeight="700" variant="h2" mb={1}>
             {title}
           </Typography>
-          )
+        )
         : null}
 
       {subtext}
@@ -55,7 +102,12 @@ function AuthRegister({ title, subtitle, subtext }) {
           >
             手机号
           </Typography>
-          <CustomTextField id="phone" variant="outlined" fullWidth />
+          <CustomTextField id="phone" variant="outlined" fullWidth onChange={(event: Parameters<
+            NonNullable<ComponentProps<"input">["onChange"]>
+          >[0]) => {
+            setPhone(event.target.value)
+            return event
+          }} />
 
           <Typography
             variant="subtitle1"
@@ -67,7 +119,13 @@ function AuthRegister({ title, subtitle, subtext }) {
           >
             密码
           </Typography>
-          <CustomTextField id="password" variant="outlined" fullWidth />
+          <CustomTextField id="password" variant="outlined" fullWidth onChange={(event: Parameters<
+            NonNullable<ComponentProps<"input">["onChange"]>
+          >[0]) => {
+            setPassword(event.target.value)
+            return event
+          }}
+          />
 
           <Typography
             variant="subtitle1"
@@ -79,7 +137,12 @@ function AuthRegister({ title, subtitle, subtext }) {
           >
             再次输入密码
           </Typography>
-          <CustomTextField id="repeatPassword" variant="outlined" fullWidth />
+          <CustomTextField id="repeatPassword" variant="outlined" fullWidth onChange={(event: Parameters<
+            NonNullable<ComponentProps<"input">["onChange"]>
+          >[0]) => {
+            setConfirmPassword(event.target.value)
+            return event
+          }} />
 
           <Typography
             variant="subtitle1"
@@ -90,7 +153,7 @@ function AuthRegister({ title, subtitle, subtext }) {
             mt="25px"
           >
             验证码
-          </Typography>         
+          </Typography>
           <Box
             sx={{
               display: 'flex',
@@ -100,13 +163,20 @@ function AuthRegister({ title, subtitle, subtext }) {
               mt: 3,
             }}
           >
-            <CustomTextField id="captcha" variant="outlined" fullWidth />
-            <Button onClick={GetVerificationCode} disabled={countdown > 0}>
-									{countdown > 0 ? `重新发送(${countdown})` : '获取验证码'}
-						</Button>
+            <CustomTextField id="captcha" variant="outlined" sx={{ flex: 1 }} onChange={(event: Parameters<
+              NonNullable<ComponentProps<"input">["onChange"]>
+            >[0]) => {
+              setCaptcha(event.target.value)
+              return event
+            }} />
+            <Button onClick={GetVerificationCode} disabled={countdown > 0} >
+              {countdown > 0 ? `重新发送(${countdown})` : '获取验证码'}
+            </Button>
           </Box>
         </Stack>
-        <Button color="primary" variant="contained" size="large" fullWidth component={Link} to="/auth/login">
+        <Button color="primary" variant="contained" size="large" fullWidth
+          type="submit"
+          onClick={() => submit()}>
           注册
         </Button>
       </Box>

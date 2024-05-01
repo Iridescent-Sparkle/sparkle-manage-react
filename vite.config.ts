@@ -13,10 +13,10 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'http://f3b9409.r3.cpolar.cn/',
+        target: 'http://localhost:3000',
         changeOrigin: true,
         secure: false,
-        protocolRewrite:"https",
+        protocolRewrite: "https",
         rewrite: path => path.replace(/^\/api/, ''),
       },
     },

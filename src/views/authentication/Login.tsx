@@ -37,18 +37,18 @@ function Login2() {
           >
             <Card elevation={9} sx={{ p: 4, zIndex: 1, width: '100%', maxWidth: '500px' }}>
               <Box display="flex" alignItems="center" justifyContent="center">
-                <Logo />
+                {/* <Logo /> */}
               </Box>
               <AuthLogin
                 subtext={(
                   <Typography variant="subtitle1" textAlign="center" color="textSecondary" mb={1}>
-                    您的社交活动
+                    {/* 您的社交活动 */}
                   </Typography>
                 )}
                 subtitle={(
                   <Stack direction="row" spacing={1} justifyContent="center" mt={3}>
                     <Typography color="textSecondary" variant="h6" fontWeight="500">
-                      现代化的新手?
+                      {/* 现代化的新手? */}
                     </Typography>
                     <Typography
                       component={Link}

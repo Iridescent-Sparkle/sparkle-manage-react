@@ -8,7 +8,7 @@ interface State {
 interface Action {
   getUserInfo: () => Promise<void>
   setData: (params: Partial<State>) => void
-  register: (params: { username: string, captcha: string, confirmPassword: string, password: string }) => void
+  register: (params: { username: string, captcha: string, password: string }) => void
   login: (params: { username: string, password: string }) => void
   logout: () => Promise<void>
 }
@@ -38,13 +38,13 @@ export const useUserStore = create<State & Action>(set => ({
   },
   register: async (params) => {
     await $.post(params, {
-      url: '/user/register',
+      url: 'admin/user/register',
     })
   },
   login: async (params) => {
     try {
       const loginRes = await $.post(params, {
-        url: '/user/login',
+        url: 'admin/user/login',
       })
 
       await localStorage.setItem('token', loginRes.data.accessToken || '')
@@ -64,6 +64,7 @@ export const useUserStore = create<State & Action>(set => ({
   },
   logout: async () => {
     await localStorage.setItem('token', '')
+
     message.success('登录成功')
     set(state => ({
       ...state,

@@ -7,42 +7,46 @@ import {
   Stack,
   Typography,
 } from '@mui/material'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
+import { useUserStore } from 'src/store/user'
 import CustomTextField from '../../../components/forms/theme-elements/CustomTextField'
-import { message } from 'antd'
+import { useNavigate } from "react-router-dom";
+import { message } from 'antd';
 
 function AuthLogin({ title, subtitle, subtext }) {
+  const navigate = useNavigate()
+
+  const userStore = useUserStore()
+
   const [passWord, setPassword] = useState('')
+
   const [phone, setPhone] = useState('')
+
   const submit = async () => {
-    try{
-      const {data} = await $.post({
-        username: phone,
-        password: passWord,
-      }, {
-        url: '/admin/user/login',
-      })
-      if (data && data.accessToken) {
-        localStorage.setItem('token', data.accessToken);
-        window.location.href='/' 
-      }
-    }catch{
-      message.info('账号或密码错误')
-     return null;
-    }
-    
+    await userStore.login({
+      username: phone,
+      password: passWord,
+    })
+
+    message.success('登录成功')
+
+    navigate({
+      pathname: '/',
+    }, {
+      replace: true
+    })
   }
-  useEffect(()=>{
-    localStorage.removeItem('token')
-  },[])
+
   /* 密码 */
   const ChangePassWord = (value: any) => {
     setPassword(value.target.value)
   }
+
   /* 账号 */
   const ChangePhone = (value: any) => {
     setPhone(value.target.value)
   }
+
   return (
     <>
       {title
@@ -50,7 +54,7 @@ function AuthLogin({ title, subtitle, subtext }) {
           <Typography fontWeight="700" variant="h2" mb={1}>
             {title}
           </Typography>
-          )
+        )
         : null}
 
       {subtext}
