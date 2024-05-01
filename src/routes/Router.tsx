@@ -8,10 +8,6 @@ const BlankLayout = Loadable(lazy(() => import('../layouts/blank/BlankLayout')))
 
 /* ****Pages***** */
 const Dashboard = Loadable(lazy(() => import('../views/dashboard/Dashboard')))
-const SamplePage = Loadable(lazy(() => import('../views/sample-page/SamplePage')))
-const Icons = Loadable(lazy(() => import('../views/icons/Icons')))
-const TypographyPage = Loadable(lazy(() => import('../views/utilities/TypographyPage')))
-const Shadow = Loadable(lazy(() => import('../views/utilities/Shadow')))
 const Error = Loadable(lazy(() => import('../views/authentication/Error')))
 const Register = Loadable(lazy(() => import('../views/authentication/Register')))
 const Login = Loadable(lazy(() => import('../views/authentication/Login')))
@@ -27,13 +23,9 @@ const Router = [
     children: [
       { path: '/', element: <Navigate to="/dashboard" /> },
       { path: '/dashboard', exact: true, element: <Dashboard /> },
-      { path: '/sample-page', exact: true, element: <SamplePage /> },
-      { path: '/icons', exact: true, element: <Icons /> },
-      { path: '/ui/typography', exact: true, element: <TypographyPage /> },
-      { path: '/ui/shadow', exact: true, element: <Shadow /> },
       { path: '/welfare-label', exact: true, element: <Label /> },
       { path: '/Occupational-classification', exact: true, element: <Occupational /> },
-      { path: '/Menu-permissions', exact: true, element: <Menu/> },
+      { path: '/Menu-permissions', exact: true, element: <Menu /> },
       { path: '/User-list', exact: true, element: <User /> },
       { path: '/Role-list', exact: true, element: <Role /> },
       { path: '*', element: <Navigate to="/auth/404" /> },

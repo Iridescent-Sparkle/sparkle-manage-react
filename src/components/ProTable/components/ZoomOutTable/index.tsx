@@ -114,14 +114,14 @@ const Index = (props: Props) => {
       rowSelection={
         rowSelection
           ? {
-              ...rowSelection,
-              getCheckboxProps: (record) => {
-                return {
-                  disabled: record.key.indexOf('bottom') !== -1 || record.key.indexOf('top') !== -1, // 只启用前两行的复选框
-                }
-              },
-              renderCell: (value, record, index, origin) => (record.key.indexOf('bottom') !== -1 || record.key.indexOf('top') !== -1 ? null : origin),
-            }
+            ...rowSelection,
+            getCheckboxProps: (record) => {
+              return {
+                disabled: record.key.indexOf('bottom') !== -1 || record.key.indexOf('top') !== -1, // 只启用前两行的复选框
+              }
+            },
+            renderCell: (value, record, index, origin) => (record.key.indexOf('bottom') !== -1 || record.key.indexOf('top') !== -1 ? null : origin),
+          }
           : null
       }
     />
