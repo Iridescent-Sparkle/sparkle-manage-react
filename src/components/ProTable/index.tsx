@@ -1,4 +1,4 @@
-import React, { Fragment, ReactNode, useImperativeHandle, useMemo, useRef, useState } from 'react'
+import React, { Fragment, ReactElement, ReactNode, useImperativeHandle, useMemo, useRef, useState } from 'react'
 import { Table, Form, Pagination, TableProps } from 'antd'
 import ClassNames from 'classnames'
 import Search, { Item } from './Search'
@@ -28,6 +28,7 @@ interface Props extends TableProps<Record<string, any>> {
   actionRef?: React.Ref<ActionType>
   searchFormCol?: [number, number]
   hasMarginPadding?: boolean
+  searchAddButton?: ReactElement
   zoomOutConfig?: {
     top?: ColumnsType<Record<string, any>>[0]
     bottom?: ColumnsType<Record<string, any>>[0]
@@ -54,6 +55,7 @@ const ProTable = (props: Props) => {
     pagination: propsPagination,
     className: propsClassName,
     columns: tableColumns,
+    searchAddButton,
     ...rest
   } = props
 
@@ -150,12 +152,12 @@ const ProTable = (props: Props) => {
     },
     formRef: form,
   })
-  
+
   return (
     <div className={ClassNames(styles.proTable, propsClassName)}>
       {!!search && (
         <div className={ClassNames(styles.searchWrap, { [styles.mobile]: isMobile() })}>
-          <Search formCol={searchFormCol} search={search} form={form} formValueChange={(v) => setFormSearch(v)} isExpand={isExpandSearch} clearInitialValue />
+          <Search addButton={searchAddButton} formCol={searchFormCol} search={search} form={form} formValueChange={(v) => setFormSearch(v)} isExpand={isExpandSearch} clearInitialValue />
         </div>
       )}
       {ExtraTopModule}

@@ -1,5 +1,5 @@
 import { Cascader, DatePicker, Input, Select } from "antd"
-import { useSetState } from "src/components/hooks"
+import { useSetState } from "src/hooks"
 
 const useTableConfig = () => {
   const [state, setState] = useSetState({
@@ -26,11 +26,11 @@ const useTableConfig = () => {
       name: 'createTime',
       render: () => (
         <DatePicker
-        // defaultValue={defaultValue}
-        showTime
+          // defaultValue={defaultValue}
+          showTime
         // locale={buddhistLocale}
         // onChange={onChange}
-      />
+        />
       ),
     },
     {
@@ -38,11 +38,11 @@ const useTableConfig = () => {
       name: 'updateTime',
       render: () => (
         <DatePicker
-        // defaultValue={defaultValue}
-        showTime
+          // defaultValue={defaultValue}
+          showTime
         // locale={buddhistLocale}
         // onChange={onChange}
-      />
+        />
       ),
     },
     {

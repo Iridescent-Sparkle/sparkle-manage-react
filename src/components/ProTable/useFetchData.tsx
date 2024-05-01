@@ -2,7 +2,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { PageInfo, UseFetchDataAction, UseFetchProps } from './typing'
 import { getQueryVariable, usePrevious } from './utils'
-import { useDeepCompareEffect } from '../hooks/useDeepCompareEffect'
+import { useDeepCompareEffect } from '../../hooks/useDeepCompareEffect'
 import { isDef } from '../utils/is'
 
 /**
@@ -67,8 +67,8 @@ const useFetchData = (
     try {
       const pageParams = options?.pageInfo ? { current: currentPageNum, pageSize } : undefined
       const { data = [], success, ...rest } = (await isLoadData?.(pageParams)) || {}
-      console.log((await isLoadData?.(pageParams)) || {},'datra');
-      
+      console.log((await isLoadData?.(pageParams)) || {}, 'datra');
+
       if (data.data) {
         setTableDataList(data.data)
         if (pageInfo?.total !== data.total) {

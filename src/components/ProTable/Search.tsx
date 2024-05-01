@@ -2,7 +2,7 @@
  * @Date: 2022-05-30 09:43:44
  * @Description: 搜索组件
  */
-import React, { useMemo, useState, cloneElement, useEffect } from 'react'
+import React, { useMemo, useState, cloneElement, useEffect, ReactElement } from 'react'
 import { DownOutlined, UpOutlined } from '@ant-design/icons'
 import { Form, Row, Col, FormInstance } from 'antd'
 import ButtonLoading from '../../components/ButtonLoading'
@@ -32,6 +32,7 @@ type Props = {
   form?: FormInstance
   formCol?: [number, number]
   formValueChange?: (v: any) => void
+  addButton?: ReactElement
 }
 
 function getButtonSpan(len: number) {
@@ -48,7 +49,7 @@ function getButtonSpan(len: number) {
 }
 
 const Index = (props: Props) => {
-  const { formCol, search, clearInitialValue = false, isExpand = false, showButton = true, searchText = '搜索', form, formValueChange } = props
+  const { formCol, search, clearInitialValue = false, isExpand = false, showButton = true, searchText = '搜索', form, formValueChange, addButton } = props
   const [searchTimes, setSearchTimes] = useState<number>(0)
   const [expand, setExpand] = useState(false)
 
@@ -159,7 +160,6 @@ const Index = (props: Props) => {
       <Form
         form={form}
         labelAlign="left"
-        // layout="inline"
         labelCol={{ span: formCol?.[0] || 8 }}
         wrapperCol={{ span: formCol?.[1] || 16 }}
         onFinish={onRefresh}
@@ -175,6 +175,12 @@ const Index = (props: Props) => {
                 <ButtonLoading style={{ marginLeft: 24 }} onClick={onRefresh} type="primary">
                   {searchText}
                 </ButtonLoading>
+                {
+                  addButton && cloneElement(addButton, {
+                    onRefresh,
+                  })
+                }
+
                 <Visible visible={isExpand}>
                   <Visible visible={expand}>
                     <a style={{ lineHeight: '32px', marginLeft: 12 }} onClick={() => setExpand(!expand)}>

@@ -12,10 +12,10 @@ const Error = Loadable(lazy(() => import('../views/authentication/Error')))
 const Register = Loadable(lazy(() => import('../views/authentication/Register')))
 const Login = Loadable(lazy(() => import('../views/authentication/Login')))
 const Label = Loadable(lazy(() => import('../views/welfare-label/welfareLabel')))
-const Occupational = Loadable(lazy(() => import('../views/Occupational-classification/OccupationalClassification')))
-const Menu = Loadable(lazy(() => import('../views/Menu-permissions/MenuPermissions')))
-const User = Loadable(lazy(() => import('../views/User-list/userList')))
-const Role = Loadable(lazy(() => import('../views/Role-list/roleList')))
+const Occupational = Loadable(lazy(() => import('../views/occupational-classification/OccupationalClassification')))
+const Menu = Loadable(lazy(() => import('../views/menu-permissions/MenuPermissions')))
+const User = Loadable(lazy(() => import('../views/user-list/userList')))
+const Role = Loadable(lazy(() => import('../views/role-list/roleList')))
 const Router = [
   {
     path: '/',
