@@ -1,8 +1,9 @@
-import { Col, Form, Modal } from "antd"
-import { Fragment, ReactElement, useMemo, useState } from "react"
-import { Item } from "src/components/ProTable/Search"
+import { Col, Form, Modal } from 'antd'
+import type { ReactElement } from 'react'
+import { Fragment, useMemo, useState } from 'react'
+import type { Item } from 'src/components/ProTable/Search'
 
-type Props = {
+interface Props {
   title?: string
   data?: Record<string, any>
   children: ReactElement
@@ -12,7 +13,7 @@ type Props = {
   onEdit?: (params: Record<string, any>) => void
 }
 
-const RoleAddAndEditModal = (props: Props) => {
+function AddAndEditModal(props: Props) {
   const { title, children, data, formItems, onRefresh, onAdd, onEdit } = props
 
   const [form] = Form.useForm()
@@ -40,16 +41,18 @@ const RoleAddAndEditModal = (props: Props) => {
     const list = formItems.map((item) => {
       const shouldUpdate = item.shouldUpdate || false
       return (
-        <Col key={item.name} >
-          {shouldUpdate ? (
-            <Form.Item shouldUpdate={true} noStyle>
-              {item.render}
-            </Form.Item>
-          ) : (
-            <Form.Item label={item.label} labelCol={{ span: 4 }} name={item.name} initialValue={item.initialValue} rules={item.rules}>
-              {item.render(form)}
-            </Form.Item>
-          )}
+        <Col key={item.name}>
+          {shouldUpdate
+            ? (
+              <Form.Item shouldUpdate={true} noStyle>
+                {item.render}
+              </Form.Item>
+              )
+            : (
+              <Form.Item label={item.label} labelCol={{ span: 4 }} name={item.name} initialValue={item.initialValue} rules={item.rules}>
+                {item.render(form)}
+              </Form.Item>
+              )}
         </Col>
       )
     })
@@ -68,4 +71,4 @@ const RoleAddAndEditModal = (props: Props) => {
   )
 }
 
-export default RoleAddAndEditModal
+export default AddAndEditModal

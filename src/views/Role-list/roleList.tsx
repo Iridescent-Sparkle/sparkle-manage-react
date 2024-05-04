@@ -1,11 +1,12 @@
-import { DatePicker, Input, Modal, Select, Space, TableColumnsType, message, Button } from "antd";
-import dayjs from 'dayjs';
-import { useRef } from "react";
-import ProTable from 'src/components/ProTable/index.tsx';
-import { ActionType } from "src/components/ProTable/typing";
-import RoleAddAndEditModal from './add-edit-modal.tsx'
-function RoleList() {
+import type { TableColumnsType } from 'antd'
+import { Button, DatePicker, Input, Modal, Select, Space, message } from 'antd'
+import dayjs from 'dayjs'
+import { useRef } from 'react'
+import ProTable from 'src/components/ProTable/index.tsx'
+import type { ActionType } from 'src/components/ProTable/typing'
+import RoleAddAndEditModal from '../../components/AddAndEditModal/index.tsx'
 
+function RoleList() {
   const actionRef = useRef<ActionType>(null)
 
   const search = [
@@ -122,60 +123,57 @@ function RoleList() {
         const updata = () => {
           actionRef.current?.reload?.()
         }
+
         return (
           <Space size="middle" align="end">
-            {(
-              <a
-                onClick={() => {
-                  Modal.confirm({
-                    title: '提示',
-                    content: '确定修改数据状态?',
-                    onOk: async () => {
-                      await $.post({
-                        isFrozen: !record.isFrozen,
-                        id: record.id
-                      }, {
-                        url: '/boss/bonus/update',
-                      })
-                      message.success('操作成功')
-                      actionRef.current?.reload?.()
-                    },
-                  })
-                }}
-              >
-                {record.isFrozen ? '启用' : '禁用'}
-              </a>
-            )}
+            <a
+              onClick={() => {
+                Modal.confirm({
+                  title: '提示',
+                  content: '确定修改数据状态?',
+                  onOk: async () => {
+                    await $.post({
+                      isFrozen: !record.isFrozen,
+                      id: record.id,
+                    }, {
+                      url: '/boss/bonus/update',
+                    })
+                    message.success('操作成功')
+                    actionRef.current?.reload?.()
+                  },
+                })
+              }}
+            >
+              {record.isFrozen ? '启用' : '禁用'}
+            </a>
             {/* <Detail reload={updata} record={record}>
               <a>修改</a>
             </Detail> */}
-            {(
-              <a
-                onClick={() => {
-                  Modal.confirm({
-                    title: '提示',
-                    content: '确定删除当前数据?',
-                    onOk: async () => {
-                      await $.post({
-                        isDelete: true,
-                        id: record.id
-                      }, {
-                        url: '/boss/bonus/update',
-                      })
-                      message.success('操作成功')
-                      actionRef.current?.reload?.()
-                    },
-                  })
-                }}
-              >
-                {'删除'}
-              </a>
-            )}
+            <a
+              onClick={() => {
+                Modal.confirm({
+                  title: '提示',
+                  content: '确定删除当前数据?',
+                  onOk: async () => {
+                    await $.post({
+                      isDelete: true,
+                      id: record.id,
+                    }, {
+                      url: '/boss/bonus/update',
+                    })
+                    message.success('操作成功')
+                    actionRef.current?.reload?.()
+                  },
+                })
+              }}
+            >
+              删除
+            </a>
           </Space>
         )
       },
     },
-  ];
+  ]
 
   const onAdd = (params: Record<string, any>) => {
 
@@ -194,7 +192,7 @@ function RoleList() {
       rowKey="id"
       pagination={{
         pageSize: 15,
-        current: 1
+        current: 1,
       }}
       sticky={{
         offsetHeader: 0,
@@ -205,16 +203,18 @@ function RoleList() {
           url: '/boss/bonus/all',
         })
       }}
-      searchAddButton={<RoleAddAndEditModal
-        title="权限"
-        formItems={formItems}
-        onAdd={onAdd}
-        onEdit={onEdit}
-      >
-        <Button type="primary" style={{ marginLeft: 24 }}>新增</Button>
-      </RoleAddAndEditModal>}
+      searchAddButton={(
+        <RoleAddAndEditModal
+          title="权限"
+          formItems={formItems}
+          onAdd={onAdd}
+          onEdit={onEdit}
+        >
+          <Button type="primary" style={{ marginLeft: 24 }}>新增</Button>
+        </RoleAddAndEditModal>
+      )}
     />
-  );
+  )
 }
 
-export default RoleList;
+export default RoleList

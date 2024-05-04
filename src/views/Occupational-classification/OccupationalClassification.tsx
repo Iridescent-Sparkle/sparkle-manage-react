@@ -1,10 +1,9 @@
-import { TableColumnsType } from 'antd';
-import React from 'react'
-import ProTable from 'src/components/ProTable';
-import useTableConfig from './config';
+import type { TableColumnsType } from 'antd'
+import ProTable from 'src/components/ProTable'
+import useTableConfig from './config'
 
-const OccupationalClassification = () => {
-  const { search} = useTableConfig()
+function OccupationalClassification() {
+  const { search } = useTableConfig()
   const data = {
     code: 200,
     message: 'success',
@@ -170,7 +169,7 @@ const OccupationalClassification = () => {
         updateTime: '2024-03-30T09:16:20.310Z',
       },
     ],
-  };
+  }
   /* 构建表单结构 */
   const columns: TableColumnsType<Record<string, any>> = [
     {
@@ -203,16 +202,16 @@ const OccupationalClassification = () => {
       dataIndex: 'operate_zh',
       key: 'operate',
     },
-  ];
-  console.log(data,'data');
-  const a=async ()=>{
+  ]
+  console.log(data, 'data')
+  const a = async () => {
     const loginRes = await $.post({}, {
       url: '/boss/bonus/all',
     })
     return loginRes
   }
-  console.log(a(),'a');
-  
+  console.log(a(), 'a')
+
   return (
     <>
       <ProTable
@@ -234,6 +233,6 @@ const OccupationalClassification = () => {
         }}
       />
     </>
-  );
+  )
 }
 export default OccupationalClassification

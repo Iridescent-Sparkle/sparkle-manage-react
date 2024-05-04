@@ -1,7 +1,7 @@
-import { Cascader, DatePicker, Input, Select } from "antd"
-import { useSetState } from "src/hooks"
+import { DatePicker, Input, Select } from 'antd'
+import { useSetState } from 'src/hooks'
 
-const useTableConfig = () => {
+function useTableConfig() {
   const [state, setState] = useSetState({
     classifyData: [],
   })
@@ -66,6 +66,5 @@ const useTableConfig = () => {
     search,
   }
 }
-
 
 export default useTableConfig
