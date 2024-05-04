@@ -6,9 +6,8 @@ export const isDeepEqual = (a: any, b: any, ignoreKeys?: string[]) => isDeepEqua
 
 function useDeepCompareMemoize(value: any, ignoreKeys?: string[]) {
   const ref = useRef()
-  if (!isDeepEqual(value, ref.current, ignoreKeys)) {
+  if (!isDeepEqual(value, ref.current, ignoreKeys))
     ref.current = value
-  }
 
   return ref.current
 }

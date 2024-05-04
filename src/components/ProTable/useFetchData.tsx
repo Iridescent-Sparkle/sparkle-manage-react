@@ -1,16 +1,16 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { useEffect, useRef, useState } from 'react'
-import { PageInfo, UseFetchDataAction, UseFetchProps } from './typing'
-import { getQueryVariable, usePrevious } from './utils'
 import { useDeepCompareEffect } from '../../hooks/useDeepCompareEffect'
 import { isDef } from '../utils/is'
+import type { PageInfo, UseFetchDataAction, UseFetchProps } from './typing'
+import { getQueryVariable, usePrevious } from './utils'
 
 /**
  * 组合用户的配置和默认值
  *
  * @param param0
  */
-const mergeOptionAndPageInfo = ({ pageInfo }: UseFetchProps) => {
+function mergeOptionAndPageInfo({ pageInfo }: UseFetchProps) {
   if (pageInfo) {
     const { current, defaultCurrent, pageSize, defaultPageSize } = pageInfo
     return {
@@ -31,11 +31,7 @@ const mergeOptionAndPageInfo = ({ pageInfo }: UseFetchProps) => {
  * @param {UseFetchProps} options - 配置项，包括了默认的分页参数、格式化数据的函数等
  * @returns {UseFetchDataAction} 返回一个对象，包含当前的数据列表、loading 状态、error、以及可控制的分页参数等
  */
-const useFetchData = (
-  isLoadData: undefined | ((params?: { pageSize: number; current: number }) => Promise<any>),
-  defaultData: any[] | undefined,
-  options: UseFetchProps,
-): UseFetchDataAction => {
+function useFetchData(isLoadData: undefined | ((params?: { pageSize: number, current: number }) => Promise<any>), defaultData: any[] | undefined, options: UseFetchProps): UseFetchDataAction {
   const { onLoad, onRequestError, effects = [], manualRequest, initFormValues, hasInitFormValue } = options || {}
 
   const timesRef = useRef<number>(0)
@@ -61,13 +57,13 @@ const useFetchData = (
     let currentPageNum = pageInfo?.current
     if (currentPage) {
       currentPageNum = currentPage
-      setPageInfo((v) => ({ ...v, current: currentPage }))
+      setPageInfo(v => ({ ...v, current: currentPage }))
     }
     const { pageSize } = pageInfo || {}
     try {
       const pageParams = options?.pageInfo ? { current: currentPageNum, pageSize } : undefined
       const { data = [], success, ...rest } = (await isLoadData?.(pageParams)) || {}
-      console.log((await isLoadData?.(pageParams)) || {}, 'datra');
+      console.log((await isLoadData?.(pageParams)) || {}, 'datra')
 
       if (data.data) {
         setTableDataList(data.data)
@@ -78,14 +74,18 @@ const useFetchData = (
           })
         }
         return data.data
-      } else {
+      }
+      else {
         return []
       }
-    } catch (e) {
-      if (tableDataList === undefined) setTableDataList([])
+    }
+    catch (e) {
+      if (tableDataList === undefined)
+        setTableDataList([])
       onRequestError?.(e as Error)
       throw new Error(e as string)
-    } finally {
+    }
+    finally {
       setTableLoading(false)
     }
   }
@@ -95,27 +95,26 @@ const useFetchData = (
     const { current, pageSize } = pageInfo || {}
     // 如果上次的页码为空或者两次页码等于是没必要查询的
     // 如果 pageSize 发生变化是需要查询的，所以又加了 prePageSize
-    if ((!prePage || prePage === current) && (!prePageSize || prePageSize === pageSize)) {
+    if ((!prePage || prePage === current) && (!prePageSize || prePageSize === pageSize))
       return
-    }
-    if ((options.pageInfo && tableDataList && tableDataList?.length > pageSize) || 0) {
+
+    if ((options.pageInfo && tableDataList && tableDataList?.length > pageSize) || 0)
       return
-    }
+
     // 如果 list 的长度大于 pageSize 的长度
     // 说明是一个假分页
     // (pageIndex - 1 || 1) 至少要第一页
     // 在第一页大于 10
     // 第二页也应该是大于 10
-    if (current !== undefined && tableDataList && tableDataList.length <= pageSize) {
+    if (current !== undefined && tableDataList && tableDataList.length <= pageSize)
       fetchList()
-    }
   }, [pageInfo?.current])
 
   // pageSize 修改后返回第一页
   useEffect(() => {
-    if (!prePageSize) {
+    if (!prePageSize)
       return
-    }
+
     fetchList(1)
   }, [pageInfo?.pageSize])
 
@@ -123,21 +122,21 @@ const useFetchData = (
     timesRef.current = timesRef.current + 1
     if (hasInitFormValue) {
       // 有搜索表单默认值情况
-      if (timesRef.current == 1 && !Object.keys(initFormValues || {})?.length) {
+      if (timesRef.current == 1 && !Object.keys(initFormValues || {})?.length)
         return
-      }
+
       fetchList(1)
       return
     }
     if (isDef(manualRequest)) {
       manualRequest && fetchList(1)
-    } else {
+    }
+    else {
       // 首次执行,假如有筛选参数取消首次请求
       if (timesRef.current == 1) {
         const queryVars = getQueryVariable(location.href)
-        if (Object.keys(queryVars || {})?.length) {
+        if (Object.keys(queryVars || {})?.length)
           return
-        }
       }
       fetchList(1)
     }
@@ -151,7 +150,7 @@ const useFetchData = (
     dataSource: tableDataList! as any[],
     /**
      * 用于设置表格数据列表的 setter 函数。
-     * @type {function}
+     * @type {Function}
      * @param {DataSource[]} list - 更新后的表格数据列表。
      */
     setDataSource: setTableDataList,
@@ -162,7 +161,7 @@ const useFetchData = (
     loading: typeof options?.loading === 'object' ? { ...options?.loading, spinning: tableLoading } : tableLoading,
     /**
      * 重新加载表格数据的函数。
-     * @type {function}
+     * @type {Function}
      * @async
      * @returns {Promise<any>}
      */
@@ -171,7 +170,7 @@ const useFetchData = (
     },
     /**
      * 当前的分页信息。
-     * @type {Object}
+     * @type {object}
      * @prop {number} current - 当前页码。
      * @prop {number} total - 总数据数量。
      * @prop {number} pageSize - 每页数据数量。
@@ -179,7 +178,7 @@ const useFetchData = (
     pageInfo,
     /**
      * 重置分页信息为其初始值的函数。
-     * @type {function}
+     * @type {Function}
      * @async
      * @returns {Promise<void>} - 重置完成后解决的 Promise。
      */
@@ -195,9 +194,9 @@ const useFetchData = (
     },
     /**
      * 更新分页信息的函数。
-     * @type {function}
+     * @type {Function}
      * @async
-     * @param {Object} info - 新的分页信息。
+     * @param {object} info - 新的分页信息。
      * @prop {number} [current] - 新的当前页码。
      * @prop {number} [total] - 新的总数据数量。
      * @prop {number} [pageSize] - 新的每页数据数量。

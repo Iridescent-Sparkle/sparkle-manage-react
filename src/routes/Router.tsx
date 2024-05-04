@@ -7,15 +7,15 @@ const FullLayout = Loadable(lazy(() => import('../layouts/full/FullLayout')))
 const BlankLayout = Loadable(lazy(() => import('../layouts/blank/BlankLayout')))
 
 /* ****Pages***** */
-const Dashboard = Loadable(lazy(() => import('../views/dashboard/Dashboard')))
-const Error = Loadable(lazy(() => import('../views/authentication/Error')))
-const Register = Loadable(lazy(() => import('../views/authentication/Register')))
-const Login = Loadable(lazy(() => import('../views/authentication/Login')))
-const Label = Loadable(lazy(() => import('../views/welfare-label/welfareLabel')))
-const Occupational = Loadable(lazy(() => import('../views/occupational-classification/OccupationalClassification')))
-const Menu = Loadable(lazy(() => import('../views/menu-permissions/MenuPermissions')))
-const User = Loadable(lazy(() => import('../views/user-list/userList')))
-const Role = Loadable(lazy(() => import('../views/role-list/roleList')))
+const Dashboard = Loadable(lazy(() => import('../views/Dashboard')))
+const Error = Loadable(lazy(() => import('../views/Authentication/Error')))
+const Register = Loadable(lazy(() => import('../views/Authentication/Register')))
+const Login = Loadable(lazy(() => import('../views/Authentication/Login')))
+const Label = Loadable(lazy(() => import('../views/WelfareLabel')))
+const Occupational = Loadable(lazy(() => import('../views/OccupationalClassification')))
+const Menu = Loadable(lazy(() => import('../views/MenuPermissions')))
+const User = Loadable(lazy(() => import('../views/UserList')))
+const Role = Loadable(lazy(() => import('../views/RoleList')))
 const Router = [
   {
     path: '/',

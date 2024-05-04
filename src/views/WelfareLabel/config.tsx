@@ -1,9 +1,11 @@
-import { DatePicker, Input, Modal, Select, Space, TableColumnsType, message } from "antd"
-import { useRef } from "react"
-import { ActionType } from "src/components/ProTable/typing"
+import type { TableColumnsType } from 'antd'
+import { DatePicker, Input, Modal, Select, Space, message } from 'antd'
+import { useRef } from 'react'
+import type { ActionType } from 'src/components/ProTable/typing'
 import dayjs from 'dayjs'
-import Detail from "./Detail"
-const useTableConfig = () => {
+import Detail from './Detail'
+
+function useTableConfig() {
   const actionRef = useRef<ActionType>()
 
   const search = [
@@ -109,64 +111,59 @@ const useTableConfig = () => {
         }
         return (
           <Space size="middle" align="end">
-            {(
-              <a
-                onClick={() => {
-                  Modal.confirm({
-                    title: '提示',
-                    content: '确定修改数据状态?',
-                    onOk: async () => {
-                      await $.post({
-                        isFrozen: !record.isFrozen,
-                        id: record.id
-                      }, {
-                        url: '/boss/bonus/update',
-                      })
-                      message.success('操作成功')
-                      actionRef.current?.reload?.()
-                    },
-                  })
-                }}
-              >
-                {record.isFrozen ? '启用' : '禁用'}
-              </a>
-            )}
+            <a
+              onClick={() => {
+                Modal.confirm({
+                  title: '提示',
+                  content: '确定修改数据状态?',
+                  onOk: async () => {
+                    await $.post({
+                      isFrozen: !record.isFrozen,
+                      id: record.id,
+                    }, {
+                      url: '/boss/bonus/update',
+                    })
+                    message.success('操作成功')
+                    actionRef.current?.reload?.()
+                  },
+                })
+              }}
+            >
+              {record.isFrozen ? '启用' : '禁用'}
+            </a>
             <Detail reload={updata} record={record}>
               <a>修改</a>
             </Detail>
-            {(
-              <a
-                onClick={() => {
-                  Modal.confirm({
-                    title: '提示',
-                    content: '确定删除当前数据?',
-                    onOk: async () => {
-                      await $.post({
-                        isDelete: true,
-                        id: record.id
-                      }, {
-                        url: '/boss/bonus/update',
-                      })
-                      message.success('操作成功')
-                      actionRef.current?.reload?.()
-                    },
-                  })
-                }}
-              >
-                {'删除'}
-              </a>
-            )}
+            <a
+              onClick={() => {
+                Modal.confirm({
+                  title: '提示',
+                  content: '确定删除当前数据?',
+                  onOk: async () => {
+                    await $.post({
+                      isDelete: true,
+                      id: record.id,
+                    }, {
+                      url: '/boss/bonus/update',
+                    })
+                    message.success('操作成功')
+                    actionRef.current?.reload?.()
+                  },
+                })
+              }}
+            >
+              删除
+            </a>
           </Space>
         )
       },
     },
-  ];
+  ]
   return {
     columns,
     search,
-    actionRef
+    actionRef,
   }
 }
-
 
 export default useTableConfig

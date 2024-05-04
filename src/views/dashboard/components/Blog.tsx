@@ -66,11 +66,13 @@ function Blog() {
               <Stack direction="row" alignItems="center" justifyContent="space-between" mt={1}>
                 <Stack direction="row" alignItems="center">
                   <Typography variant="h6">
-                      ${product.price}
-                    </Typography>
+                    $
+                    {product.price}
+                  </Typography>
                   <Typography color="textSecondary" ml={1} sx={{ textDecoration: 'line-through' }}>
-                      ${product.salesPrice}
-                    </Typography>
+                    $
+                    {product.salesPrice}
+                  </Typography>
                 </Stack>
                 <Rating name="read-only" size="small" value={product.rating} readOnly />
               </Stack>

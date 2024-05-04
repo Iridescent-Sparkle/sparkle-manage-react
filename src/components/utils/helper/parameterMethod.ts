@@ -1,4 +1,4 @@
-type dataType = {
+interface dataType {
   meta: {
     pagination: {
       /** 总数据量 */
@@ -20,9 +20,10 @@ type dataType = {
  *  新格式：data:{meta:{pagination:{}},list:[]}
  *  老格式：data:{data:[],...rest}
  */
-export const convertNewToOldFormat = (newData: dataType): any => {
+export function convertNewToOldFormat(newData: dataType): any {
   const { meta, list } = newData || {}
-  if (!meta || !list) return newData
+  if (!meta || !list)
+    return newData
   const { total, count, page, page_size, has_more } = meta?.pagination || {}
   return {
     data: list,

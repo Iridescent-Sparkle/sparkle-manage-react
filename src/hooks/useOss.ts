@@ -74,7 +74,7 @@ const mime: Record<string, string> = {
   '.MOV': 'video/quicktime',
 }
 
-const useOss = (options: any, success?: any) => {
+function useOss(options: any, success?: any) {
   const ossData = useRef<any>({})
   const readFile = async (files: Blob) => {
     return new Promise((resolve) => {
@@ -100,18 +100,18 @@ const useOss = (options: any, success?: any) => {
       headers: data.headers,
       method: 'PUT',
       body: formatFile,
-    }).then((res) => res.json())
+    }).then(res => res.json())
 
-    if (res.code === 0) {
+    if (res.code === 0)
       return data.accessUrl
-    }
+
     message.error(res.message)
   }
 
   const handleChange = (info: any) => {
-    if (info.file.status === 'uploading') {
+    if (info.file.status === 'uploading')
       return
-    }
+
     if (info.file.status === 'done') {
       const list = ossData.current.file.split('/')
       info.file.name = list[list.length - 1]
@@ -120,17 +120,16 @@ const useOss = (options: any, success?: any) => {
   }
 
   const beforeUpload = async (file: any) => {
-    const { maxSize = Infinity, accept = [] } = options || {}
+    const { maxSize = Number.POSITIVE_INFINITY, accept = [] } = options || {}
     // 支持的图片格式
     const imageTypes = ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'PBG', 'GIF', 'JPG', 'JPEG']
     const _accept: any = []
     accept?.forEach((type: string) => {
-      if (Object.keys(mime).includes(type)) {
+      if (Object.keys(mime).includes(type))
         _accept.push(mime[type])
-      }
-      if (Object.values(mime).includes(type)) {
+
+      if (Object.values(mime).includes(type))
         _accept.push(type)
-      }
     })
     // if (file.type.indexOf("image") == -1) {
     //   message.error("只能上传图片");

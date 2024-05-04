@@ -9,9 +9,9 @@ import {
 } from '@mui/material'
 import { useState } from 'react'
 import { useUserStore } from 'src/store/user'
+import { useNavigate } from 'react-router-dom'
+import { message } from 'antd'
 import CustomTextField from '../../../components/forms/theme-elements/CustomTextField'
-import { useNavigate } from "react-router-dom";
-import { message } from 'antd';
 
 function AuthLogin({ title, subtitle, subtext }) {
   const navigate = useNavigate()
@@ -33,7 +33,7 @@ function AuthLogin({ title, subtitle, subtext }) {
     navigate({
       pathname: '/',
     }, {
-      replace: true
+      replace: true,
     })
   }
 
@@ -54,7 +54,7 @@ function AuthLogin({ title, subtitle, subtext }) {
           <Typography fontWeight="700" variant="h2" mb={1}>
             {title}
           </Typography>
-        )
+          )
         : null}
 
       {subtext}

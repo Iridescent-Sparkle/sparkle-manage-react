@@ -1,8 +1,8 @@
-import { Button, Form, Input, Modal, message } from 'antd';
+import { Button, Form, Input, Modal, message } from 'antd'
 import React, { cloneElement, useEffect, useState } from 'react'
 
-const Detail = (props: { children: React.ReactElement; record?:any;reload: any}) => {
-  const { children, record,reload } = props
+function Detail(props: { children: React.ReactElement, record?: any, reload: any }) {
+  const { children, record, reload } = props
   const [visible, setVisible] = useState(false)
   const [form] = Form.useForm()
   const handleCancel = () => {
@@ -15,33 +15,35 @@ const Detail = (props: { children: React.ReactElement; record?:any;reload: any})
       })
     }
   }, [visible, record])
-  const onOk=async () => {
-    try{
-      const values=await form.validateFields()
-      if(record){
+  const onOk = async () => {
+    try {
+      const values = await form.validateFields()
+      if (record) {
         await $.post({
-          id:record.id,
-          ...values
+          id: record.id,
+          ...values,
         }, {
           url: '/boss/bonus/update',
         })
-      }else{ 
+      }
+      else {
         await $.post({
-          ...values
+          ...values,
         }, {
           url: '/boss/bonus/update',
         })
       }
       setVisible(false)
       reload?.()
-    }catch{
+    }
+    catch {
       message.error('报错')
     }
   }
   return (
     <>
-    {cloneElement(children, { onClick: () => setVisible(!visible) })}
-    <Modal
+      {cloneElement(children, { onClick: () => setVisible(!visible) })}
+      <Modal
         destroyOnClose
         width={800}
         title="详情"
@@ -50,8 +52,8 @@ const Detail = (props: { children: React.ReactElement; record?:any;reload: any})
             返回
           </Button>,
           <Button type="primary" onClick={onOk}>
-          确认
-        </Button>
+            确认
+          </Button>,
         ]}
         open={visible}
         onCancel={handleCancel}

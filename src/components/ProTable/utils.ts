@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react'
-import { ActionType } from './typing'
-import { FormInstance } from 'antd'
+import type { FormInstance } from 'antd'
+import type { ActionType } from './typing'
 
 /**
  * 获取用户的 action 信息
@@ -43,17 +43,17 @@ export function useActionType(
       await action?.reset?.()
       await action?.reload()
     },
-    // @ts-ignore
+    // @ts-expect-error
     dataSource: action?.dataSource,
     clearSelected: () => props.onCleanSelected(),
-    setPageInfo: (rest) => action.setPageInfo(rest),
+    setPageInfo: rest => action.setPageInfo(rest),
   }
-  // eslint-disable-next-line no-param-reassign
+
   // ref.current = userAction
   ref.current = { ...userAction, formRef: props.formRef }
 }
 
-export const usePrevious = <T>(state: T): T | undefined => {
+export function usePrevious<T>(state: T): T | undefined {
   const ref = useRef<T>()
 
   useEffect(() => {
@@ -77,12 +77,13 @@ export function parseUrlParams(queryString: string) {
       // 获取去掉[]后的键名
       const paramName = key.slice(0, -2)
       // 如果对象中还没有这个键，就创建一个数组
-      if (!params[paramName]) {
+      if (!params[paramName])
         params[paramName] = []
-      }
+
       // 向数组中添加值
       params[paramName].push(value)
-    } else {
+    }
+    else {
       // 如果不是数组，直接添加到对象中
       params[key] = value
     }
@@ -92,22 +93,21 @@ export function parseUrlParams(queryString: string) {
 }
 
 /** 获取当前url ?符号后面的筛选参数的值 */
-export const getQueryVariable = (path: string) => {
+export function getQueryVariable(path: string) {
   let ret: Record<string, any> = {}
-  let query = path.split('?')[1]
-  if (query) {
+  const query = path.split('?')[1]
+  if (query)
     ret = parseUrlParams(query)
-  }
+
   return ret
 }
 
-/**过滤对象中值为null、 undefined、 ""的键 */
+/** 过滤对象中值为null、 undefined、 ""的键 */
 export function cleanObject(obj: Record<string, any>): Record<string, any> {
-  let newObj = {} as any
-  for (let prop in obj) {
-    if (obj[prop] !== null && obj[prop] !== undefined && obj[prop] !== '') {
+  const newObj = {} as any
+  for (const prop in obj) {
+    if (obj[prop] !== null && obj[prop] !== undefined && obj[prop] !== '')
       newObj[prop] = obj[prop]
-    }
   }
   return newObj
 }

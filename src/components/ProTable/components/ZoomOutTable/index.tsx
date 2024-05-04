@@ -1,9 +1,10 @@
-import { Table, TableProps } from 'antd'
-import { ColumnsType } from 'antd/es/table'
+import type { TableProps } from 'antd'
+import { Table } from 'antd'
+import type { ColumnsType } from 'antd/es/table'
 import concat from 'lodash-es/concat'
 import { useMemo } from 'react'
-import styles from './index.module.less'
 import classNames from 'classnames'
+import styles from './index.module.less'
 
 interface Props extends TableProps<Record<string, any>> {
   zoomOutConfig?: {
@@ -12,7 +13,7 @@ interface Props extends TableProps<Record<string, any>> {
   }
 }
 
-const Index = (props: Props) => {
+function Index(props: Props) {
   const { zoomOutConfig, dataSource: data, rowKey, columns: initColumns, rowSelection, ...rest } = props
   const dataSource = useMemo(() => {
     const objectKey = typeof rowKey === 'string' ? rowKey : 'id'
@@ -24,7 +25,7 @@ const Index = (props: Props) => {
             top ? { ...cur, key: `${cur[objectKey]}-top` } : null,
             { ...cur, key: cur[objectKey] },
             bottom ? { ...cur, key: `${cur[objectKey]}-bottom` } : null,
-          ].filter((val) => !!val),
+          ].filter(val => !!val),
         ),
       [],
     )
@@ -61,21 +62,20 @@ const Index = (props: Props) => {
         rowSpan: 1,
       }
     }
-    if (index % (Object.keys(zoomOutConfig || {}).length + 1) === reset) {
+    if (index % (Object.keys(zoomOutConfig || {}).length + 1) === reset)
       return {}
-    }
 
     return { colSpan: 0, rowSpan: 1 }
   }
 
   const isHasPadding = (index: number) => {
     const objectLength = Object.keys(zoomOutConfig || {}).length
-    if (objectLength === 2) {
+    if (objectLength === 2)
       return index % 3 !== 1
-    }
-    if (zoomOutConfig?.top) {
+
+    if (zoomOutConfig?.top)
       return index % 2 !== 1
-    }
+
     return index % 2 !== 0
   }
 
@@ -104,24 +104,23 @@ const Index = (props: Props) => {
       rowClassName={(record, index) =>
         classNames(styles.table, isShowWhite(index) ? styles['table-row-white'] : styles['table-row-gray'], {
           [styles['sub-table-row']]: isHasPadding(index),
-          [styles.selected]: !!rowSelection?.selectedRowKeys?.find((item) => item === record[typeof rowKey === 'string' ? rowKey : 'id']),
-        })
-      }
+          [styles.selected]: !!rowSelection?.selectedRowKeys?.find(item => item === record[typeof rowKey === 'string' ? rowKey : 'id']),
+        })}
       dataSource={dataSource}
       {...rest}
-      rowKey={'key'}
+      rowKey="key"
       pagination={false}
       rowSelection={
         rowSelection
           ? {
-            ...rowSelection,
-            getCheckboxProps: (record) => {
-              return {
-                disabled: record.key.indexOf('bottom') !== -1 || record.key.indexOf('top') !== -1, // 只启用前两行的复选框
-              }
-            },
-            renderCell: (value, record, index, origin) => (record.key.indexOf('bottom') !== -1 || record.key.indexOf('top') !== -1 ? null : origin),
-          }
+              ...rowSelection,
+              getCheckboxProps: (record) => {
+                return {
+                  disabled: record.key.includes('bottom') || record.key.includes('top'), // 只启用前两行的复选框
+                }
+              },
+              renderCell: (value, record, index, origin) => (record.key.includes('bottom') || record.key.includes('top') ? null : origin),
+            }
           : null
       }
     />

@@ -1,8 +1,7 @@
 import { Box, Card, Grid, Stack, Typography } from '@mui/material'
 import { Link } from 'react-router-dom'
 import PageContainer from 'src/components/container/PageContainer'
-import Logo from 'src/layouts/full/shared/logo/Logo'
-import AuthRegister from './auth/AuthRegister'
+import AuthRegister from './components/AuthRegister'
 
 function Register2() {
   return (

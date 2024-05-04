@@ -1,10 +1,6 @@
-/*
- * @Date: 2023-11-06 10:26:27
- * @Description: loading handle
- */
 import { useState } from 'react'
 
-const useLoadingHandle = <T extends (...args: any[]) => Promise<any>>(fn: T) => {
+function useLoadingHandle<T extends (...args: any[]) => Promise<any>>(fn: T) {
   const [loading, setLoading] = useState<boolean>(false)
   const handle = async (...args: any[]) => {
     try {
@@ -12,9 +8,11 @@ const useLoadingHandle = <T extends (...args: any[]) => Promise<any>>(fn: T) => 
         setLoading(true)
         return await fn(...args)
       }
-    } catch (error) {
+    }
+    catch (error) {
       console.error(`useLoadingHandle--${error}`)
-    } finally {
+    }
+    finally {
       setLoading(false)
     }
   }

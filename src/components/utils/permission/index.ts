@@ -21,76 +21,71 @@ export interface RouteObject {
 }
 export type FilterPermissionRouters = RouteObject[]
 
-export const filterPermissionRouters = async (routers: FilterPermissionRouters) => {
-  if (location.pathname === '/login') {
-    return [routers.find((item) => item?.path === '/login')]
-  }
+export async function filterPermissionRouters(routers: FilterPermissionRouters) {
+  if (location.pathname === '/login')
+    return [routers.find(item => item?.path === '/login')]
+
   const res = usePowerListStore.getState().permissionInfo || (await adminHttp.get('/uaa/v1/permission/current/user'))
-  if (!usePowerListStore.getState().permissionInfo) {
+  if (!usePowerListStore.getState().permissionInfo)
     usePowerListStore.setState({ permissionInfo: res })
-  }
-  if (res.isRoot) {
+
+  if (res.isRoot)
     return routers
-  }
-  // eslint-disable-next-line
+
   const codes = JSON.stringify(res.menuList)
-    // eslint-disable-next-line
+
     .match(/"code":"([a-zA-Z\_]+)"/g)
-    .map((item) => item.replace('"code":"', '').replace('"', ''))
+    .map(item => item.replace('"code":"', '').replace('"', ''))
   const loop = (router: FilterPermissionRouters) => {
     return router.filter((item) => {
       /** 没有code就直接展示 */
-      if (!item.code) {
+      if (!item.code)
         return true
-      }
+
       const includes = codes?.includes(item.code)
-      if (includes && item?.children?.length) {
+      if (includes && item?.children?.length)
         item.children = loop(item.children)
-      }
+
       return includes
     })
   }
   return loop(routers)
 }
-export const findFirstRoute = (items: FilterPermissionRouters): string => {
+export function findFirstRoute(items: FilterPermissionRouters): string {
   const loop = (item: FilterPermissionRouters[0]): string => {
-    if (item?.element && !item?.meta?.notMenu) {
+    if (item?.element && !item?.meta?.notMenu)
       return item.path
-    }
-    if (!item?.children?.length) {
-      return ''
-    }
 
-    for (let val of item.children) {
+    if (!item?.children?.length)
+      return ''
+
+    for (const val of item.children) {
       const result = loop(val)
-      if (result) {
+      if (result)
         return result
-      }
     }
     return ''
   }
-  for (let item of items) {
+  for (const item of items) {
     const result = loop(item)
-    if (result) {
+    if (result)
       return result
-    }
   }
   return ''
 }
 
-export const findUrl = (list: FilterPermissionRouters, pathname: string): boolean => {
-  if (!list?.length || pathname === '/') {
+export function findUrl(list: FilterPermissionRouters, pathname: string): boolean {
+  if (!list?.length || pathname === '/')
     return false
-  }
+
   let result = true
   const loop = (list: FilterPermissionRouters) => {
-    for (let item of list) {
+    for (const item of list) {
       if (item.path !== '/') {
         const regexp = new RegExp(`^${item.path.replace('*', '.*')}/?$`)
         const hasHeader = regexp.test(pathname)
-        if (hasHeader) {
+        if (hasHeader)
           result = false
-        }
       }
       loop(item?.children || [])
     }

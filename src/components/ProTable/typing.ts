@@ -1,6 +1,6 @@
 import type { FormInstance, SpinProps } from 'antd'
 
-export type PageInfo = {
+export interface PageInfo {
   pageSize: number
   total: number
   current: number
@@ -20,7 +20,7 @@ export type ActionType<T = {}> = {
   formRef: FormInstance
 } & T
 
-export type UseFetchDataAction<T = any> = {
+export interface UseFetchDataAction<T = any> {
   dataSource: T[]
   setDataSource: (dataSource: T[]) => void
   loading: boolean | SpinProps | undefined
@@ -32,7 +32,7 @@ export type UseFetchDataAction<T = any> = {
 
 /**
  * 用于定义 useFetch 的参数类型
- * @typedef {Object} UseFetchProps
+ * @typedef {object} UseFetchProps
  * @property {any} [dataSource] - 数据源，可选参数
  * @property {UseFetchDataAction['loading']} loading - 数据加载状态，必须参数
  * @property {(loading: UseFetchDataAction['loading']) => void} [onLoadingChange] - 加载状态改变时的回调函数，可选参数
@@ -48,7 +48,7 @@ export type UseFetchDataAction<T = any> = {
  * @property {boolean} [revalidateOnFocus] - 是否在焦点回到页面时重新验证数据，可选参数
  */
 
-export type UseFetchProps = {
+export interface UseFetchProps {
   /**
    * 是否处于加载状态
    * @type {UseFetchDataAction['loading']}
@@ -94,11 +94,11 @@ export type UseFetchProps = {
    */
   pageInfo:
     | {
-        current?: number
-        pageSize?: number
-        defaultCurrent?: number
-        defaultPageSize?: number
-      }
+      current?: number
+      pageSize?: number
+      defaultCurrent?: number
+      defaultPageSize?: number
+    }
     | false
 
   /**

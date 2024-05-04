@@ -1,17 +1,18 @@
-import { Box, Button, Typography } from '@mui/material';
-import { Stack } from '@mui/system';
-import { message } from 'antd';
-import { ComponentProps, useEffect, useState } from 'react';
-import CustomTextField from '../../../components/forms/theme-elements/CustomTextField';
-import { useNavigate } from "react-router-dom";
-import { useUserStore } from 'src/store/user';
+import { Box, Button, Typography } from '@mui/material'
+import { Stack } from '@mui/system'
+import { message } from 'antd'
+import type { ComponentProps } from 'react'
+import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { useUserStore } from 'src/store/user'
+import CustomTextField from '../../../components/forms/theme-elements/CustomTextField'
 
 function AuthRegister({ title, subtitle, subtext }) {
   const userStore = useUserStore()
 
   const navigate = useNavigate()
 
-  const [countdown, setCountdown] = useState(0);
+  const [countdown, setCountdown] = useState(0)
 
   const [phone, setPhone] = useState('')
 
@@ -23,51 +24,49 @@ function AuthRegister({ title, subtitle, subtext }) {
 
   /* 获取验证码 */
   const GetVerificationCode = async () => {
-    if (!phone) {
+    if (!phone)
       return message.error('请输入手机号')
-    }
 
     const { data } = await $.get({
-      phone
+      phone,
     }, {
-      url: '/admin/user/register-smsCode'
+      url: '/admin/user/register-smsCode',
     })
 
-    setCountdown(data.countDown);
-  };
+    setCountdown(data.countDown)
+  }
 
   useEffect(() => {
     let timer: number
     if (countdown > 0) {
       console.log(countdown)
       timer = setTimeout(() => {
-        setCountdown(countdown - 1);
-      }, 1000);
+        setCountdown(countdown - 1)
+      }, 1000)
     }
-    return () => clearTimeout(timer); // 清除定时器
-  }, [countdown]);
+    return () => clearTimeout(timer) // 清除定时器
+  }, [countdown])
 
   const submit = async () => {
-    if (!captcha) {
+    if (!captcha)
       return message.warning('请输入验证码')
-    }
-    if (!phone) {
+
+    if (!phone)
       return message.warning('请输入手机号')
-    }
-    if (!password) {
+
+    if (!password)
       return message.warning('请输入密码')
-    }
-    if (!confirmPassword) {
+
+    if (!confirmPassword)
       return message.warning('请确认密码')
-    }
-    if (password !== confirmPassword) {
+
+    if (password !== confirmPassword)
       return message.warning('两次输入的密码不一致')
-    }
 
     await userStore.register({
       username: phone,
       password,
-      captcha
+      captcha,
     })
 
     message.success('注册成功')
@@ -75,7 +74,7 @@ function AuthRegister({ title, subtitle, subtext }) {
     navigate({
       pathname: '/auth/login',
     }, {
-      replace: true
+      replace: true,
     })
   }
 
@@ -86,7 +85,7 @@ function AuthRegister({ title, subtitle, subtext }) {
           <Typography fontWeight="700" variant="h2" mb={1}>
             {title}
           </Typography>
-        )
+          )
         : null}
 
       {subtext}
@@ -102,12 +101,17 @@ function AuthRegister({ title, subtitle, subtext }) {
           >
             手机号
           </Typography>
-          <CustomTextField id="phone" variant="outlined" fullWidth onChange={(event: Parameters<
-            NonNullable<ComponentProps<"input">["onChange"]>
+          <CustomTextField
+            id="phone"
+            variant="outlined"
+            fullWidth
+            onChange={(event: Parameters<
+            NonNullable<ComponentProps<'input'>['onChange']>
           >[0]) => {
-            setPhone(event.target.value)
-            return event
-          }} />
+              setPhone(event.target.value)
+              return event
+            }}
+          />
 
           <Typography
             variant="subtitle1"
@@ -119,12 +123,16 @@ function AuthRegister({ title, subtitle, subtext }) {
           >
             密码
           </Typography>
-          <CustomTextField id="password" variant="outlined" fullWidth onChange={(event: Parameters<
-            NonNullable<ComponentProps<"input">["onChange"]>
+          <CustomTextField
+            id="password"
+            variant="outlined"
+            fullWidth
+            onChange={(event: Parameters<
+            NonNullable<ComponentProps<'input'>['onChange']>
           >[0]) => {
-            setPassword(event.target.value)
-            return event
-          }}
+              setPassword(event.target.value)
+              return event
+            }}
           />
 
           <Typography
@@ -137,12 +145,17 @@ function AuthRegister({ title, subtitle, subtext }) {
           >
             再次输入密码
           </Typography>
-          <CustomTextField id="repeatPassword" variant="outlined" fullWidth onChange={(event: Parameters<
-            NonNullable<ComponentProps<"input">["onChange"]>
+          <CustomTextField
+            id="repeatPassword"
+            variant="outlined"
+            fullWidth
+            onChange={(event: Parameters<
+            NonNullable<ComponentProps<'input'>['onChange']>
           >[0]) => {
-            setConfirmPassword(event.target.value)
-            return event
-          }} />
+              setConfirmPassword(event.target.value)
+              return event
+            }}
+          />
 
           <Typography
             variant="subtitle1"
@@ -163,20 +176,30 @@ function AuthRegister({ title, subtitle, subtext }) {
               mt: 3,
             }}
           >
-            <CustomTextField id="captcha" variant="outlined" sx={{ flex: 1 }} onChange={(event: Parameters<
-              NonNullable<ComponentProps<"input">["onChange"]>
+            <CustomTextField
+              id="captcha"
+              variant="outlined"
+              sx={{ flex: 1 }}
+              onChange={(event: Parameters<
+              NonNullable<ComponentProps<'input'>['onChange']>
             >[0]) => {
-              setCaptcha(event.target.value)
-              return event
-            }} />
-            <Button onClick={GetVerificationCode} disabled={countdown > 0} >
+                setCaptcha(event.target.value)
+                return event
+              }}
+            />
+            <Button onClick={GetVerificationCode} disabled={countdown > 0}>
               {countdown > 0 ? `重新发送(${countdown})` : '获取验证码'}
             </Button>
           </Box>
         </Stack>
-        <Button color="primary" variant="contained" size="large" fullWidth
+        <Button
+          color="primary"
+          variant="contained"
+          size="large"
+          fullWidth
           type="submit"
-          onClick={() => submit()}>
+          onClick={() => submit()}
+        >
           注册
         </Button>
       </Box>

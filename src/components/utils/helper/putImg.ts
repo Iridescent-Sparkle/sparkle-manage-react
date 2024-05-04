@@ -1,7 +1,7 @@
-import { IModelRes } from '../../type'
 import axios from 'axios'
+import type { IModelRes } from '../../type'
 
-export const ossPut = async (data: { blobFile: Blob; info: IModelRes<'POST/upload/batch/auth'>['list'][0] }) => {
+export async function ossPut(data: { blobFile: Blob, info: IModelRes<'POST/upload/batch/auth'>['list'][0] }) {
   const defaultHeaders = {
     ...(data?.info?.oss?.extraInfo?.uploadUrlInfo?.headers || {}),
     ...{ 'Content-Disposition': `attachment; filename=${encodeURIComponent(data?.info?.file_info.file_name)}` },
