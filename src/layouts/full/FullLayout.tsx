@@ -2,7 +2,6 @@ import { Box, Container, styled } from '@mui/material'
 import { useState } from 'react'
 import { Outlet } from 'react-router-dom'
 
-import Header from './header/Header'
 import Sidebar from './sidebar'
 
 const MainWrapper = styled('div')(() => ({
@@ -52,7 +51,7 @@ function FullLayout() {
         {/* ------------------------------------------- */}
         <Container sx={{
           paddingTop: '20px',
-          maxWidth: '1200px',
+          maxWidth: '100%!important',
         }}
         >
           {/* ------------------------------------------- */}

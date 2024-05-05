@@ -2,11 +2,11 @@ import type { TableColumnsType } from 'antd'
 import { Button, DatePicker, Input, Modal, Select, Space, message } from 'antd'
 import dayjs from 'dayjs'
 import { useRef } from 'react'
-import AddAndEditModal from 'src/components/AddAndEditModal'
 import ProTable from 'src/components/ProTable/index.tsx'
 import type { ActionType } from 'src/components/ProTable/typing'
+import RoleAddAndEditModal from '../../components/AddAndEditModal/index.tsx'
 
-function RoleList() {
+function UserList() {
   const actionRef = useRef<ActionType>(null)
 
   const search = [
@@ -16,13 +16,23 @@ function RoleList() {
       render: () => <Input allowClear placeholder="请输入id" />,
     },
     {
-      label: '权限代码',
-      name: 'code',
+      label: '用户名',
+      name: 'username',
       render: () => <Input allowClear placeholder="请输入名称" />,
     },
     {
-      label: '权限描述',
-      name: 'description',
+      label: '昵称',
+      name: 'nickname',
+      render: () => <Input allowClear placeholder="请输入描述" />,
+    },
+    {
+      label: '角色',
+      name: 'roles',
+      render: () => <Input allowClear placeholder="请输入角色" />,
+    },
+    {
+      label: '头像',
+      name: 'avatar',
       render: () => <Input allowClear placeholder="请输入描述" />,
     },
     {
@@ -68,12 +78,12 @@ function RoleList() {
   const formItems = [
     {
       label: '名称',
-      name: 'code',
+      name: 'categoryName',
       render: () => <Input allowClear placeholder="请输入名称" />,
     },
     {
       label: '描述',
-      name: 'description',
+      name: 'categoryDescription',
       render: () => <Input allowClear placeholder="请输入描述" />,
     },
   ]
@@ -86,14 +96,24 @@ function RoleList() {
       key: 'id',
     },
     {
-      title: '权限代码',
-      dataIndex: 'code',
-      key: 'code',
+      title: '用户名',
+      dataIndex: 'username',
+      key: 'username',
     },
     {
-      title: '权限描述',
-      dataIndex: 'description',
-      key: 'description',
+      title: '昵称',
+      dataIndex: 'nickname',
+      key: 'nickname',
+    },
+    {
+      title: '头像',
+      dataIndex: 'avatar',
+      key: 'avatar',
+    },
+    {
+      title: '角色',
+      dataIndex: 'roles',
+      key: 'roles',
     },
     {
       title: '创建时间',
@@ -123,6 +143,7 @@ function RoleList() {
         const updata = () => {
           actionRef.current?.reload?.()
         }
+
         return (
           <Space size="middle" align="end">
             <a
@@ -203,17 +224,17 @@ function RoleList() {
         })
       }}
       searchAddButton={(
-        <AddAndEditModal
+        <RoleAddAndEditModal
           title="权限"
           formItems={formItems}
           onAdd={onAdd}
           onEdit={onEdit}
         >
           <Button type="primary" style={{ marginLeft: 24 }}>新增</Button>
-        </AddAndEditModal>
+        </RoleAddAndEditModal>
       )}
     />
   )
 }
 
-export default RoleList
+export default UserList

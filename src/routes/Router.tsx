@@ -2,32 +2,45 @@ import { lazy } from 'react'
 import { Navigate } from 'react-router-dom'
 import Loadable from '../layouts/full/shared/loadable/Loadable'
 
-/* ***Layouts**** */
 const FullLayout = Loadable(lazy(() => import('../layouts/full/FullLayout')))
 const BlankLayout = Loadable(lazy(() => import('../layouts/blank/BlankLayout')))
 
-/* ****Pages***** */
 const Dashboard = Loadable(lazy(() => import('../views/Dashboard')))
 const Error = Loadable(lazy(() => import('../views/Authentication/Error')))
 const Register = Loadable(lazy(() => import('../views/Authentication/Register')))
 const Login = Loadable(lazy(() => import('../views/Authentication/Login')))
-const Label = Loadable(lazy(() => import('../views/WelfareLabel')))
-const Occupational = Loadable(lazy(() => import('../views/OccupationalClassification')))
-const Menu = Loadable(lazy(() => import('../views/MenuPermissions')))
-const User = Loadable(lazy(() => import('../views/UserList')))
-const Role = Loadable(lazy(() => import('../views/RoleList')))
+const WelfareLabel = Loadable(lazy(() => import('../views/WelfareLabel')))
+const OccupationalClassification = Loadable(lazy(() => import('../views/OccupationalClassification')))
+const MenuPermission = Loadable(lazy(() => import('../views/MenuPermission')))
+const AdminUserList = Loadable(lazy(() => import('../views/AdminUserList')))
+const RoleList = Loadable(lazy(() => import('../views/RoleList')))
+const JobList = Loadable(lazy(() => import('../views/JobList')))
+const OrderList = Loadable(lazy(() => import('../views/OrderList')))
+const ResumeList = Loadable(lazy(() => import('../views/ResumeList')))
+const TradeControl = Loadable(lazy(() => import('../views/TradeControl')))
+const UserList = Loadable(lazy(() => import('../views/UserList')))
+const GoodsList = Loadable(lazy(() => import('../views/GoodsList')))
+const CompanyAuth = Loadable(lazy(() => import('../views/CompanyAuth')))
+
 const Router = [
   {
     path: '/',
     element: <FullLayout />,
     children: [
-      { path: '/', element: <Navigate to="/dashboard" /> },
-      { path: '/dashboard', exact: true, element: <Dashboard /> },
-      { path: '/welfare-label', exact: true, element: <Label /> },
-      { path: '/Occupational-classification', exact: true, element: <Occupational /> },
-      { path: '/Menu-permissions', exact: true, element: <Menu /> },
-      { path: '/User-list', exact: true, element: <User /> },
-      { path: '/Role-list', exact: true, element: <Role /> },
+      { path: '/', element: <Navigate to="/dashboard" />, code: 'menu_dashboard' },
+      { path: '/dashboard', exact: true, element: <Dashboard />, code: 'menu_dashboard' },
+      { path: '/welfare-label', exact: true, element: <WelfareLabel />, code: 'menu_welfare_label' },
+      { path: '/occupational-classification', exact: true, element: <OccupationalClassification />, code: 'menu_occupational_classification' },
+      { path: '/menu-permission', exact: true, element: <MenuPermission />, code: 'menu_menu_permission' },
+      { path: '/admin-user-list', exact: true, element: <AdminUserList />, code: 'menu_admin_user_list' },
+      { path: '/user-list', exact: true, element: <UserList />, code: 'menu_user_list' },
+      { path: '/role-list', exact: true, element: <RoleList />, code: 'menu_role_list' },
+      { path: '/job-list', exact: true, element: <JobList />, code: 'menu_job_list' },
+      { path: '/order-list', exact: true, element: <OrderList />, code: 'menu_order_list' },
+      { path: '/resume-list', exact: true, element: <ResumeList />, code: 'menu_resume_list' },
+      { path: '/trade-control', exact: true, element: <TradeControl />, code: 'menu_trade_control' },
+      { path: '/goods-list', exact: true, element: <GoodsList />, code: 'menu_goods_list' },
+      { path: '/company-auth', exact: true, element: <CompanyAuth />, code: 'menu_company_auth' },
       { path: '*', element: <Navigate to="/auth/404" /> },
     ],
   },
