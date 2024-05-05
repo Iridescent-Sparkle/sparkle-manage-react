@@ -29,6 +29,7 @@
     "chance": "^1.1.11",
     "classnames": "^2.5.1",
     "dayjs": "^1.11.11",
+    "history": "^5.3.0",
     "lodash": "^4.17.21",
     "lodash-es": "^4.17.21",
     "nprogress": "^0.2.0",

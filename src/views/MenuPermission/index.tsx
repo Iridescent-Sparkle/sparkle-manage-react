@@ -105,7 +105,7 @@ function MenuPermissions() {
     {
       title: '操作',
       width: 300,
-      render: (value: number, record: any) => {
+      render: (_, record: any) => {
         return (
           <Fragment>
             <Button

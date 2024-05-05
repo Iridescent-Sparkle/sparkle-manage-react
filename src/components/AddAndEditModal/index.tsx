@@ -33,7 +33,12 @@ function AddAndEditModal(props: Props) {
   const handleConfirmClick = async () => {
     const values = await form.validateFields()
     handleModalClose()
-    data ? onEdit?.(values) : onAdd?.(values)
+    data
+      ? onEdit?.({
+        id: data.id,
+        ...values,
+      })
+      : onAdd?.(values)
     onRefresh?.()
   }
 

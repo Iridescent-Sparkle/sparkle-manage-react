@@ -1,13 +1,46 @@
 import type { TableColumnsType } from 'antd'
-import { Button, DatePicker, Input, Modal, Select, Space, message } from 'antd'
+import { Button, DatePicker, Input, Modal, Select, message } from 'antd'
 import dayjs from 'dayjs'
-import { useRef } from 'react'
+import { Fragment, useEffect, useRef, useState } from 'react'
 import ProTable from 'src/components/ProTable/index.tsx'
 import type { ActionType } from 'src/components/ProTable/typing'
 import RoleAddAndEditModal from '../../components/AddAndEditModal/index.tsx'
 
 function RoleList() {
   const actionRef = useRef<ActionType>(null)
+
+  const [permissionsOptions, setPermissionsOptions] = useState([])
+
+  const getInitData = async () => {
+    const { data } = await $.post({
+      pageSize: 9999,
+    }, {
+      url: '/admin/permission/all',
+    })
+
+    setPermissionsOptions(data.data.map((item: any) => {
+      return {
+        label: item.description,
+        value: item.id,
+      }
+    }))
+  }
+  useEffect(() => {
+    getInitData()
+  }, [])
+  const onAdd = async (params: Record<string, any>) => {
+    await $.post(params, {
+      url: '/admin/role/create',
+    })
+    actionRef.current?.reload?.()
+  }
+
+  const onEdit = async (params: Record<string, any>) => {
+    await $.post(params, {
+      url: '/admin/role/update',
+    })
+    actionRef.current?.reload?.()
+  }
 
   const search = [
     {
@@ -16,24 +49,28 @@ function RoleList() {
       render: () => <Input allowClear placeholder="请输入id" />,
     },
     {
-      label: '名称',
-      name: 'categoryName',
+      label: '角色名称',
+      name: 'name',
       render: () => <Input allowClear placeholder="请输入名称" />,
     },
     {
-      label: '描述',
-      name: 'categoryDescription',
-      render: () => <Input allowClear placeholder="请输入描述" />,
+      label: '角色权限',
+      name: 'permissions',
+      render: () => (
+        <Select
+          mode="multiple"
+          allowClear
+          options={permissionsOptions}
+          placeholder="请选择角色权限"
+        />
+      ),
     },
     {
       label: '创建时间',
       name: 'createTime',
       render: () => (
-        <DatePicker
-          // defaultValue={defaultValue}
+        <DatePicker.RangePicker
           showTime
-        // locale={buddhistLocale}
-        // onChange={onChange}
         />
       ),
     },
@@ -41,24 +78,21 @@ function RoleList() {
       label: '更新时间',
       name: 'updateTime',
       render: () => (
-        <DatePicker
-          // defaultValue={defaultValue}
+        <DatePicker.RangePicker
           showTime
-        // locale={buddhistLocale}
-        // onChange={onChange}
         />
       ),
     },
     {
       label: '状态',
-      name: 'isDelete',
+      name: 'isFrozen',
       render: () => (
         <Select
           allowClear
           placeholder="请输入"
           options={[
-            { value: '1', label: '已下架' },
-            { value: '2', label: '已上架' },
+            { value: false, label: '启用中' },
+            { value: true, label: '禁用中' },
           ]}
         />
       ),
@@ -67,45 +101,65 @@ function RoleList() {
 
   const formItems = [
     {
-      label: '名称',
-      name: 'categoryName',
+      label: '角色名称',
+      name: 'name',
+      rules: [
+        { required: true, message: '请输入角色名称' },
+      ],
       render: () => <Input allowClear placeholder="请输入名称" />,
     },
     {
-      label: '描述',
-      name: 'categoryDescription',
-      render: () => <Input allowClear placeholder="请输入描述" />,
+      label: '角色权限',
+      name: 'permissions',
+      rules: [
+        { required: true, message: '请选择角色权限' },
+      ],
+      render: () => (
+        <Select
+          mode="multiple"
+          allowClear
+          options={permissionsOptions}
+          placeholder="请选择角色权限"
+        />
+      ),
     },
   ]
 
-  /* 构建表单结构 */
   const columns: TableColumnsType<Record<string, any>> = [
     {
-      title: 'id',
+      title: 'Id',
       dataIndex: 'id',
       key: 'id',
     },
     {
-      title: '权限代码',
-      dataIndex: 'code',
-      key: 'code',
+      title: '角色名称',
+      dataIndex: 'name',
+      key: 'name',
     },
     {
-      title: '权限描述',
-      dataIndex: 'description',
-      key: 'description',
+      title: '角色权限',
+      dataIndex: 'permissions',
+      key: 'permissions',
+      render: (value) => {
+        return value?.map((item: any) => {
+          return <div key={item}>{item.description}</div>
+        })
+      },
     },
     {
       title: '创建时间',
       dataIndex: 'createTime',
       key: 'createTime',
+      render: (value: number) => {
+        return dayjs(value).format('YYYY-MM-DD HH:mm:ss')
+      },
     },
     {
       title: '更新时间',
       dataIndex: 'updateTime',
       key: 'updateTime',
       render: (value: number) => {
-        return value ? dayjs(value * 1000).format('YYYY-MM-DD HH:mm:ss') : '-'
+        return dayjs(value).format('YYYY-MM-DD HH:mm:ss')
       },
     },
     {
@@ -119,14 +173,51 @@ function RoleList() {
     {
       title: '操作',
       width: 300,
-      render: (value: number, record: any) => {
-        const updata = () => {
-          actionRef.current?.reload?.()
+      render: (_, record: any) => {
+        const formatRecord = {
+          ...record,
+          permissions: record.permissions.map((item: any) => item.id),
         }
 
         return (
-          <Space size="middle" align="end">
-            <a
+          <Fragment>
+            <RoleAddAndEditModal
+              title="权限"
+              formItems={formItems}
+              onAdd={onAdd}
+              onEdit={onEdit}
+              data={formatRecord}
+            >
+              <Button
+                type="link"
+              >
+                修改
+              </Button>
+            </RoleAddAndEditModal>
+            <Button
+              type="link"
+              onClick={() => {
+                Modal.confirm({
+                  title: '提示',
+                  content: '确定修改数据状态?',
+
+                  onOk: async () => {
+                    await $.post({
+                      isFrozen: !record.isFrozen,
+                      id: record.id,
+                    }, {
+                      url: '/admin/role/update',
+                    })
+                    message.success('操作成功')
+                    actionRef.current?.reload?.()
+                  },
+                })
+              }}
+            >
+              {record.isFrozen ? '启用' : '禁用'}
+            </Button>
+            <Button
+              type="link"
               onClick={() => {
                 Modal.confirm({
                   title: '提示',
@@ -136,30 +227,7 @@ function RoleList() {
                       isFrozen: !record.isFrozen,
                       id: record.id,
                     }, {
-                      url: '/boss/bonus/update',
-                    })
-                    message.success('操作成功')
-                    actionRef.current?.reload?.()
-                  },
-                })
-              }}
-            >
-              {record.isFrozen ? '启用' : '禁用'}
-            </a>
-            {/* <Detail reload={updata} record={record}>
-              <a>修改</a>
-            </Detail> */}
-            <a
-              onClick={() => {
-                Modal.confirm({
-                  title: '提示',
-                  content: '确定删除当前数据?',
-                  onOk: async () => {
-                    await $.post({
-                      isDelete: true,
-                      id: record.id,
-                    }, {
-                      url: '/boss/bonus/update',
+                      url: '/admin/role/delete',
                     })
                     message.success('操作成功')
                     actionRef.current?.reload?.()
@@ -168,20 +236,12 @@ function RoleList() {
               }}
             >
               删除
-            </a>
-          </Space>
+            </Button>
+          </Fragment>
         )
       },
     },
   ]
-
-  const onAdd = (params: Record<string, any>) => {
-
-  }
-
-  const onEdit = (params: Record<string, any>) => {
-
-  }
 
   return (
     <ProTable
@@ -200,7 +260,7 @@ function RoleList() {
       }}
       request={async (params) => {
         return await $.post(params, {
-          url: '/boss/bonus/all',
+          url: '/admin/role/all',
         })
       }}
       searchAddButton={(

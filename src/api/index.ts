@@ -3,8 +3,10 @@ import type { AxiosInstance, AxiosRequestConfig, CreateAxiosDefaults } from 'axi
 import axios from 'axios'
 import nprogress from 'nprogress'
 import 'nprogress/nprogress.css'
+import { createBrowserHistory } from 'history'
 import type { CustomConfig } from './type.d'
 
+const router = createBrowserHistory()
 export class Request {
   private readonly axios: AxiosInstance
 
@@ -21,6 +23,9 @@ export class Request {
 
     this.axios.interceptors.response.use((response) => {
       nprogress.done()
+      if (response.data.code === 401)
+        router.replace('/login')
+
       return response
     }, (error) => {
       nprogress.done()
