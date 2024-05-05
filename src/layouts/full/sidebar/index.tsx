@@ -13,6 +13,7 @@ function Sidebar(props) {
         sx={{
           width: sidebarWidth,
           flexShrink: 0,
+          zIndex: 0,
         }}
       >
         {/* ------------------------------------------- */}
@@ -41,7 +42,7 @@ function Sidebar(props) {
             {/* Logo */}
             {/* ------------------------------------------- */}
             <Box px={3}>
-              <Logo />
+              {/* <Logo /> */}
             </Box>
             <Box>
               {/* ------------------------------------------- */}
