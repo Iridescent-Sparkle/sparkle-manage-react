@@ -8,6 +8,19 @@ import type { ActionType } from 'src/components/ProTable/typing'
 
 function MenuPermissions() {
   const actionRef = useRef<ActionType>(null)
+  const onAdd = async (params: Record<string, any>) => {
+    await $.post(params, {
+      url: '/admin/permission/create',
+    })
+    actionRef.current?.reload?.()
+  }
+
+  const onEdit = async (params: Record<string, any>) => {
+    await $.post(params, {
+      url: '/admin/permission/update',
+    })
+    actionRef.current?.reload?.()
+  }
 
   const search = [
     {
@@ -47,26 +60,26 @@ function MenuPermissions() {
 
   const formItems = [
     {
-      label: '名称',
+      label: '权限编码',
       name: 'code',
       rules: [
         {
           required: true,
-          message: '请输入名称',
+          message: '请输入权限编码',
         },
       ],
-      render: () => <Input allowClear placeholder="请输入名称" />,
+      render: () => <Input allowClear placeholder="请输入权限编码" />,
     },
     {
-      label: '描述',
+      label: '权限描述',
       name: 'description',
       rules: [
         {
           required: true,
-          message: '请输入描述',
+          message: '请输入权限描述',
         },
       ],
-      render: () => <Input allowClear placeholder="请输入描述" />,
+      render: () => <Input allowClear placeholder="请输入权限描述" />,
     },
   ]
 
@@ -108,27 +121,19 @@ function MenuPermissions() {
       render: (_, record: any) => {
         return (
           <Fragment>
-            <Button
-              type="link"
-              onClick={() => {
-                Modal.confirm({
-                  title: '提示',
-                  content: '确定修改数据状态?',
-                  onOk: async () => {
-                    await $.post({
-                      isFrozen: !record.isFrozen,
-                      id: record.id,
-                    }, {
-                      url: '/admin/permission/update',
-                    })
-                    message.success('操作成功')
-                    actionRef.current?.reload?.()
-                  },
-                })
-              }}
+            <AddAndEditModal
+              title="权限"
+              formItems={formItems}
+              onAdd={onAdd}
+              onEdit={onEdit}
+              data={record}
             >
-              修改
-            </Button>
+              <Button
+                type="link"
+              >
+                修改
+              </Button>
+            </AddAndEditModal>
             <Button
               type="link"
               onClick={() => {
@@ -154,20 +159,6 @@ function MenuPermissions() {
       },
     },
   ]
-
-  const onAdd = async (params: Record<string, any>) => {
-    await $.post(params, {
-      url: '/admin/permission/create',
-    })
-    actionRef.current?.reload?.()
-  }
-
-  const onEdit = async (params: Record<string, any>) => {
-    await $.post(params, {
-      url: '/admin/permission/update',
-    })
-    actionRef.current?.reload?.()
-  }
 
   return (
     <ProTable
