@@ -5,7 +5,6 @@ import {
 
 import uniqueId from 'lodash-es/uniqueId'
 
-
 const getMenuItems = (permissions: string | string[]) => {
   let menuItems = [
     {

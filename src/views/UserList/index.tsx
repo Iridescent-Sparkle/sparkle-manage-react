@@ -1,22 +1,21 @@
 import type { TableColumnsType } from 'antd'
-import { Button, DatePicker, Input, Modal, Select, Space, message } from 'antd'
+import { Button, DatePicker, Image, Input, Modal, Select, message } from 'antd'
 import dayjs from 'dayjs'
-import { useRef } from 'react'
+import { Fragment, useRef } from 'react'
 import ProTable from 'src/components/ProTable/index.tsx'
 import type { ActionType } from 'src/components/ProTable/typing'
-import RoleAddAndEditModal from '../../components/AddAndEditModal/index.tsx'
 
 function UserList() {
   const actionRef = useRef<ActionType>(null)
 
   const search = [
     {
-      label: 'id',
+      label: 'ID',
       name: 'id',
-      render: () => <Input allowClear placeholder="请输入id" />,
+      render: () => <Input allowClear placeholder="请输入ID" />,
     },
     {
-      label: '用户名',
+      label: '手机号',
       name: 'username',
       render: () => <Input allowClear placeholder="请输入名称" />,
     },
@@ -25,25 +24,27 @@ function UserList() {
       name: 'nickname',
       render: () => <Input allowClear placeholder="请输入描述" />,
     },
+   
     {
-      label: '角色',
-      name: 'roles',
-      render: () => <Input allowClear placeholder="请输入角色" />,
-    },
-    {
-      label: '头像',
-      name: 'avatar',
-      render: () => <Input allowClear placeholder="请输入描述" />,
+      label: '状态',
+      name: 'isFrozen',
+      render: () => (
+        <Select
+          allowClear
+          placeholder="请输入"
+          options={[
+            { value: false, label: '启用中' },
+            { value: true, label: '禁用中' },
+          ]}
+        />
+      ),
     },
     {
       label: '创建时间',
       name: 'createTime',
       render: () => (
-        <DatePicker
-          // defaultValue={defaultValue}
+        <DatePicker.RangePicker
           showTime
-        // locale={buddhistLocale}
-        // onChange={onChange}
         />
       ),
     },
@@ -51,44 +52,13 @@ function UserList() {
       label: '更新时间',
       name: 'updateTime',
       render: () => (
-        <DatePicker
-          // defaultValue={defaultValue}
+        <DatePicker.RangePicker
           showTime
-        // locale={buddhistLocale}
-        // onChange={onChange}
-        />
-      ),
-    },
-    {
-      label: '状态',
-      name: 'isDelete',
-      render: () => (
-        <Select
-          allowClear
-          placeholder="请输入"
-          options={[
-            { value: '1', label: '已下架' },
-            { value: '2', label: '已上架' },
-          ]}
         />
       ),
     },
   ]
 
-  const formItems = [
-    {
-      label: '名称',
-      name: 'categoryName',
-      render: () => <Input allowClear placeholder="请输入名称" />,
-    },
-    {
-      label: '描述',
-      name: 'categoryDescription',
-      render: () => <Input allowClear placeholder="请输入描述" />,
-    },
-  ]
-
-  /* 构建表单结构 */
   const columns: TableColumnsType<Record<string, any>> = [
     {
       title: 'id',
@@ -96,7 +66,7 @@ function UserList() {
       key: 'id',
     },
     {
-      title: '用户名',
+      title: '手机号',
       dataIndex: 'username',
       key: 'username',
     },
@@ -109,23 +79,24 @@ function UserList() {
       title: '头像',
       dataIndex: 'avatar',
       key: 'avatar',
-    },
-    {
-      title: '角色',
-      dataIndex: 'roles',
-      key: 'roles',
+      render: (value: string) => {
+        return <Image width={100} src={value} />
+      },
     },
     {
       title: '创建时间',
       dataIndex: 'createTime',
       key: 'createTime',
+      render: (value: number) => {
+        return dayjs(value).format('YYYY-MM-DD HH:mm:ss')
+      },
     },
     {
       title: '更新时间',
       dataIndex: 'updateTime',
       key: 'updateTime',
       render: (value: number) => {
-        return value ? dayjs(value * 1000).format('YYYY-MM-DD HH:mm:ss') : '-'
+        return dayjs(value).format('YYYY-MM-DD HH:mm:ss')
       },
     },
     {
@@ -138,15 +109,11 @@ function UserList() {
     },
     {
       title: '操作',
- 
-      render: (value: number, record: any) => {
-        const updata = () => {
-          actionRef.current?.reload?.()
-        }
-
+      render: (_, record: any) => {
         return (
-          <Space size="middle" align="end">
-            <a
+          <Fragment>
+            <Button
+              type="link"
               onClick={() => {
                 Modal.confirm({
                   title: '提示',
@@ -156,7 +123,7 @@ function UserList() {
                       isFrozen: !record.isFrozen,
                       id: record.id,
                     }, {
-                      url: '/boss/bonus/update',
+                      url: '/admin/custom-user/update',
                     })
                     message.success('操作成功')
                     actionRef.current?.reload?.()
@@ -165,43 +132,12 @@ function UserList() {
               }}
             >
               {record.isFrozen ? '启用' : '禁用'}
-            </a>
-            {/* <Detail reload={updata} record={record}>
-              <a>修改</a>
-            </Detail> */}
-            <a
-              onClick={() => {
-                Modal.confirm({
-                  title: '提示',
-                  content: '确定删除当前数据?',
-                  onOk: async () => {
-                    await $.post({
-                      isDelete: true,
-                      id: record.id,
-                    }, {
-                      url: '/boss/bonus/update',
-                    })
-                    message.success('操作成功')
-                    actionRef.current?.reload?.()
-                  },
-                })
-              }}
-            >
-              删除
-            </a>
-          </Space>
+            </Button>
+          </Fragment>
         )
       },
     },
   ]
-
-  const onAdd = (params: Record<string, any>) => {
-
-  }
-
-  const onEdit = (params: Record<string, any>) => {
-
-  }
 
   return (
     <ProTable
@@ -220,19 +156,9 @@ function UserList() {
       }}
       request={async (params) => {
         return await $.post(params, {
-          url: '/boss/bonus/all',
+          url: '/admin/custom-user/all',
         })
       }}
-      searchAddButton={(
-        <RoleAddAndEditModal
-          title="权限"
-          formItems={formItems}
-          onAdd={onAdd}
-          onEdit={onEdit}
-        >
-          <Button type="primary" >新增</Button>
-        </RoleAddAndEditModal>
-      )}
     />
   )
 }
