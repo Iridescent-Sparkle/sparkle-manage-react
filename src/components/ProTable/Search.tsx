@@ -171,36 +171,32 @@ function Index(props: Props) {
           {showButton
             ? (
               <Col span={btnSpan}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <div>
-                    {
-                      addButton && cloneElement(addButton, {
-                        onRefresh,
-                      })
-                    }
-                  </div>
-                  <div>
-                    <ButtonLoading  onClick={onReset}>
-                      重置
-                    </ButtonLoading>
-                    <ButtonLoading  onClick={onRefresh} type="primary" style={{ marginLeft: 24 }}>
-                      {searchText}
-                    </ButtonLoading>
-                    <Visible visible={isExpand}>
-                      <Visible visible={expand}>
-                        <a style={{ lineHeight: '32px', marginLeft: 12 }} onClick={() => setExpand(!expand)}>
-                          收起
-                          <UpOutlined />
-                        </a>
-                      </Visible>
-                      <Visible visible={!expand}>
-                        <a style={{ lineHeight: '32px', marginLeft: 12 }} onClick={() => setExpand(!expand)}>
-                          展开
-                          <DownOutlined />
-                        </a>
-                      </Visible>
+                <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
+                  {
+                    addButton && cloneElement(addButton, {
+                      onRefresh,
+                    })
+                  }
+                  <ButtonLoading onClick={onReset} style={{ marginLeft: 24 }}>
+                    重置
+                  </ButtonLoading>
+                  <ButtonLoading onClick={onRefresh} type="primary" style={{ marginLeft: 24 }}>
+                    {searchText}
+                  </ButtonLoading>
+                  <Visible visible={isExpand}>
+                    <Visible visible={expand}>
+                      <a style={{ lineHeight: '32px', marginLeft: 12 }} onClick={() => setExpand(!expand)}>
+                        收起
+                        <UpOutlined />
+                      </a>
                     </Visible>
-                  </div>
+                    <Visible visible={!expand}>
+                      <a style={{ lineHeight: '32px', marginLeft: 12 }} onClick={() => setExpand(!expand)}>
+                        展开
+                        <DownOutlined />
+                      </a>
+                    </Visible>
+                  </Visible>
                 </div>
               </Col>
             )

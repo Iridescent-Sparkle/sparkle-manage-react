@@ -124,7 +124,7 @@ const getMenuItems = (permissions: string | string[]) => {
           id: uniqueId(),
           title: '商品列表',
           icon: IconAperture,
-          href: '/order-list',
+          href: '/goods-list',
           code: 'menu_goods_list',
         },
       ],

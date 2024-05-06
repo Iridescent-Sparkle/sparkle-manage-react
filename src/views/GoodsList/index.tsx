@@ -1,49 +1,78 @@
 import type { TableColumnsType } from 'antd'
-import { Button, DatePicker, Input, Modal, Select, Space, message } from 'antd'
+import { Button, DatePicker, Input, Modal, Select, Switch, message } from 'antd'
 import dayjs from 'dayjs'
-import { useRef } from 'react'
+import { Fragment, useRef } from 'react'
+import AddAndEditModal from 'src/components/AddAndEditModal'
 import ProTable from 'src/components/ProTable/index.tsx'
 import type { ActionType } from 'src/components/ProTable/typing'
-import RoleAddAndEditModal from '../../components/AddAndEditModal/index.tsx'
 
-function UserList() {
+function GoodsList() {
   const actionRef = useRef<ActionType>(null)
+
+  const onAdd = async (params: Record<string, any>) => {
+    await $.post(params, {
+      url: '/boss/integral/create',
+    })
+    actionRef.current?.reload?.()
+  }
+
+  const onEdit = async (params: Record<string, any>) => {
+    await $.post(params, {
+      url: '/boss/integral/update',
+    })
+    actionRef.current?.reload?.()
+  }
 
   const search = [
     {
-      label: 'id',
+      label: 'ID',
       name: 'id',
-      render: () => <Input allowClear placeholder="请输入id" />,
+      render: () => <Input allowClear placeholder="请输入ID" />,
     },
     {
-      label: '用户名',
-      name: 'username',
-      render: () => <Input allowClear placeholder="请输入名称" />,
+      label: '积分数量',
+      name: 'integralNum',
+      render: () => <Input allowClear placeholder="请输入积分数量" />,
     },
     {
-      label: '昵称',
-      name: 'nickname',
-      render: () => <Input allowClear placeholder="请输入描述" />,
+      label: '充值金额',
+      name: 'price',
+      render: () => <Input allowClear placeholder="请输入充值金额" />,
     },
     {
-      label: '角色',
-      name: 'roles',
-      render: () => <Input allowClear placeholder="请输入角色" />,
+      label: '默认展示',
+      name: 'isDefault',
+      render: () => (
+        <Select
+          allowClear
+          placeholder="请选择是否默认展示"
+          options={[
+            { value: false, label: '否' },
+            { value: true, label: '是' },
+          ]}
+        />
+      ),
     },
     {
-      label: '头像',
-      name: 'avatar',
-      render: () => <Input allowClear placeholder="请输入描述" />,
+      label: '状态',
+      name: 'isFrozen',
+      render: () => (
+        <Select
+          allowClear
+          placeholder="请选择状态"
+          options={[
+            { value: false, label: '启用中' },
+            { value: true, label: '禁用中' },
+          ]}
+        />
+      ),
     },
     {
       label: '创建时间',
       name: 'createTime',
       render: () => (
-        <DatePicker
-          // defaultValue={defaultValue}
+        <DatePicker.RangePicker
           showTime
-        // locale={buddhistLocale}
-        // onChange={onChange}
         />
       ),
     },
@@ -51,25 +80,8 @@ function UserList() {
       label: '更新时间',
       name: 'updateTime',
       render: () => (
-        <DatePicker
-          // defaultValue={defaultValue}
+        <DatePicker.RangePicker
           showTime
-        // locale={buddhistLocale}
-        // onChange={onChange}
-        />
-      ),
-    },
-    {
-      label: '状态',
-      name: 'isDelete',
-      render: () => (
-        <Select
-          allowClear
-          placeholder="请输入"
-          options={[
-            { value: '1', label: '已下架' },
-            { value: '2', label: '已上架' },
-          ]}
         />
       ),
     },
@@ -77,56 +89,85 @@ function UserList() {
 
   const formItems = [
     {
-      label: '名称',
-      name: 'categoryName',
-      render: () => <Input allowClear placeholder="请输入名称" />,
+      label: '积分数量',
+      name: 'integralNum',
+      rules: [
+        { required: true, message: '请输入积分数量' },
+      ],
+      render: () => <Input allowClear placeholder="请输入积分数量" />,
     },
     {
-      label: '描述',
-      name: 'categoryDescription',
-      render: () => <Input allowClear placeholder="请输入描述" />,
+      label: '充值金额',
+      name: 'price',
+      rules: [
+        { required: true, message: '请输入充值金额' },
+      ],
+      render: () => <Input allowClear placeholder="请输入充值金额" />,
+    },
+    {
+      label: '默认展示',
+      name: 'isDefault',
+      rules: [
+        { required: true, message: '请选择是否默认展示' },
+      ],
+      render: () => (
+        <Select
+          allowClear
+          placeholder="请选择是否默认展示"
+          options={[
+            { value: false, label: '否' },
+            { value: true, label: '是' },
+          ]}
+        />
+      ),
     },
   ]
 
-  /* 构建表单结构 */
   const columns: TableColumnsType<Record<string, any>> = [
     {
-      title: 'id',
+      title: 'Id',
       dataIndex: 'id',
       key: 'id',
     },
     {
-      title: '用户名',
-      dataIndex: 'username',
-      key: 'username',
+      title: '积分数量',
+      dataIndex: 'integralNum',
+      key: 'integralNum',
     },
     {
-      title: '昵称',
-      dataIndex: 'nickname',
-      key: 'nickname',
-    },
-    {
-      title: '头像',
-      dataIndex: 'avatar',
-      key: 'avatar',
-    },
-    {
-      title: '角色',
-      dataIndex: 'roles',
-      key: 'roles',
+      title: '充值金额',
+      dataIndex: 'price',
+      key: 'price',
     },
     {
       title: '创建时间',
       dataIndex: 'createTime',
       key: 'createTime',
+      render: (value: number) => {
+        console.log(value)
+        return dayjs(value).format('YYYY-MM-DD HH:mm:ss')
+      },
     },
     {
       title: '更新时间',
       dataIndex: 'updateTime',
       key: 'updateTime',
       render: (value: number) => {
-        return value ? dayjs(value * 1000).format('YYYY-MM-DD HH:mm:ss') : '-'
+        return dayjs(value).format('YYYY-MM-DD HH:mm:ss')
       },
+    },
+    {
+      title: '默认展示',
+      dataIndex: 'isDefault',
+      key: 'isDefault',
+      render: (value: boolean) => <Switch value={value} checkedChildren="是" unCheckedChildren="否" onChange={async (value) => {
+        await $.post({
+          isDefault: value
+        }, {
+          url: '/boss/integral/update',
+        })
+        actionRef.current?.reload?.()
+      }} />,
     },
     {
       title: '状态',
@@ -138,15 +179,23 @@ function UserList() {
     },
     {
       title: '操作',
- 
-      render: (value: number, record: any) => {
-        const updata = () => {
-          actionRef.current?.reload?.()
-        }
-
+      render: (_, record: any) => {
         return (
-          <Space size="middle" align="end">
-            <a
+          <Fragment>
+            <AddAndEditModal
+              title="商品"
+              formItems={formItems}
+              onEdit={onEdit}
+              data={record}
+            >
+              <Button
+                type="link"
+              >
+                修改
+              </Button>
+            </AddAndEditModal>
+            <Button
+              type="link"
               onClick={() => {
                 Modal.confirm({
                   title: '提示',
@@ -156,7 +205,7 @@ function UserList() {
                       isFrozen: !record.isFrozen,
                       id: record.id,
                     }, {
-                      url: '/boss/bonus/update',
+                      url: '/boss/integral/update',
                     })
                     message.success('操作成功')
                     actionRef.current?.reload?.()
@@ -165,21 +214,19 @@ function UserList() {
               }}
             >
               {record.isFrozen ? '启用' : '禁用'}
-            </a>
-            {/* <Detail reload={updata} record={record}>
-              <a>修改</a>
-            </Detail> */}
-            <a
+            </Button>
+            <Button
+              type="link"
               onClick={() => {
                 Modal.confirm({
                   title: '提示',
                   content: '确定删除当前数据?',
                   onOk: async () => {
                     await $.post({
-                      isDelete: true,
                       id: record.id,
+                      isDelete: true,
                     }, {
-                      url: '/boss/bonus/update',
+                      url: '/boss/integral/update',
                     })
                     message.success('操作成功')
                     actionRef.current?.reload?.()
@@ -188,20 +235,12 @@ function UserList() {
               }}
             >
               删除
-            </a>
-          </Space>
+            </Button>
+          </Fragment>
         )
       },
     },
   ]
-
-  const onAdd = (params: Record<string, any>) => {
-
-  }
-
-  const onEdit = (params: Record<string, any>) => {
-
-  }
 
   return (
     <ProTable
@@ -220,21 +259,21 @@ function UserList() {
       }}
       request={async (params) => {
         return await $.post(params, {
-          url: '/boss/bonus/all',
+          url: '/boss/integral/all',
         })
       }}
       searchAddButton={(
-        <RoleAddAndEditModal
-          title="权限"
+        <AddAndEditModal
+          title="商品"
           formItems={formItems}
           onAdd={onAdd}
           onEdit={onEdit}
         >
           <Button type="primary" >新增</Button>
-        </RoleAddAndEditModal>
+        </AddAndEditModal>
       )}
     />
   )
 }
 
-export default UserList
+export default GoodsList
