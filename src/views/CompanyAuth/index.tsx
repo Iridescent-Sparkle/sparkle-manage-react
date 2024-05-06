@@ -1,49 +1,58 @@
 import type { TableColumnsType } from 'antd'
-import { Button, DatePicker, Input, Modal, Select, Space, message } from 'antd'
+import { Button, DatePicker, Image, Input, Modal, Select, message } from 'antd'
 import dayjs from 'dayjs'
-import { useRef } from 'react'
+import { Fragment, useRef } from 'react'
+import AddAndEditModal from 'src/components/AddAndEditModal'
 import ProTable from 'src/components/ProTable/index.tsx'
 import type { ActionType } from 'src/components/ProTable/typing'
-import RoleAddAndEditModal from '../../components/AddAndEditModal/index.tsx'
 
-function UserList() {
+function CompanyAuth() {
   const actionRef = useRef<ActionType>(null)
+  
+  const onEdit = async (params: Record<string, any>) => {
+    await $.post(params, {
+      url: '/boss/company/update',
+    })
+    actionRef.current?.reload?.()
+  }
 
   const search = [
     {
-      label: 'id',
+      label: 'ID',
       name: 'id',
-      render: () => <Input allowClear placeholder="请输入id" />,
+      render: () => <Input allowClear placeholder="请输入ID" />,
     },
     {
-      label: '用户名',
-      name: 'username',
+      label: '公司名称',
+      name: 'companyName',
       render: () => <Input allowClear placeholder="请输入名称" />,
     },
     {
-      label: '昵称',
-      name: 'nickname',
+      label: '公司描述',
+      name: 'companyDesc',
       render: () => <Input allowClear placeholder="请输入描述" />,
     },
     {
-      label: '角色',
-      name: 'roles',
-      render: () => <Input allowClear placeholder="请输入角色" />,
-    },
-    {
-      label: '头像',
-      name: 'avatar',
-      render: () => <Input allowClear placeholder="请输入描述" />,
+      label: '审核状态',
+      name: 'status',
+      render: () => (
+        <Select
+          allowClear
+          placeholder="请输入"
+          options={[
+            { value: 1, label: '审核通过' },
+            { value: 0, label: '待审核' },
+            { value: -1, label: '审核失败' },
+          ]}
+        />
+      ),
     },
     {
       label: '创建时间',
       name: 'createTime',
       render: () => (
-        <DatePicker
-          // defaultValue={defaultValue}
+        <DatePicker.RangePicker
           showTime
-        // locale={buddhistLocale}
-        // onChange={onChange}
         />
       ),
     },
@@ -51,25 +60,8 @@ function UserList() {
       label: '更新时间',
       name: 'updateTime',
       render: () => (
-        <DatePicker
-          // defaultValue={defaultValue}
+        <DatePicker.RangePicker
           showTime
-        // locale={buddhistLocale}
-        // onChange={onChange}
-        />
-      ),
-    },
-    {
-      label: '状态',
-      name: 'isDelete',
-      render: () => (
-        <Select
-          allowClear
-          placeholder="请输入"
-          options={[
-            { value: '1', label: '已下架' },
-            { value: '2', label: '已上架' },
-          ]}
         />
       ),
     },
@@ -77,108 +69,133 @@ function UserList() {
 
   const formItems = [
     {
-      label: '名称',
-      name: 'categoryName',
-      render: () => <Input allowClear placeholder="请输入名称" />,
+      label: 'ID',
+      name: 'id',
+      render: () => <Input disabled allowClear placeholder="请输入ID" />,
     },
     {
-      label: '描述',
-      name: 'categoryDescription',
-      render: () => <Input allowClear placeholder="请输入描述" />,
+      label: '公司名称',
+      name: 'companyName',
+      render: () => <Input disabled allowClear placeholder="请输入名称" />,
+    },
+    {
+      label: '公司描述',
+      name: 'companyDesc',
+      render: () => <Input disabled allowClear placeholder="请输入描述" />,
+    },
+    {
+      label: '审核状态',
+      name: 'status',
+      rules: [
+        {
+          required: true,
+          message: '请选择审核状态'
+        }
+      ],
+      render: () => (
+        <Select
+          allowClear
+          placeholder="请选择审核状态"
+          options={[
+            { value: 1, label: '审核通过' },
+            { value: -1, label: '审核失败' },
+          ]}
+        />
+      ),
     },
   ]
 
-  /* 构建表单结构 */
   const columns: TableColumnsType<Record<string, any>> = [
     {
-      title: 'id',
+      title: 'Id',
       dataIndex: 'id',
       key: 'id',
     },
     {
-      title: '用户名',
-      dataIndex: 'username',
-      key: 'username',
+      title: '公司名称',
+      dataIndex: 'companyName',
+      key: 'companyName',
     },
     {
-      title: '昵称',
-      dataIndex: 'nickname',
-      key: 'nickname',
+      title: '公司头像',
+      dataIndex: 'companyAvatar',
+      key: 'companyAvatar',
+      render: (value: string) => {
+        return <Image width={100} src={value} />
+      },
     },
     {
-      title: '头像',
-      dataIndex: 'avatar',
-      key: 'avatar',
+      title: '营业执照',
+      dataIndex: 'companyLicense',
+      key: 'companyLicense',
+      render: (value: string) => {
+        return <Image width={100} src={value} />
+      },
     },
     {
-      title: '角色',
-      dataIndex: 'roles',
-      key: 'roles',
+      title: '公司描述',
+      dataIndex: 'companyDesc',
+      key: 'companyDesc',
     },
     {
       title: '创建时间',
       dataIndex: 'createTime',
       key: 'createTime',
+      render: (value: number) => {
+        return dayjs(value).format('YYYY-MM-DD HH:mm:ss')
+      },
     },
     {
       title: '更新时间',
       dataIndex: 'updateTime',
       key: 'updateTime',
       render: (value: number) => {
-        return value ? dayjs(value * 1000).format('YYYY-MM-DD HH:mm:ss') : '-'
+        return dayjs(value).format('YYYY-MM-DD HH:mm:ss')
       },
     },
     {
-      title: '状态',
-      dataIndex: 'isFrozen',
-      key: 'isFrozen',
-      render: (value: number) => {
-        return value ? '禁用中' : '启用中'
+      title: '审核状态',
+      dataIndex: 'status',
+      key: 'status',
+      render: (value) => {
+        const STATUS_MAP = {
+          0: '待审核',
+          1: '审核通过',
+          '-1': '审核失败'
+        } as Record<any, string>
+
+        return STATUS_MAP[value]
       },
     },
     {
       title: '操作',
-      render: (value: number, record: any) => {
-        const updata = () => {
-          actionRef.current?.reload?.()
-        }
-
+      render: (_, record: any) => {
         return (
-          <Space size="middle" align="end">
-            <a
-              onClick={() => {
-                Modal.confirm({
-                  title: '提示',
-                  content: '确定修改数据状态?',
-                  onOk: async () => {
-                    await $.post({
-                      isFrozen: !record.isFrozen,
-                      id: record.id,
-                    }, {
-                      url: '/boss/bonus/update',
-                    })
-                    message.success('操作成功')
-                    actionRef.current?.reload?.()
-                  },
-                })
-              }}
+          <Fragment>
+            <AddAndEditModal
+              title="用户"
+              formItems={formItems}
+              onEdit={onEdit}
+              data={record}
             >
-              {record.isFrozen ? '启用' : '禁用'}
-            </a>
-            {/* <Detail reload={updata} record={record}>
-              <a>修改</a>
-            </Detail> */}
-            <a
+              <Button
+                type="link"
+              >
+                审核
+              </Button>
+            </AddAndEditModal>
+            <Button
+              type="link"
               onClick={() => {
                 Modal.confirm({
                   title: '提示',
                   content: '确定删除当前数据?',
                   onOk: async () => {
                     await $.post({
-                      isDelete: true,
                       id: record.id,
+                      isDelete: true,
                     }, {
-                      url: '/boss/bonus/update',
+                      url: '/boss/company/update',
                     })
                     message.success('操作成功')
                     actionRef.current?.reload?.()
@@ -187,20 +204,12 @@ function UserList() {
               }}
             >
               删除
-            </a>
-          </Space>
+            </Button>
+          </Fragment>
         )
       },
     },
   ]
-
-  const onAdd = (params: Record<string, any>) => {
-
-  }
-
-  const onEdit = (params: Record<string, any>) => {
-
-  }
 
   return (
     <ProTable
@@ -219,21 +228,11 @@ function UserList() {
       }}
       request={async (params) => {
         return await $.post(params, {
-          url: '/boss/bonus/all',
+          url: '/boss/company/all',
         })
       }}
-      searchAddButton={(
-        <RoleAddAndEditModal
-          title="权限"
-          formItems={formItems}
-          onAdd={onAdd}
-          onEdit={onEdit}
-        >
-          <Button type="primary" >新增</Button>
-        </RoleAddAndEditModal>
-      )}
     />
   )
 }
 
-export default UserList
+export default CompanyAuth

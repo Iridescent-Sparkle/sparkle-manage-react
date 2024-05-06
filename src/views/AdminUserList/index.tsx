@@ -147,7 +147,7 @@ function AdminUserList() {
       key: 'roles',
       render: (value) => {
         return value?.map((item: any) => {
-          return <div key={item}>{item.name}</div>
+          return <div key={item.id}>{item.name}</div>
         })
       },
     },
