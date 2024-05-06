@@ -8,6 +8,7 @@ import type { ActionType } from 'src/components/ProTable/typing'
 
 function MenuPermissions() {
   const actionRef = useRef<ActionType>(null)
+  
   const onAdd = async (params: Record<string, any>) => {
     await $.post(params, {
       url: '/admin/permission/create',
@@ -117,7 +118,6 @@ function MenuPermissions() {
     },
     {
       title: '操作',
-      width: 300,
       render: (_, record: any) => {
         return (
           <Fragment>

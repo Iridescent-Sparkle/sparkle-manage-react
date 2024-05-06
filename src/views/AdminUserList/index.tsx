@@ -44,12 +44,12 @@ function AdminUserList() {
       render: () => <Input allowClear placeholder="请输入ID" />,
     },
     {
-      label: '权限代码',
+      label: '手机号',
       name: 'username',
       render: () => <Input allowClear placeholder="请输入名称" />,
     },
     {
-      label: '权限描述',
+      label: '昵称',
       name: 'nickname',
       render: () => <Input allowClear placeholder="请输入描述" />,
     },
@@ -124,9 +124,14 @@ function AdminUserList() {
       key: 'id',
     },
     {
-      title: '用户名',
+      title: '手机号',
       dataIndex: 'username',
       key: 'username',
+    },
+    {
+      title: '昵称',
+      dataIndex: 'nickname',
+      key: 'nickname',
     },
     {
       title: '头像',
@@ -167,12 +172,11 @@ function AdminUserList() {
       dataIndex: 'isFrozen',
       key: 'isFrozen',
       render: (value: number) => {
-        return value ? '已禁用' : '启用中'
+        return value ? '禁用中' : '启用中'
       },
     },
     {
       title: '操作',
-      width: 300,
       render: (_, record: any) => {
         const formatRecord = {
           ...record,

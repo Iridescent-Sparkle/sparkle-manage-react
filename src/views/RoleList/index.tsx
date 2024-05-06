@@ -167,12 +167,12 @@ function RoleList() {
       dataIndex: 'isFrozen',
       key: 'isFrozen',
       render: (value: number) => {
-        return value ? '已禁用' : '启用中'
+        return value ? '禁用中' : '启用中'
       },
     },
     {
       title: '操作',
-      width: 300,
+ 
       render: (_, record: any) => {
         const formatRecord = {
           ...record,
