@@ -226,7 +226,7 @@ function WelfareLabel() {
           onAdd={onAdd}
           onEdit={onEdit}
         >
-          <Button type="primary" style={{ marginLeft: 24 }}>新增</Button>
+          <Button type="primary" >新增</Button>
         </AddAndEditModal>
       )}
     />

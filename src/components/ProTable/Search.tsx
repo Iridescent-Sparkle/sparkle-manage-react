@@ -65,12 +65,12 @@ function Index(props: Props) {
               <Form.Item shouldUpdate={true} noStyle>
                 {item.render}
               </Form.Item>
-              )
+            )
             : (
               <Form.Item label={item.label} name={item.name} initialValue={item.initialValue} rules={item.rules}>
                 {item.render(form)}
               </Form.Item>
-              )}
+            )}
         </Col>
       )
     })
@@ -171,36 +171,39 @@ function Index(props: Props) {
           {showButton
             ? (
               <Col span={btnSpan}>
-                <div style={{ marginBottom: 24, display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
-                  <ButtonLoading style={{ marginLeft: 24 }} onClick={onReset}>
-                    重置
-                  </ButtonLoading>
-                  <ButtonLoading style={{ marginLeft: 24 }} onClick={onRefresh} type="primary">
-                    {searchText}
-                  </ButtonLoading>
-                  {
-                  addButton && cloneElement(addButton, {
-                    onRefresh,
-                  })
-                }
-
-                  <Visible visible={isExpand}>
-                    <Visible visible={expand}>
-                      <a style={{ lineHeight: '32px', marginLeft: 12 }} onClick={() => setExpand(!expand)}>
-                        收起
-                        <UpOutlined />
-                      </a>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <div>
+                    {
+                      addButton && cloneElement(addButton, {
+                        onRefresh,
+                      })
+                    }
+                  </div>
+                  <div>
+                    <ButtonLoading  onClick={onReset}>
+                      重置
+                    </ButtonLoading>
+                    <ButtonLoading  onClick={onRefresh} type="primary" style={{ marginLeft: 24 }}>
+                      {searchText}
+                    </ButtonLoading>
+                    <Visible visible={isExpand}>
+                      <Visible visible={expand}>
+                        <a style={{ lineHeight: '32px', marginLeft: 12 }} onClick={() => setExpand(!expand)}>
+                          收起
+                          <UpOutlined />
+                        </a>
+                      </Visible>
+                      <Visible visible={!expand}>
+                        <a style={{ lineHeight: '32px', marginLeft: 12 }} onClick={() => setExpand(!expand)}>
+                          展开
+                          <DownOutlined />
+                        </a>
+                      </Visible>
                     </Visible>
-                    <Visible visible={!expand}>
-                      <a style={{ lineHeight: '32px', marginLeft: 12 }} onClick={() => setExpand(!expand)}>
-                        展开
-                        <DownOutlined />
-                      </a>
-                    </Visible>
-                  </Visible>
+                  </div>
                 </div>
               </Col>
-              )
+            )
             : null}
         </Row>
         {/* 有助于可以回车搜索 */}

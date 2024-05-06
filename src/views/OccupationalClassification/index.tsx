@@ -1,238 +1,236 @@
 import type { TableColumnsType } from 'antd'
-import ProTable from 'src/components/ProTable'
-import useTableConfig from './config'
+import { Button, DatePicker, Input, Modal, Select, message } from 'antd'
+import dayjs from 'dayjs'
+import { Fragment, useRef } from 'react'
+import AddAndEditModal from 'src/components/AddAndEditModal'
+import ProTable from 'src/components/ProTable/index.tsx'
+import type { ActionType } from 'src/components/ProTable/typing'
 
 function OccupationalClassification() {
-  const { search } = useTableConfig()
-  const data = {
-    code: 200,
-    message: 'success',
-    data: [
-      {
-        id: 1,
-        bonusName: '餐饮及下午茶',
-        bonusDescription: '',
-        isDelete: false,
-        createTime: '2024-03-30T09:16:20.213Z',
-        updateTime: '2024-03-30T09:16:20.213Z',
-      },
-      {
-        id: 2,
-        bonusName: '就近租房补贴',
-        bonusDescription: '',
-        isDelete: false,
-        createTime: '2024-03-30T09:16:20.229Z',
-        updateTime: '2024-03-30T09:16:20.229Z',
-      },
-      {
-        id: 3,
-        bonusName: '节日礼品',
-        bonusDescription: '',
-        isDelete: false,
-        createTime: '2024-03-30T09:16:20.243Z',
-        updateTime: '2024-03-30T09:16:20.243Z',
-      },
-      {
-        id: 4,
-        bonusName: '年度体检',
-        bonusDescription: '',
-        isDelete: false,
-        createTime: '2024-03-30T09:16:20.251Z',
-        updateTime: '2024-03-30T09:16:20.251Z',
-      },
-      {
-        id: 5,
-        bonusName: '免费健身设施',
-        bonusDescription: '',
-        isDelete: false,
-        createTime: '2024-03-30T09:16:20.255Z',
-        updateTime: '2024-03-30T09:16:20.255Z',
-      },
-      {
-        id: 6,
-        bonusName: '家庭关爱假',
-        bonusDescription: '',
-        isDelete: false,
-        createTime: '2024-03-30T09:16:20.259Z',
-        updateTime: '2024-03-30T09:16:20.259Z',
-      },
-      {
-        id: 7,
-        bonusName: '家庭自选保险',
-        bonusDescription: '',
-        isDelete: false,
-        createTime: '2024-03-30T09:16:20.264Z',
-        updateTime: '2024-03-30T09:16:20.264Z',
-      },
-      {
-        id: 8,
-        bonusName: '住房补贴',
-        bonusDescription: '',
-        isDelete: false,
-        createTime: '2024-03-30T09:16:20.267Z',
-        updateTime: '2024-03-30T09:16:20.267Z',
-      },
-      {
-        id: 9,
-        bonusName: '团建聚餐',
-        bonusDescription: '',
-        isDelete: false,
-        createTime: '2024-03-30T09:16:20.271Z',
-        updateTime: '2024-03-30T09:16:20.271Z',
-      },
-      {
-        id: 10,
-        bonusName: '零食下午茶',
-        bonusDescription: '',
-        isDelete: false,
-        createTime: '2024-03-30T09:16:20.275Z',
-        updateTime: '2024-03-30T09:16:20.275Z',
-      },
-      {
-        id: 11,
-        bonusName: '餐补',
-        bonusDescription: '',
-        isDelete: false,
-        createTime: '2024-03-30T09:16:20.278Z',
-        updateTime: '2024-03-30T09:16:20.278Z',
-      },
-      {
-        id: 12,
-        bonusName: '带薪年假',
-        bonusDescription: '',
-        isDelete: false,
-        createTime: '2024-03-30T09:16:20.282Z',
-        updateTime: '2024-03-30T09:16:20.282Z',
-      },
-      {
-        id: 13,
-        bonusName: '夜班补助',
-        bonusDescription: '',
-        isDelete: false,
-        createTime: '2024-03-30T09:16:20.285Z',
-        updateTime: '2024-03-30T09:16:20.285Z',
-      },
-      {
-        id: 14,
-        bonusName: '股票期权',
-        bonusDescription: '',
-        isDelete: false,
-        createTime: '2024-03-30T09:16:20.289Z',
-        updateTime: '2024-03-30T09:16:20.289Z',
-      },
-      {
-        id: 15,
-        bonusName: '绩效奖金',
-        bonusDescription: '',
-        isDelete: false,
-        createTime: '2024-03-30T09:16:20.293Z',
-        updateTime: '2024-03-30T09:16:20.293Z',
-      },
-      {
-        id: 16,
-        bonusName: '年终奖',
-        bonusDescription: '',
-        isDelete: false,
-        createTime: '2024-03-30T09:16:20.297Z',
-        updateTime: '2024-03-30T09:16:20.297Z',
-      },
-      {
-        id: 17,
-        bonusName: '定期体检',
-        bonusDescription: '',
-        isDelete: false,
-        createTime: '2024-03-30T09:16:20.300Z',
-        updateTime: '2024-03-30T09:16:20.300Z',
-      },
-      {
-        id: 18,
-        bonusName: '意外险',
-        bonusDescription: '',
-        isDelete: false,
-        createTime: '2024-03-30T09:16:20.305Z',
-        updateTime: '2024-03-30T09:16:20.305Z',
-      },
-      {
-        id: 19,
-        bonusName: '补充医疗保险',
-        bonusDescription: '',
-        isDelete: false,
-        createTime: '2024-03-30T09:16:20.308Z',
-        updateTime: '2024-03-30T09:16:20.308Z',
-      },
-      {
-        id: 20,
-        bonusName: '五险一金',
-        bonusDescription: '',
-        isDelete: false,
-        createTime: '2024-03-30T09:16:20.310Z',
-        updateTime: '2024-03-30T09:16:20.310Z',
-      },
-    ],
+  const actionRef = useRef<ActionType>(null)
+
+  const onAdd = async (params: Record<string, any>) => {
+    await $.post(params, {
+      url: '/boss/category/create',
+    })
+    actionRef.current?.reload?.()
   }
-  /* 构建表单结构 */
+
+  const onEdit = async (params: Record<string, any>) => {
+    await $.post(params, {
+      url: '/boss/category/update',
+    })
+    actionRef.current?.reload?.()
+  }
+
+  const search = [
+    {
+      label: 'ID',
+      name: 'id',
+      render: () => <Input allowClear placeholder="请输入ID" />,
+    },
+    {
+      label: '福利名称',
+      name: 'categoryName',
+      render: () => <Input allowClear placeholder="请输入福利名称" />,
+    },
+    {
+      label: '福利描述',
+      name: 'categoryDescription',
+      render: () => <Input allowClear placeholder="请输入福利描述" />,
+    },
+    {
+      label: '状态',
+      name: 'isFrozen',
+      render: () => (
+        <Select
+          allowClear
+          placeholder="请输入"
+          options={[
+            { value: false, label: '启用中' },
+            { value: true, label: '禁用中' },
+          ]}
+        />
+      ),
+    },
+    {
+      label: '创建时间',
+      name: 'createTime',
+      render: () => (
+        <DatePicker.RangePicker
+          showTime
+        />
+      ),
+    },
+    {
+      label: '更新时间',
+      name: 'updateTime',
+      render: () => (
+        <DatePicker.RangePicker
+          showTime
+        />
+      ),
+    },
+  ]
+
+  const formItems = [
+    {
+      label: '福利名称',
+      name: 'categoryName',
+      rules: [
+        { required: true, message: '请输入福利名称' },
+      ],
+      render: () => <Input allowClear placeholder="请输入福利名称" />,
+    },
+    {
+      label: '福利描述',
+      name: 'categoryDescription',
+      render: () => <Input allowClear placeholder="请输入福利描述" />,
+    },
+  ]
+
   const columns: TableColumnsType<Record<string, any>> = [
     {
-      title: 'id',
-      dataIndex: 'operate_zh',
-      key: 'operate',
+      title: 'Id',
+      dataIndex: 'id',
+      key: 'id',
     },
     {
-      title: '名称',
-      dataIndex: 'operate_zh',
-      key: 'operate',
+      title: '福利名称',
+      dataIndex: 'categoryName',
+      key: 'categoryName',
     },
     {
-      title: '描述',
-      dataIndex: 'operate_zh',
-      key: 'operate',
+      title: '福利描述',
+      dataIndex: 'categoryDescription',
+      width: 100,
+      key: 'categoryDescription',
+      render: (value: string) => {
+        return value ? value : '-'
+      },
     },
     {
       title: '创建时间',
-      dataIndex: 'operate_zh',
-      key: 'operate',
+      dataIndex: 'createTime',
+      key: 'createTime',
+      render: (value: number) => {
+        console.log(value)
+        return dayjs(value).format('YYYY-MM-DD HH:mm:ss')
+      },
     },
     {
       title: '更新时间',
-      dataIndex: 'operate_zh',
-      key: 'operate',
+      dataIndex: 'updateTime',
+      key: 'updateTime',
+      render: (value: number) => {
+        return dayjs(value).format('YYYY-MM-DD HH:mm:ss')
+      },
+    },
+    {
+      title: '状态',
+      dataIndex: 'isFrozen',
+      key: 'isFrozen',
+      render: (value: number) => {
+        return value ? '禁用中' : '启用中'
+      },
     },
     {
       title: '操作',
-      dataIndex: 'operate_zh',
-      key: 'operate',
+      render: (_, record: any) => {
+        return (
+          <Fragment>
+            <AddAndEditModal
+              title="福利标签"
+              formItems={formItems}
+              onEdit={onEdit}
+              data={record}
+            >
+              <Button
+                type="link"
+              >
+                修改
+              </Button>
+            </AddAndEditModal>
+            <Button
+              type="link"
+              onClick={() => {
+                Modal.confirm({
+                  title: '提示',
+                  content: '确定修改数据状态?',
+                  onOk: async () => {
+                    await $.post({
+                      isFrozen: !record.isFrozen,
+                      id: record.id,
+                    }, {
+                      url: '/boss/category/update',
+                    })
+                    message.success('操作成功')
+                    actionRef.current?.reload?.()
+                  },
+                })
+              }}
+            >
+              {record.isFrozen ? '启用' : '禁用'}
+            </Button>
+            <Button
+              type="link"
+              onClick={() => {
+                Modal.confirm({
+                  title: '提示',
+                  content: '确定删除当前数据?',
+                  onOk: async () => {
+                    await $.post({
+                      id: record.id,
+                      isDelete: true,
+                    }, {
+                      url: '/boss/category/update',
+                    })
+                    message.success('操作成功')
+                    actionRef.current?.reload?.()
+                  },
+                })
+              }}
+            >
+              删除
+            </Button>
+          </Fragment>
+        )
+      },
     },
   ]
-  console.log(data, 'data')
-  const a = async () => {
-    const loginRes = await $.post({}, {
-      url: '/boss/bonus/all',
-    })
-    return loginRes
-  }
-  console.log(a(), 'a')
 
   return (
-    <>
-      <ProTable
-        columns={columns}
-        search={search}
-        scroll={{ x: 'max-content' }}
-        rowKey="id"
-        pagination={{
-          pageSize: 15,
-        }}
-        sticky={{
-          offsetHeader: 0,
-          offsetScroll: 0,
-        }}
-        request={async (params) => {
-          return await $.post(params, {
-            url: '/boss/bonus/all',
-          })
-        }}
-      />
-    </>
+    <ProTable
+      actionRef={actionRef}
+      columns={columns}
+      search={search}
+      scroll={{ x: 'max-content' }}
+      rowKey="id"
+      pagination={{
+        pageSize: 15,
+        current: 1,
+      }}
+      sticky={{
+        offsetHeader: 0,
+        offsetScroll: 0,
+      }}
+      request={async (params) => {
+        return await $.post(params, {
+          url: '/boss/category/all',
+        })
+      }}
+      searchAddButton={(
+        <AddAndEditModal
+          title="职业分类"
+          formItems={formItems}
+          onAdd={onAdd}
+          onEdit={onEdit}
+        >
+          <Button type="primary" >新增</Button>
+        </AddAndEditModal>
+      )}
+    />
   )
 }
+
 export default OccupationalClassification
