@@ -2,7 +2,6 @@ import { Box, Grid } from '@mui/material'
 import PageContainer from 'src/components/container/PageContainer'
 
 // components
-import Blog from './components/Blog'
 import MonthlyEarnings from './components/MonthlyEarnings'
 import ProductPerformance from './components/ProductPerformance'
 import RecentTransactions from './components/RecentTransactions'
@@ -32,9 +31,6 @@ function Dashboard() {
           </Grid>
           <Grid item xs={12} lg={8}>
             <ProductPerformance />
-          </Grid>
-          <Grid item xs={12}>
-            <Blog />
           </Grid>
         </Grid>
       </Box>

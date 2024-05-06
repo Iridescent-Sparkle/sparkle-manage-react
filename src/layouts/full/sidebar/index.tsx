@@ -13,7 +13,7 @@ function Sidebar(props) {
         sx={{
           width: sidebarWidth,
           flexShrink: 0,
-          zIndex: 0,
+          zIndex: 10,
         }}
       >
         {/* ------------------------------------------- */}

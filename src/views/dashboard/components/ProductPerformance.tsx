@@ -66,27 +66,27 @@ function ProductPerformance() {
               <TableCell>
                 <Typography variant="subtitle2" fontWeight={600}>
                   Id
-                                </Typography>
+                </Typography>
               </TableCell>
               <TableCell>
                 <Typography variant="subtitle2" fontWeight={600}>
                   Assigned
-                                </Typography>
+                </Typography>
               </TableCell>
               <TableCell>
                 <Typography variant="subtitle2" fontWeight={600}>
                   Name
-                                </Typography>
+                </Typography>
               </TableCell>
               <TableCell>
                 <Typography variant="subtitle2" fontWeight={600}>
                   Priority
-                                </Typography>
+                </Typography>
               </TableCell>
               <TableCell align="right">
                 <Typography variant="subtitle2" fontWeight={600}>
                   Budget
-                                </Typography>
+                </Typography>
               </TableCell>
             </TableRow>
           </TableHead>
@@ -95,58 +95,58 @@ function ProductPerformance() {
               <TableRow key={product.name}>
                 <TableCell>
                   <Typography
-                      sx={{
-                          fontSize: '15px',
-                          fontWeight: '500',
-                        }}
-                    >
-                      {product.id}
-                    </Typography>
+                    sx={{
+                      fontSize: '15px',
+                      fontWeight: '500',
+                    }}
+                  >
+                    {product.id}
+                  </Typography>
                 </TableCell>
                 <TableCell>
                   <Box
-                      sx={{
-                          display: 'flex',
-                          alignItems: 'center',
+                    sx={{
+                      display: 'flex',
+                      alignItems: 'center',
+                    }}
+                  >
+                    <Box>
+                      <Typography variant="subtitle2" fontWeight={600}>
+                        {product.name}
+                      </Typography>
+                      <Typography
+                        color="textSecondary"
+                        sx={{
+                          fontSize: '13px',
                         }}
-                    >
-                      <Box>
-                          <Typography variant="subtitle2" fontWeight={600}>
-                              {product.name}
-                            </Typography>
-                          <Typography
-                              color="textSecondary"
-                              sx={{
-                                  fontSize: '13px',
-                                }}
-                            >
-                              {product.post}
-                            </Typography>
-                        </Box>
+                      >
+                        {product.post}
+                      </Typography>
                     </Box>
+                  </Box>
                 </TableCell>
                 <TableCell>
                   <Typography color="textSecondary" variant="subtitle2" fontWeight={400}>
-                      {product.pname}
-                    </Typography>
+                    {product.pname}
+                  </Typography>
                 </TableCell>
                 <TableCell>
                   <Chip
-                      sx={{
-                          px: '4px',
-                          backgroundColor: product.pbg,
-                          color: '#fff',
-                        }}
-                      size="small"
-                      label={product.priority}
-                    >
-                    </Chip>
+                    sx={{
+                      px: '4px',
+                      backgroundColor: product.pbg,
+                      color: '#fff',
+                    }}
+                    size="small"
+                    label={product.priority}
+                  >
+                  </Chip>
                 </TableCell>
                 <TableCell align="right">
                   <Typography variant="h6">
-                      ${product.budget}
-                      k
-</Typography>
+                    ${product.budget}
+                    k
+                  </Typography>
                 </TableCell>
               </TableRow>
             ))}

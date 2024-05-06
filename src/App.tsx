@@ -2,16 +2,20 @@ import { CssBaseline, ThemeProvider } from '@mui/material'
 import { ConfigProvider } from 'antd'
 import zhCN from 'antd/locale/zh_CN'
 import 'dayjs/locale/zh-cn'
-import { Suspense, useEffect } from 'react'
-import { RouterProvider, } from 'react-router-dom'
+import { useEffect } from 'react'
+import { useRoutes } from 'react-router-dom'
 import '../src/api/index'
-import Router from './routes/Router'
-import { baselightTheme } from './theme/DefaultColors'
+
+import { getRoutes } from './routes/Router'
 import { useUserStore } from './store/user'
+import { baselightTheme } from './theme/DefaultColors'
 
 function App() {
   const theme = baselightTheme
+
   const userStore = useUserStore()
+
+  const routing = useRoutes(getRoutes(userStore.userInfo.permissions?.map(item => item.code)))
 
   useEffect(() => {
     userStore.getUserInfo()
@@ -19,15 +23,12 @@ function App() {
 
 
   return (
-    <Suspense>
-      <ThemeProvider theme={theme}>
-        <ConfigProvider locale={zhCN}>
-          <RouterProvider router={Router} >
-            <CssBaseline />
-          </RouterProvider>
-        </ConfigProvider>
-      </ThemeProvider>
-    </Suspense>
+    <ThemeProvider theme={theme}>
+      <ConfigProvider locale={zhCN}>
+        <CssBaseline />
+        {routing}
+      </ConfigProvider>
+    </ThemeProvider>
   )
 }
 

@@ -1,25 +1,24 @@
 import {
-  IconAperture,
-  IconLayoutDashboard,
+  IconAperture
 } from '@tabler/icons'
 
 import uniqueId from 'lodash-es/uniqueId'
 
 const getMenuItems = (permissions: string | string[]) => {
   let menuItems = [
-    {
-      navlabel: true,
-      subheader: '首页',
-      children: [
-        {
-          id: uniqueId(),
-          title: '看板',
-          icon: IconLayoutDashboard,
-          href: '/dashboard',
-          code: 'menu_dashboard',
-        },
-      ],
-    },
+    // {
+    //   navlabel: true,
+    //   subheader: '首页',
+    //   children: [
+    //     {
+    //       id: uniqueId(),
+    //       title: '看板',
+    //       icon: IconLayoutDashboard,
+    //       href: '/dashboard',
+    //       code: 'menu_dashboard',
+    //     },
+    //   ],
+    // },
     {
       navlabel: true,
       subheader: '权限管理',

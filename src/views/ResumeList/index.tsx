@@ -1,49 +1,50 @@
 import type { TableColumnsType } from 'antd'
-import { Button, DatePicker, Input, Modal, Select, Space, message } from 'antd'
+import { Button, DatePicker, Input, Modal, Select, message } from 'antd'
 import dayjs from 'dayjs'
-import { useRef } from 'react'
+import { Fragment, useRef } from 'react'
 import ProTable from 'src/components/ProTable/index.tsx'
 import type { ActionType } from 'src/components/ProTable/typing'
-import RoleAddAndEditModal from '../../components/AddAndEditModal/index.tsx'
-
-function UserList() {
+import { Document, Page } from 'react-pdf';
+function ResumeList() {
   const actionRef = useRef<ActionType>(null)
 
   const search = [
     {
-      label: 'id',
+      label: 'ID',
       name: 'id',
-      render: () => <Input allowClear placeholder="请输入id" />,
+      render: () => <Input allowClear placeholder="请输入ID" />,
     },
     {
-      label: '用户名',
-      name: 'username',
+      label: '职业',
+      name: 'occupation',
       render: () => <Input allowClear placeholder="请输入名称" />,
     },
     {
-      label: '昵称',
-      name: 'nickname',
+      label: '地址',
+      name: 'address',
       render: () => <Input allowClear placeholder="请输入描述" />,
     },
     {
-      label: '角色',
-      name: 'roles',
-      render: () => <Input allowClear placeholder="请输入角色" />,
+      label: '联系电话',
+      name: 'phone',
+      render: () => <Input allowClear placeholder="请输入描述" />,
     },
     {
-      label: '头像',
-      name: 'avatar',
+      label: '邮箱',
+      name: 'email',
+      render: () => <Input allowClear placeholder="请输入描述" />,
+    },
+    {
+      label: '个人总结',
+      name: 'summary',
       render: () => <Input allowClear placeholder="请输入描述" />,
     },
     {
       label: '创建时间',
       name: 'createTime',
       render: () => (
-        <DatePicker
-          // defaultValue={defaultValue}
+        <DatePicker.RangePicker
           showTime
-        // locale={buddhistLocale}
-        // onChange={onChange}
         />
       ),
     },
@@ -51,102 +52,118 @@ function UserList() {
       label: '更新时间',
       name: 'updateTime',
       render: () => (
-        <DatePicker
-          // defaultValue={defaultValue}
+        <DatePicker.RangePicker
           showTime
-        // locale={buddhistLocale}
-        // onChange={onChange}
-        />
-      ),
-    },
-    {
-      label: '状态',
-      name: 'isDelete',
-      render: () => (
-        <Select
-          allowClear
-          placeholder="请输入"
-          options={[
-            { value: '1', label: '已下架' },
-            { value: '2', label: '已上架' },
-          ]}
         />
       ),
     },
   ]
 
-  const formItems = [
-    {
-      label: '名称',
-      name: 'categoryName',
-      render: () => <Input allowClear placeholder="请输入名称" />,
-    },
-    {
-      label: '描述',
-      name: 'categoryDescription',
-      render: () => <Input allowClear placeholder="请输入描述" />,
-    },
-  ]
-
-  /* 构建表单结构 */
   const columns: TableColumnsType<Record<string, any>> = [
     {
-      title: 'id',
+      title: 'Id',
       dataIndex: 'id',
       key: 'id',
     },
     {
-      title: '用户名',
-      dataIndex: 'username',
-      key: 'username',
+      title: '职业',
+      dataIndex: 'occupation',
+      key: 'occupation',
+      render: (value: string) => {
+        return value ? value : '-'
+      },
     },
     {
-      title: '昵称',
-      dataIndex: 'nickname',
-      key: 'nickname',
+      title: '地址',
+      dataIndex: 'address',
+      key: 'address',
+      render: (value: string) => {
+        return value ? value : '-'
+      },
     },
     {
-      title: '头像',
-      dataIndex: 'avatar',
-      key: 'avatar',
+      title: '联系电话',
+      dataIndex: 'phone',
+      key: 'phone',
+      render: (value: string) => {
+        return value ? value : '-'
+      },
     },
     {
-      title: '角色',
-      dataIndex: 'roles',
-      key: 'roles',
+      title: '邮箱',
+      dataIndex: 'email',
+      key: 'email',
+      render: (value: string) => {
+        return value ? value : '-'
+      },
+    },
+    {
+      title: '最低薪资',
+      width: 80,
+      dataIndex: 'minSalary',
+      key: 'minSalary',
+      render: (value: string) => {
+        return value ? value : '-'
+      },
+    },
+    {
+      title: '最高薪资',
+      dataIndex: 'maxSalary',
+      key: 'maxSalary',
+      render: (value: string) => {
+        return value ? value : '-'
+      },
+    },
+    {
+      title: '个人总结',
+      dataIndex: 'summary',
+      key: 'summary',
+      render: (value: string) => {
+        return value ? value : '-'
+      },
+    },
+    {
+      title: '简历pdf',
+      dataIndex: 'resume',
+      key: 'resume',
+      render: (value) => {
+        return value ? <Document file={value}>
+          <Page pageNumber={1} />
+        </Document> : '-'
+      },
     },
     {
       title: '创建时间',
       dataIndex: 'createTime',
       key: 'createTime',
+      render: (value: number) => {
+        return dayjs(value).format('YYYY-MM-DD HH:mm:ss')
+      },
     },
     {
       title: '更新时间',
       dataIndex: 'updateTime',
       key: 'updateTime',
       render: (value: number) => {
-        return value ? dayjs(value * 1000).format('YYYY-MM-DD HH:mm:ss') : '-'
+        return dayjs(value).format('YYYY-MM-DD HH:mm:ss')
       },
+
     },
     {
       title: '状态',
       dataIndex: 'isFrozen',
       key: 'isFrozen',
       render: (value: number) => {
-        return value ? '禁用中' : '启用中'
+        return value ? '已关闭' : '已开启'
       },
     },
     {
       title: '操作',
- 
-      render: (value: number, record: any) => {
-        const updata = () => {
-          actionRef.current?.reload?.()
-        }
-
+      render: (_, record: any) => {
         return (
-          <Space size="middle" align="end">
-            <a
+          <Fragment>
+            <Button
+              type="link"
               onClick={() => {
                 Modal.confirm({
                   title: '提示',
@@ -156,7 +173,7 @@ function UserList() {
                       isFrozen: !record.isFrozen,
                       id: record.id,
                     }, {
-                      url: '/boss/bonus/update',
+                      url: '/genius/profile/update',
                     })
                     message.success('操作成功')
                     actionRef.current?.reload?.()
@@ -164,44 +181,13 @@ function UserList() {
                 })
               }}
             >
-              {record.isFrozen ? '启用' : '禁用'}
-            </a>
-            {/* <Detail reload={updata} record={record}>
-              <a>修改</a>
-            </Detail> */}
-            <a
-              onClick={() => {
-                Modal.confirm({
-                  title: '提示',
-                  content: '确定删除当前数据?',
-                  onOk: async () => {
-                    await $.post({
-                      isDelete: true,
-                      id: record.id,
-                    }, {
-                      url: '/boss/bonus/update',
-                    })
-                    message.success('操作成功')
-                    actionRef.current?.reload?.()
-                  },
-                })
-              }}
-            >
-              删除
-            </a>
-          </Space>
+              {record.isFrozen ? '开启' : '关闭'}
+            </Button>
+          </Fragment>
         )
       },
     },
   ]
-
-  const onAdd = (params: Record<string, any>) => {
-
-  }
-
-  const onEdit = (params: Record<string, any>) => {
-
-  }
 
   return (
     <ProTable
@@ -220,21 +206,11 @@ function UserList() {
       }}
       request={async (params) => {
         return await $.post(params, {
-          url: '/boss/bonus/all',
+          url: '/genius/profile/all',
         })
       }}
-      searchAddButton={(
-        <RoleAddAndEditModal
-          title="权限"
-          formItems={formItems}
-          onAdd={onAdd}
-          onEdit={onEdit}
-        >
-          <Button type="primary" >新增</Button>
-        </RoleAddAndEditModal>
-      )}
     />
   )
 }
 
-export default UserList
+export default ResumeList

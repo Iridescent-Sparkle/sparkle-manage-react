@@ -3,8 +3,9 @@ import type { AxiosInstance, AxiosRequestConfig, CreateAxiosDefaults } from 'axi
 import axios from 'axios'
 import nprogress from 'nprogress'
 import 'nprogress/nprogress.css'
-import Router from 'src/routes/Router'
+
 import type { CustomConfig } from './type.d'
+import { Router } from 'src/routes/Router'
 
 export class Request {
   private readonly axios: AxiosInstance
@@ -26,11 +27,11 @@ export class Request {
     }, (error) => {
       nprogress.done()
 
-      if (error.response.data.code === 401)
+      if (error.response.data.code === 401) {
         message.error('登录失效，请重新登录')
-        Router.navigate('/auth/login', {
-          replace: true
-        })
+        Router.replace('/auth/login')
+      }
+
       return Promise.reject(error)
     })
   }
