@@ -63,8 +63,7 @@ function useFetchData(isLoadData: undefined | ((params?: { pageSize: number, cur
     try {
       const pageParams = options?.pageInfo ? { current: currentPageNum, pageSize } : undefined
       const { data = [], success, ...rest } = (await isLoadData?.(pageParams)) || {}
-      console.log((await isLoadData?.(pageParams)) || {}, 'datra')
-
+    
       if (data.data) {
         setTableDataList(data.data)
         if (pageInfo?.total !== data.total) {

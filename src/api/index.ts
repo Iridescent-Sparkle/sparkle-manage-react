@@ -3,8 +3,8 @@ import type { AxiosInstance, AxiosRequestConfig, CreateAxiosDefaults } from 'axi
 import axios from 'axios'
 import nprogress from 'nprogress'
 import 'nprogress/nprogress.css'
-import type { CustomConfig } from './type.d'
 import Router from 'src/routes/Router'
+import type { CustomConfig } from './type.d'
 
 export class Request {
   private readonly axios: AxiosInstance

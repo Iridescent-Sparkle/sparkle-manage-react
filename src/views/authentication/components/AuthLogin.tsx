@@ -7,7 +7,7 @@ import {
   Stack,
   Typography,
 } from '@mui/material'
-import { useState } from 'react'
+import { Fragment, useState } from 'react'
 import { useUserStore } from 'src/store/user'
 import { useNavigate } from 'react-router-dom'
 import { message } from 'antd'
@@ -23,18 +23,24 @@ function AuthLogin({ title, subtitle, subtext }) {
   const [phone, setPhone] = useState('')
 
   const submit = async () => {
-    await userStore.login({
-      username: phone,
-      password: passWord,
-    })
+    try {
+      await userStore.login({
+        username: phone,
+        password: passWord,
+      })
 
-    message.success('登录成功')
+      await userStore.getUserInfo()
 
-    navigate({
-      pathname: '/',
-    }, {
-      replace: true,
-    })
+      message.success('登录成功')
+
+      navigate({
+        pathname: '/',
+      }, {
+        replace: true,
+      })
+    } catch (error: any) {
+      error.data && message.error(error.data)
+    }
   }
 
   /* 密码 */
@@ -48,13 +54,13 @@ function AuthLogin({ title, subtitle, subtext }) {
   }
 
   return (
-    <>
+    <Fragment>
       {title
         ? (
           <Typography fontWeight="700" variant="h2" mb={1}>
             {title}
           </Typography>
-          )
+        )
         : null}
 
       {subtext}
@@ -75,6 +81,7 @@ function AuthLogin({ title, subtitle, subtext }) {
             onChange={(value: any) => ChangePhone(value)}
             variant="outlined"
             fullWidth
+            placeholder="请输入手机号"
           />
         </Box>
         <Box mt="25px">
@@ -93,6 +100,7 @@ function AuthLogin({ title, subtitle, subtext }) {
             type="password"
             variant="outlined"
             fullWidth
+            placeholder="请输入密码"
           />
         </Box>
         <Stack
@@ -101,7 +109,7 @@ function AuthLogin({ title, subtitle, subtext }) {
           alignItems="center"
           my={2}
         >
-          <FormGroup>
+          {/* <FormGroup>
             <FormControlLabel
               control={<Checkbox defaultChecked />}
               label="记住密码"
@@ -115,7 +123,7 @@ function AuthLogin({ title, subtitle, subtext }) {
             }}
           >
             忘记密码 ?
-          </Typography>
+          </Typography> */}
         </Stack>
       </Stack>
       <Box>
@@ -131,7 +139,7 @@ function AuthLogin({ title, subtitle, subtext }) {
         </Button>
       </Box>
       {subtitle}
-    </>
+    </Fragment>
   )
 }
 

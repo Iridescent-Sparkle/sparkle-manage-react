@@ -1,4 +1,5 @@
 import { message } from 'antd'
+import Router from 'src/routes/Router'
 import { create } from 'zustand'
 
 interface State {
@@ -11,6 +12,7 @@ interface Action {
   register: (params: { username: string, captcha: string, password: string }) => void
   login: (params: { username: string, password: string }) => void
   logout: () => Promise<void>
+  userInfo:any
 }
 
 export const useUserStore = create<State & Action>(set => ({
@@ -21,12 +23,7 @@ export const useUserStore = create<State & Action>(set => ({
     password: '',
     nickname: '',
     avatar: '',
-    email: '',
-    contactIdToB: '',
-    contactIdToC: '',
-    contactPassword: '',
     isFrozen: false,
-    isAdmin: false,
     createTime: '',
     updateTime: '',
   },
@@ -42,25 +39,18 @@ export const useUserStore = create<State & Action>(set => ({
     })
   },
   login: async (params) => {
-    try {
-      const loginRes = await $.post(params, {
-        url: 'admin/user/login',
-      })
+    const loginRes = await $.post(params, {
+      url: 'admin/user/login',
+    })
 
-      await localStorage.setItem('token', loginRes.data.accessToken || '')
+    localStorage.setItem('token', loginRes.data.accessToken || '')
 
-      return set((state) => {
-        state.getUserInfo()
-        return {
-          ...state,
-          token: loginRes.data.accessToken,
-        }
-      })
-    }
-    catch (error) {
-      message.error('登录失败')
-      console.error(error)
-    }
+    return set((state) => {
+      return {
+        ...state,
+        token: loginRes.data.accessToken,
+      }
+    })
   },
   logout: async () => {
     await localStorage.setItem('token', '')
@@ -72,19 +62,26 @@ export const useUserStore = create<State & Action>(set => ({
     }))
   },
   getUserInfo: async () => {
-    const token = await localStorage.getItem('token') || ''
+    const token = localStorage.getItem('token') || ''
 
     if (token) {
       const userInfo = await $.get({}, {
-        url: '/user/info',
+        url: 'admin/user/info',
       })
-      await localStorage.setItem('userInfo', JSON.stringify(userInfo.data))
+
+      localStorage.setItem('userInfo', JSON.stringify(userInfo.data))
 
       return set(state => ({
         ...state,
         token,
         userInfo: userInfo.data,
       }))
+    } else if(!Router.state.location.pathname.startsWith('/auth')){
+      message.error('登录失效，请重新登录')
+
+      Router.navigate('/auth/login', {
+        replace: true
+      })
     }
   },
 }))

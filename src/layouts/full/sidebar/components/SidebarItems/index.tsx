@@ -1,18 +1,19 @@
 import { Box, List } from '@mui/material'
 import { useLocation } from 'react-router'
 import { Fragment } from 'react/jsx-runtime'
-import Menuitems from './MenuItems.ts'
+import getMenuItems from './MenuItems.ts'
 import NavGroup from './components/NavGroup/NavGroup.tsx'
 import NavItem from './components/NavItem/index.tsx'
+import { useUserStore } from 'src/store/user/index.ts'
 
 function SidebarItems() {
   const { pathname } = useLocation()
   const pathDirect = pathname
-
+const userStore = useUserStore()
   return (
     <Box sx={{ px: 3 }}>
       <List sx={{ pt: 0 }} className="sidebarNav">
-        {Menuitems.map((item) => {
+        {getMenuItems(userStore.userInfo.permissions?.map((item:any) => item.code)).map((item) => {
           if (item.subheader) {
             return (
               <Fragment key={item.subheader}>
