@@ -8,20 +8,24 @@ interface Props {
   data?: Record<string, any>
   children: ReactElement
   formItems: Item[] | ((form: FormInstance, params?: Record<string, any>) => Promise<Item[] | undefined>)
+
   onRefresh?: () => void
+  onClick?: () => void
   onAdd?: (params: Record<string, any>) => void
   onEdit?: (params: Record<string, any>) => void
 }
 
 function AddAndEditModal(props: Props) {
-  const { title, children, data, formItems, onRefresh, onAdd, onEdit } = props
+  const { title, children, data, formItems, onClick, onRefresh, onAdd, onEdit } = props
 
   const [form] = Form.useForm()
 
   const [visible, setVisible] = useState(false)
+
   const [formList, setFormList] = useState<Item[]>([])
 
   const handleModalOpen = async () => {
+    await onClick?.()
     await getListData()
     form.setFieldsValue(data)
     setVisible(true)
@@ -62,7 +66,7 @@ function AddAndEditModal(props: Props) {
       <Modal open={visible} title={data ? `修改${title}` : `新增${title}`} onCancel={handleModalClose} onOk={handleConfirmClick} destroyOnClose>
         <Form form={form}>
           {
-            formList.map((item: any) => {
+            formItems instanceof Function ? formList.map((item: any) => {
               const shouldUpdate = item.shouldUpdate || false
 
               return (
@@ -80,7 +84,26 @@ function AddAndEditModal(props: Props) {
                     )}
                 </Col>
               )
-            })
+            }) :
+              formItems.map((item: any) => {
+                const shouldUpdate = item.shouldUpdate || false
+
+                return (
+                  <Col key={item.name}>
+                    {shouldUpdate
+                      ? (
+                        <Form.Item shouldUpdate={true} noStyle>
+                          {item.render}
+                        </Form.Item>
+                      )
+                      : (
+                        <Form.Item label={item.label} labelCol={{ span: 4 }} name={item.name} initialValue={item.initialValue} rules={item.rules}>
+                          {item.render(form, data)}
+                        </Form.Item>
+                      )}
+                  </Col>
+                )
+              })
           }
         </Form>
       </Modal>

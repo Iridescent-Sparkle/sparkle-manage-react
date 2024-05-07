@@ -1,14 +1,9 @@
-import { AppBar, Badge, Box, IconButton, Stack, Toolbar, styled } from '@mui/material'
-
-// components
-import { IconBellRinging, IconMenu } from '@tabler/icons'
+import { AppBar, Box, IconButton, Stack, Toolbar, styled } from '@mui/material'
+import { IconMenu } from '@tabler/icons'
 import type { MouseEventHandler } from 'react'
 import Profile from './Profile'
 
 function Header(props: { toggleMobileSidebar: MouseEventHandler<HTMLButtonElement> | undefined }) {
-  // const lgUp = useMediaQuery((theme) => theme.breakpoints.up('lg'));
-  // const lgDown = useMediaQuery((theme) => theme.breakpoints.down('lg'));
-
   const AppBarStyled = styled(AppBar)(({ theme }) => ({
     boxShadow: 'none',
     background: theme.palette.background.paper,
@@ -18,6 +13,7 @@ function Header(props: { toggleMobileSidebar: MouseEventHandler<HTMLButtonElemen
       minHeight: '70px',
     },
   }))
+  
   const ToolbarStyled = styled(Toolbar)(({ theme }) => ({
     width: '100%',
     color: theme.palette.text.secondary,
@@ -38,24 +34,6 @@ function Header(props: { toggleMobileSidebar: MouseEventHandler<HTMLButtonElemen
           }}
         >
           <IconMenu width="20" height="20" />
-        </IconButton>
-
-        <IconButton
-          size="large"
-          aria-label="show 11 new notifications"
-          color="inherit"
-          aria-controls="msgs-menu"
-          aria-haspopup="true"
-          sx={{
-            ...(typeof anchorEl2 === 'object' && {
-              color: 'primary.main',
-            }),
-          }}
-        >
-          <Badge variant="dot" color="primary">
-            <IconBellRinging size="21" stroke="1.5" />
-          </Badge>
-
         </IconButton>
         <Box flexGrow={1} />
         <Stack spacing={1} direction="row" alignItems="center">

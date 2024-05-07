@@ -55,12 +55,15 @@ export const useUserStore = create<State & Action>(set => ({
   logout: async () => {
     await localStorage.setItem('token', '')
 
-    message.success('登录成功')
+    Router.replace('/auth/login')
+
+    window.location.reload()
     set(state => ({
       ...state,
       token: '',
     }))
   },
+
   getUserInfo: async () => {
     const token = localStorage.getItem('token') || ''
 

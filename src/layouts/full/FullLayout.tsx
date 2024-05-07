@@ -1,7 +1,7 @@
 import { Box, Container, styled } from '@mui/material'
 import { useState } from 'react'
 import { Outlet } from 'react-router-dom'
-
+import Header from './header/Header'
 import Sidebar from './sidebar'
 
 const MainWrapper = styled('div')(() => ({
@@ -46,7 +46,7 @@ function FullLayout() {
         {/* ------------------------------------------- */}
         {/* Header */}
         {/* ------------------------------------------- */}
-        {/* <Header toggleSidebar={() => setSidebarOpen(!isSidebarOpen)} toggleMobileSidebar={() => setMobileSidebarOpen(true)} /> */}
+        <Header toggleSidebar={() => setSidebarOpen(!isSidebarOpen)} toggleMobileSidebar={() => setMobileSidebarOpen(true)} />
         {/* ------------------------------------------- */}
         {/* PageContent */}
         {/* ------------------------------------------- */}

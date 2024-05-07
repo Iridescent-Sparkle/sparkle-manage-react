@@ -18,7 +18,9 @@
     "@mui/material": "^5.15.16",
     "@mui/system": "^5.15.15",
     "@tabler/icons": "^1.119.0",
+    "ali-oss": "^6.20.0",
     "antd": "^5.17.0",
+    "antd-img-crop": "^4.21.0",
     "apexcharts": "^3.49.0",
     "axios": "^1.6.8",
     "classnames": "^2.5.1",
@@ -40,6 +42,7 @@
   "devDependencies": {
     "@antfu/eslint-config": "^2.16.1",
     "@svgr/rollup": "^8.1.0",
+    "@types/ali-oss": "^6.16.11",
     "@types/node": "^20.12.10",
     "@types/nprogress": "^0.2.3",
     "@types/react": "^18.3.1",
