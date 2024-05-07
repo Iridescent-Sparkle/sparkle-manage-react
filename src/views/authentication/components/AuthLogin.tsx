@@ -1,16 +1,13 @@
 import {
   Box,
   Button,
-  Checkbox,
-  FormControlLabel,
-  FormGroup,
   Stack,
-  Typography,
+  Typography
 } from '@mui/material'
-import { Fragment, useState } from 'react'
-import { useUserStore } from 'src/store/user'
-import { useNavigate } from 'react-router-dom'
 import { message } from 'antd'
+import { Fragment, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { useUserStore } from 'src/store/user'
 import CustomTextField from '../../../components/forms/theme-elements/CustomTextField'
 
 function AuthLogin({ title, subtitle, subtext }) {

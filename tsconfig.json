@@ -6,15 +6,12 @@
     "useDefineForClassFields": true,
     "baseUrl": ".",
     "module": "ESNext",
-    /* Bundler mode */
     "moduleResolution": "bundler",
     "paths": {
       "src/*": ["src/*"]
     },
     "resolveJsonModule": true,
     "allowImportingTsExtensions": true,
-
-    /* Linting */
     "strict": true,
     "noFallthroughCasesInSwitch": true,
     "noUnusedLocals": true,

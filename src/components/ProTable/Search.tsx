@@ -14,7 +14,7 @@ import { cleanObject, getQueryVariable } from './utils'
 export interface Item {
   label: string
   name: string
-  render: (form?: FormInstance) => React.ReactElement
+  render: (form?: FormInstance, data?: any) => React.ReactElement
   /** 初始化的值 */
   initialValue?: any
   rules?: any

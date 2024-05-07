@@ -1,15 +1,45 @@
 import type { TableColumnsType } from 'antd'
-import { Button, DatePicker, Input, Select } from 'antd'
-import { Fragment, useRef } from 'react'
+import { Button, DatePicker, Input, InputNumber, message } from 'antd'
+import { FormInstance } from 'antd/lib'
+import dayjs from 'dayjs'
+import { useRef } from 'react'
 import AddAndEditModal from 'src/components/AddAndEditModal'
 import ProTable from 'src/components/ProTable/index.tsx'
 import type { ActionType } from 'src/components/ProTable/typing'
+import Visible from 'src/components/Visible'
 
 function OrderList() {
   const actionRef = useRef<ActionType>(null)
 
-  const onEdit = () => {
+  const onEdit = async (params: Record<string, any>) => {
+    const passback_params = JSON.parse(params.passback_params)
+    const refundIntergal = Math.floor(params.refund_amount / params.receipt_amount * passback_params.integral)
 
+    await Promise.all([
+      $.post({
+        refund_amount: params.refund_amount,
+        trade_no: params.trade_no,
+        refund_reason: params.refund_reason,
+      }, {
+        url: '/boss/order/refund',
+      }),
+      $.post({
+        userId: passback_params.user_id,
+        integral: refundIntergal,
+      }, {
+        url: '/boss/integral/consume',
+      }),
+      $.post({
+        userId: passback_params.user_id,
+        integral: refundIntergal,
+        type: 'refund',
+        isConsume: true,
+      }, {
+        url: '/boss/consume/create',
+      })
+    ])
+
+    actionRef.current?.reload?.()
   }
 
   const search = [
@@ -19,33 +49,18 @@ function OrderList() {
       render: () => <Input allowClear placeholder="请输入ID" />,
     },
     {
-      label: '手机号',
-      name: 'username',
-      render: () => <Input allowClear placeholder="请输入名称" />,
+      label: '订单标题',
+      name: 'subject',
+      render: () => <Input allowClear placeholder="请输入订单标题" />,
     },
     {
-      label: '昵称',
-      name: 'nickname',
-      render: () => <Input allowClear placeholder="请输入描述" />,
-    },
-
-    {
-      label: '状态',
-      name: 'isFrozen',
-      render: () => (
-        <Select
-          allowClear
-          placeholder="请输入"
-          options={[
-            { value: false, label: '启用中' },
-            { value: true, label: '禁用中' },
-          ]}
-        />
-      ),
+      label: '商品描述',
+      name: 'body',
+      render: () => <Input allowClear placeholder="请输入商品描述" />,
     },
     {
-      label: '创建时间',
-      name: 'createTime',
+      label: '通知时间',
+      name: 'notify_time',
       render: () => (
         <DatePicker.RangePicker
           showTime
@@ -53,8 +68,8 @@ function OrderList() {
       ),
     },
     {
-      label: '更新时间',
-      name: 'updateTime',
+      label: '交易创建时间',
+      name: 'gmt_create',
       render: () => (
         <DatePicker.RangePicker
           showTime
@@ -63,12 +78,79 @@ function OrderList() {
     },
   ]
 
-  const formItems = []
+  const formItems = async (form: FormInstance, params: any) => {
+    const passback_params = JSON.parse(params.passback_params)
+
+    const { data } = await $.post({
+      userId: passback_params.user_id
+    }, {
+      url: '/user/info',
+    })
+
+    const userIntegral = parseInt(data.integral, 10)
+
+    const diffIntegral = userIntegral - passback_params.integral
+
+    if (diffIntegral < 0) {
+      message.error('当前用户剩余积分不足，不支持退款')
+      return Promise.reject()
+    }
+
+    form.setFieldValue('refund_amount', passback_params.price)
+
+    return [
+      {
+        label: '订单标题',
+        name: 'subject',
+        render: () => <Input disabled placeholder="请输入订单标题" />,
+      },
+      {
+        label: '商品描述',
+        name: 'body',
+        render: () => <Input disabled placeholder="请输入商品描述" />,
+      },
+      {
+        label: '订单号',
+        name: 'trade_no',
+        render: () => <Input disabled placeholder="请输入退款金额" />,
+      },
+      {
+        label: '实收金额',
+        name: 'receipt_amount',
+        render: () => <Input disabled placeholder="请输入商品描述" />,
+      },
+      {
+        label: '退款金额',
+        name: 'refund_amount',
+        rules: [
+          {
+            required: true,
+            message: '请输入退款金额'
+          }
+        ],
+        render: (_: any, data: any) => <InputNumber precision={2} max={parseInt(data.receipt_amount, 10)} placeholder="请输入退款金额" />,
+      },
+      {
+        label: '退款原因',
+        name: 'refund_reason',
+        rules: [
+          {
+            required: true,
+            message: '请输入退款原因'
+          }
+        ],
+        render: () => <Input.TextArea maxLength={200} allowClear placeholder="请输入退款原因" />,
+      },
+    ]
+  }
+
   const columns: TableColumnsType<Record<string, any>> = [
     {
       title: 'Id',
       dataIndex: 'id',
       key: 'id',
+      width: 100,
+      fixed: 'left',
     },
     {
       title: '订单标题',
@@ -84,6 +166,7 @@ function OrderList() {
       title: '通知时间',
       dataIndex: 'notify_time',
       key: 'notify_time',
+      render: (value) => value ? dayjs(value).format('YYYY-MM-DD HH:mm:ss') : '-'
     },
     {
       title: '通知类型',
@@ -91,19 +174,9 @@ function OrderList() {
       key: 'notify_type',
     },
     {
-      title: '通知校验ID',
-      dataIndex: 'notify_id',
-      key: 'notify_id',
-    },
-    {
-      title: '签名类型',
-      dataIndex: 'sign_type',
-      key: 'sign_type',
-    },
-    {
-      title: '签名',
-      dataIndex: 'sign',
-      key: 'sign',
+      title: '业务信息',
+      dataIndex: 'passback_params',
+      key: 'passback_params',
     },
     {
       title: '支付宝交易号',
@@ -116,11 +189,6 @@ function OrderList() {
       key: 'out_trade_no',
     },
     {
-      title: '商户业务号',
-      dataIndex: 'out_biz_no',
-      key: 'out_biz_no',
-    },
-    {
       title: '交易状态',
       dataIndex: 'trade_status',
       key: 'trade_status',
@@ -129,58 +197,76 @@ function OrderList() {
       title: '订单金额',
       dataIndex: 'total_amount',
       key: 'total_amount',
+      width: 100,
+      render: (value) => value ? `${value}元` : '-'
     },
     {
       title: '实收金额',
       dataIndex: 'receipt_amount',
       key: 'receipt_amount',
+      width: 100,
+      render: (value) => value ? `${value}元` : '-'
     },
     {
       title: '付款金额',
       dataIndex: 'buyer_pay_amount',
       key: 'buyer_pay_amount',
+      width: 100,
+      render: (value) => value ? `${value}元` : '-'
     },
     {
       title: '总退款金额',
       dataIndex: 'refund_fee',
       key: 'refund_fee',
+      width: 120,
+      render: (value) => value ? `${value}元` : '-'
     },
     {
       title: '实际退款金额',
       dataIndex: 'send_back_fee',
       key: 'send_back_fee',
+      width: 120,
+      render: (value) => value ? `${value}元` : '-'
     },
     {
       title: '交易创建时间',
       dataIndex: 'gmt_create',
       key: 'gmt_create',
+      width: 120,
+      render: (value) => value ? dayjs(value).format('YYYY-MM-DD HH:mm:ss') : '-'
     },
     {
       title: '交易付款时间',
       dataIndex: 'gmt_payment',
       key: 'gmt_payment',
+      render: (value) => value ? dayjs(value).format('YYYY-MM-DD HH:mm:ss') : '-'
     },
     {
       title: '交易退款时间',
       dataIndex: 'gmt_refund',
       key: 'gmt_refund',
+      width: 120,
+      render: (value) => value ? dayjs(value).format('YYYY-MM-DD HH:mm:ss') : '-'
     },
     {
       title: '交易结束时间',
       dataIndex: 'gmt_close',
       key: 'gmt_close',
+      width: 120,
+      render: (value) => value ? dayjs(value).format('YYYY-MM-DD HH:mm:ss') : '-'
     },
     {
       title: '支付金额信息',
       dataIndex: 'fund_bill_list',
       key: 'fund_bill_list',
     },
-
     {
       title: '操作',
+      fixed: 'right',
+      width: 100,
       render: (_, record: any) => {
         return (
-          <Fragment>
+          <Visible visible={record.trade_status === 'TRADE_SUCCESS'}>
             <AddAndEditModal
               title="权限"
               formItems={formItems}
@@ -190,10 +276,10 @@ function OrderList() {
               <Button
                 type="link"
               >
-                修改
+                退款
               </Button>
             </AddAndEditModal>
-          </Fragment>
+          </Visible>
         )
       },
     },
