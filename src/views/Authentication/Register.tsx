@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import PageContainer from 'src/components/container/PageContainer'
 import AuthRegister from './components/AuthRegister'
 
-function Register2() {
+function Register() {
   return (
     <PageContainer title="Register" description="this is Register page">
       <Box
@@ -69,4 +69,4 @@ function Register2() {
   )
 }
 
-export default Register2
+export default Register

@@ -5,7 +5,6 @@ import 'dayjs/locale/zh-cn'
 import { useEffect } from 'react'
 import { useRoutes } from 'react-router-dom'
 import '../src/api/index'
-
 import { getRoutes } from './routes/Router'
 import { useUserStore } from './store/user'
 import { baselightTheme } from './theme/DefaultColors'
@@ -15,7 +14,7 @@ function App() {
 
   const userStore = useUserStore()
 
-  const routing = useRoutes(getRoutes(userStore.userInfo.permissions?.map((item: { code: any }) => item.code)))
+  const routing = useRoutes(getRoutes(userStore.userInfo.permissions?.map((item: { code: any }) => item.code), userStore.userInfo.isAdmin))
 
   useEffect(() => {
     userStore.getUserInfo()

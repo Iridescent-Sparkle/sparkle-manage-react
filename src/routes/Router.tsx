@@ -23,7 +23,7 @@ const UserList = Loadable(lazy(() => import('../views/UserList')))
 const GoodsList = Loadable(lazy(() => import('../views/GoodsList')))
 const CompanyAuth = Loadable(lazy(() => import('../views/CompanyAuth')))
 
-export const getRoutes = (permissions: string[]) => {
+export const getRoutes = (permissions: string[], isAdmin: boolean) => {
   const routes = [
     {
       path: '/',
@@ -57,9 +57,12 @@ export const getRoutes = (permissions: string[]) => {
       ],
     },
   ]
+  
+  if (isAdmin) {
+    return routes
+  }
 
   routes[0].children = routes[0].children.filter(item => permissions?.includes(item.code!))
-
   return routes
 }
 

@@ -1,7 +1,5 @@
 import { Box, Grid } from '@mui/material'
 import PageContainer from 'src/components/container/PageContainer'
-
-// components
 import MonthlyEarnings from './components/MonthlyEarnings'
 import ProductPerformance from './components/ProductPerformance'
 import RecentTransactions from './components/RecentTransactions'

@@ -1,6 +1,5 @@
 import { message } from 'antd'
 import { Router } from 'src/routes/Router'
-
 import { create } from 'zustand'
 
 interface State {
@@ -81,7 +80,7 @@ export const useUserStore = create<State & Action>(set => ({
       message.error('登录失效，请重新登录')
 
       Router.replace('/auth/login')
-      
+
       window.location.reload()
     }
   },

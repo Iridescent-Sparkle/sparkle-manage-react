@@ -4,7 +4,7 @@ import {
 
 import uniqueId from 'lodash-es/uniqueId'
 
-const getMenuItems = (permissions: string | string[]) => {
+const getMenuItems = (permissions: string | string[], isAdmin: boolean) => {
   let menuItems = [
     // {
     //   navlabel: true,
@@ -142,6 +142,10 @@ const getMenuItems = (permissions: string | string[]) => {
     },
 
   ]
+
+  if (isAdmin) {
+    return menuItems
+  }
 
   menuItems = menuItems.filter(item => {
     if (item.children) {
