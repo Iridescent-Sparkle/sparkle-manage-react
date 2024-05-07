@@ -1,22 +1,25 @@
 import type { TableColumnsType } from 'antd'
-import { Button, DatePicker, Input, Modal, Select, Space, message } from 'antd'
-import dayjs from 'dayjs'
-import { useRef } from 'react'
+import { Button, DatePicker, Input, Select } from 'antd'
+import { Fragment, useRef } from 'react'
+import AddAndEditModal from 'src/components/AddAndEditModal'
 import ProTable from 'src/components/ProTable/index.tsx'
 import type { ActionType } from 'src/components/ProTable/typing'
-import RoleAddAndEditModal from '../../components/AddAndEditModal/index.tsx'
 
-function UserList() {
+function OrderList() {
   const actionRef = useRef<ActionType>(null)
+
+  const onEdit = () => {
+
+  }
 
   const search = [
     {
-      label: 'id',
+      label: 'ID',
       name: 'id',
-      render: () => <Input allowClear placeholder="请输入id" />,
+      render: () => <Input allowClear placeholder="请输入ID" />,
     },
     {
-      label: '用户名',
+      label: '手机号',
       name: 'username',
       render: () => <Input allowClear placeholder="请输入名称" />,
     },
@@ -25,25 +28,27 @@ function UserList() {
       name: 'nickname',
       render: () => <Input allowClear placeholder="请输入描述" />,
     },
+
     {
-      label: '角色',
-      name: 'roles',
-      render: () => <Input allowClear placeholder="请输入角色" />,
-    },
-    {
-      label: '头像',
-      name: 'avatar',
-      render: () => <Input allowClear placeholder="请输入描述" />,
+      label: '状态',
+      name: 'isFrozen',
+      render: () => (
+        <Select
+          allowClear
+          placeholder="请输入"
+          options={[
+            { value: false, label: '启用中' },
+            { value: true, label: '禁用中' },
+          ]}
+        />
+      ),
     },
     {
       label: '创建时间',
       name: 'createTime',
       render: () => (
-        <DatePicker
-          // defaultValue={defaultValue}
+        <DatePicker.RangePicker
           showTime
-        // locale={buddhistLocale}
-        // onChange={onChange}
         />
       ),
     },
@@ -51,157 +56,148 @@ function UserList() {
       label: '更新时间',
       name: 'updateTime',
       render: () => (
-        <DatePicker
-          // defaultValue={defaultValue}
+        <DatePicker.RangePicker
           showTime
-        // locale={buddhistLocale}
-        // onChange={onChange}
-        />
-      ),
-    },
-    {
-      label: '状态',
-      name: 'isDelete',
-      render: () => (
-        <Select
-          allowClear
-          placeholder="请输入"
-          options={[
-            { value: '1', label: '已下架' },
-            { value: '2', label: '已上架' },
-          ]}
         />
       ),
     },
   ]
 
-  const formItems = [
-    {
-      label: '名称',
-      name: 'categoryName',
-      render: () => <Input allowClear placeholder="请输入名称" />,
-    },
-    {
-      label: '描述',
-      name: 'categoryDescription',
-      render: () => <Input allowClear placeholder="请输入描述" />,
-    },
-  ]
-
-  /* 构建表单结构 */
+  const formItems = []
   const columns: TableColumnsType<Record<string, any>> = [
     {
-      title: 'id',
+      title: 'Id',
       dataIndex: 'id',
       key: 'id',
     },
     {
-      title: '用户名',
-      dataIndex: 'username',
-      key: 'username',
+      title: '订单标题',
+      dataIndex: 'subject',
+      key: 'subject',
     },
     {
-      title: '昵称',
-      dataIndex: 'nickname',
-      key: 'nickname',
+      title: '商品描述',
+      dataIndex: 'body',
+      key: 'body',
     },
     {
-      title: '头像',
-      dataIndex: 'avatar',
-      key: 'avatar',
+      title: '通知时间',
+      dataIndex: 'notify_time',
+      key: 'notify_time',
     },
     {
-      title: '角色',
-      dataIndex: 'roles',
-      key: 'roles',
+      title: '通知类型',
+      dataIndex: 'notify_type',
+      key: 'notify_type',
     },
     {
-      title: '创建时间',
-      dataIndex: 'createTime',
-      key: 'createTime',
+      title: '通知校验ID',
+      dataIndex: 'notify_id',
+      key: 'notify_id',
     },
     {
-      title: '更新时间',
-      dataIndex: 'updateTime',
-      key: 'updateTime',
-      render: (value: number) => {
-        return value ? dayjs(value * 1000).format('YYYY-MM-DD HH:mm:ss') : '-'
-      },
+      title: '签名类型',
+      dataIndex: 'sign_type',
+      key: 'sign_type',
     },
     {
-      title: '状态',
-      dataIndex: 'isFrozen',
-      key: 'isFrozen',
-      render: (value: number) => {
-        return value ? '禁用中' : '启用中'
-      },
+      title: '签名',
+      dataIndex: 'sign',
+      key: 'sign',
     },
+    {
+      title: '支付宝交易号',
+      dataIndex: 'trade_no',
+      key: 'trade_no',
+    },
+    {
+      title: '商户订单号',
+      dataIndex: 'out_trade_no',
+      key: 'out_trade_no',
+    },
+    {
+      title: '商户业务号',
+      dataIndex: 'out_biz_no',
+      key: 'out_biz_no',
+    },
+    {
+      title: '交易状态',
+      dataIndex: 'trade_status',
+      key: 'trade_status',
+    },
+    {
+      title: '订单金额',
+      dataIndex: 'total_amount',
+      key: 'total_amount',
+    },
+    {
+      title: '实收金额',
+      dataIndex: 'receipt_amount',
+      key: 'receipt_amount',
+    },
+    {
+      title: '付款金额',
+      dataIndex: 'buyer_pay_amount',
+      key: 'buyer_pay_amount',
+    },
+    {
+      title: '总退款金额',
+      dataIndex: 'refund_fee',
+      key: 'refund_fee',
+    },
+    {
+      title: '实际退款金额',
+      dataIndex: 'send_back_fee',
+      key: 'send_back_fee',
+    },
+    {
+      title: '交易创建时间',
+      dataIndex: 'gmt_create',
+      key: 'gmt_create',
+    },
+    {
+      title: '交易付款时间',
+      dataIndex: 'gmt_payment',
+      key: 'gmt_payment',
+    },
+    {
+      title: '交易退款时间',
+      dataIndex: 'gmt_refund',
+      key: 'gmt_refund',
+    },
+    {
+      title: '交易结束时间',
+      dataIndex: 'gmt_close',
+      key: 'gmt_close',
+    },
+    {
+      title: '支付金额信息',
+      dataIndex: 'fund_bill_list',
+      key: 'fund_bill_list',
+    },
+
     {
       title: '操作',
- 
-      render: (value: number, record: any) => {
-        const updata = () => {
-          actionRef.current?.reload?.()
-        }
-
+      render: (_, record: any) => {
         return (
-          <Space size="middle" align="end">
-            <a
-              onClick={() => {
-                Modal.confirm({
-                  title: '提示',
-                  content: '确定修改数据状态?',
-                  onOk: async () => {
-                    await $.post({
-                      isFrozen: !record.isFrozen,
-                      id: record.id,
-                    }, {
-                      url: '/boss/bonus/update',
-                    })
-                    message.success('操作成功')
-                    actionRef.current?.reload?.()
-                  },
-                })
-              }}
+          <Fragment>
+            <AddAndEditModal
+              title="权限"
+              formItems={formItems}
+              onEdit={onEdit}
+              data={record}
             >
-              {record.isFrozen ? '启用' : '禁用'}
-            </a>
-            {/* <Detail reload={updata} record={record}>
-              <a>修改</a>
-            </Detail> */}
-            <a
-              onClick={() => {
-                Modal.confirm({
-                  title: '提示',
-                  content: '确定删除当前数据?',
-                  onOk: async () => {
-                    await $.post({
-                      isDelete: true,
-                      id: record.id,
-                    }, {
-                      url: '/boss/bonus/update',
-                    })
-                    message.success('操作成功')
-                    actionRef.current?.reload?.()
-                  },
-                })
-              }}
-            >
-              删除
-            </a>
-          </Space>
+              <Button
+                type="link"
+              >
+                修改
+              </Button>
+            </AddAndEditModal>
+          </Fragment>
         )
       },
     },
   ]
-
-  const onAdd = (params: Record<string, any>) => {
-
-  }
-
-  const onEdit = (params: Record<string, any>) => {
-
-  }
 
   return (
     <ProTable
@@ -220,21 +216,11 @@ function UserList() {
       }}
       request={async (params) => {
         return await $.post(params, {
-          url: '/boss/bonus/all',
+          url: '/boss/order/all',
         })
       }}
-      searchAddButton={(
-        <RoleAddAndEditModal
-          title="权限"
-          formItems={formItems}
-          onAdd={onAdd}
-          onEdit={onEdit}
-        >
-          <Button type="primary" >新增</Button>
-        </RoleAddAndEditModal>
-      )}
     />
   )
 }
 
-export default UserList
+export default OrderList

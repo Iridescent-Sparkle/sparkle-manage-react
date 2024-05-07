@@ -1,10 +1,10 @@
 import type { TableColumnsType } from 'antd'
-import { Button, DatePicker, Input, Modal, Select, message } from 'antd'
+import { Button, DatePicker, Input, Modal, message } from 'antd'
 import dayjs from 'dayjs'
 import { Fragment, useRef } from 'react'
+import { Document, Page } from 'react-pdf'
 import ProTable from 'src/components/ProTable/index.tsx'
 import type { ActionType } from 'src/components/ProTable/typing'
-import { Document, Page } from 'react-pdf';
 function ResumeList() {
   const actionRef = useRef<ActionType>(null)
 

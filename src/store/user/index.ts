@@ -13,7 +13,7 @@ interface Action {
   register: (params: { username: string, captcha: string, password: string }) => void
   login: (params: { username: string, password: string }) => void
   logout: () => Promise<void>
-  userInfo:any
+  userInfo: any
 }
 
 export const useUserStore = create<State & Action>(set => ({
@@ -77,10 +77,12 @@ export const useUserStore = create<State & Action>(set => ({
         token,
         userInfo: userInfo.data,
       }))
-    } else if(!Router.location.pathname.startsWith('/auth')){
+    } else if (Router.location.pathname !== '/auth/login' && Router.location.pathname !== '/auth/register') {
       message.error('登录失效，请重新登录')
 
       Router.replace('/auth/login')
+      
+      window.location.reload()
     }
   },
 }))

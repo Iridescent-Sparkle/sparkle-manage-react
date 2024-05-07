@@ -29,7 +29,10 @@ export class Request {
 
       if (error.response.data.code === 401) {
         message.error('登录失效，请重新登录')
+        
         Router.replace('/auth/login')
+
+        window.location.reload()
       }
 
       return Promise.reject(error)

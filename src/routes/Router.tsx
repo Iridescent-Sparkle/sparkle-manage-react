@@ -57,11 +57,13 @@ export const getRoutes = (permissions: string[]) => {
       ],
     },
   ]
-  routes[0].children = routes[0].children.filter(item => permissions?.includes(item.code))
+
+  routes[0].children = routes[0].children.filter(item => permissions?.includes(item.code!))
+
   return routes
 }
 
 
 export const Router = createBrowserHistory({
-  window
+  window,
 })

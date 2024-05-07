@@ -15,12 +15,11 @@ function App() {
 
   const userStore = useUserStore()
 
-  const routing = useRoutes(getRoutes(userStore.userInfo.permissions?.map(item => item.code)))
+  const routing = useRoutes(getRoutes(userStore.userInfo.permissions?.map((item: { code: any }) => item.code)))
 
   useEffect(() => {
     userStore.getUserInfo()
   }, [])
-
 
   return (
     <ThemeProvider theme={theme}>
