@@ -18,7 +18,7 @@ function UserList() {
   const formItems = [{
     label: 'Id',
     name: 'id',
-    render: () => <Input disabled placeholder="请输入订单标题" />,
+    render: () => <Input disabled placeholder="请输入Id" />,
   },
   {
     label: '端',

@@ -46,12 +46,12 @@ function AdminUserList() {
     {
       label: '手机号',
       name: 'username',
-      render: () => <Input allowClear placeholder="请输入名称" />,
+      render: () => <Input allowClear placeholder="请输入手机号" />,
     },
     {
       label: '昵称',
       name: 'nickname',
-      render: () => <Input allowClear placeholder="请输入描述" />,
+      render: () => <Input allowClear placeholder="请输入昵称" />,
     },
     {
       label: '角色权限',
@@ -71,7 +71,7 @@ function AdminUserList() {
       render: () => (
         <Select
           allowClear
-          placeholder="请输入"
+          placeholder="请选择状态"
           options={[
             { value: false, label: '启用中' },
             { value: true, label: '禁用中' },

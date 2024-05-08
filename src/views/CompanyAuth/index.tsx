@@ -25,12 +25,12 @@ function CompanyAuth() {
     {
       label: '公司名称',
       name: 'companyName',
-      render: () => <Input allowClear placeholder="请输入名称" />,
+      render: () => <Input allowClear placeholder="请输入公司名称" />,
     },
     {
       label: '公司描述',
       name: 'companyDesc',
-      render: () => <Input allowClear placeholder="请输入描述" />,
+      render: () => <Input allowClear placeholder="请输入公司描述" />,
     },
     {
       label: '审核状态',
@@ -38,7 +38,7 @@ function CompanyAuth() {
       render: () => (
         <Select
           allowClear
-          placeholder="请输入"
+          placeholder="请选择审核状态"
           options={[
             { value: 1, label: '审核通过' },
             { value: 0, label: '待审核' },
@@ -76,12 +76,12 @@ function CompanyAuth() {
     {
       label: '公司名称',
       name: 'companyName',
-      render: () => <Input disabled allowClear placeholder="请输入名称" />,
+      render: () => <Input disabled allowClear placeholder="请输入公司名称" />,
     },
     {
       label: '公司描述',
       name: 'companyDesc',
-      render: () => <Input disabled allowClear placeholder="请输入描述" />,
+      render: () => <Input disabled allowClear placeholder="请输入公司描述" />,
     },
     {
       label: '审核状态',

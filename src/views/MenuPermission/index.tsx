@@ -32,12 +32,12 @@ function MenuPermissions() {
     {
       label: '权限代码',
       name: 'code',
-      render: () => <Input allowClear placeholder="请输入名称" />,
+      render: () => <Input allowClear placeholder="请输入权限代码" />,
     },
     {
       label: '权限描述',
       name: 'description',
-      render: () => <Input allowClear placeholder="请输入描述" />,
+      render: () => <Input allowClear placeholder="请输入权限描述" />,
     },
     {
       label: '创建时间',

@@ -45,7 +45,7 @@ function OccupationalClassification() {
       render: () => (
         <Select
           allowClear
-          placeholder="请输入"
+          placeholder="请选择状态"
           options={[
             { value: false, label: '启用中' },
             { value: true, label: '禁用中' },

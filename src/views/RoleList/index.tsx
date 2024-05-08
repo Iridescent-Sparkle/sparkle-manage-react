@@ -44,14 +44,14 @@ function RoleList() {
 
   const search = [
     {
-      label: 'id',
+      label: 'Id',
       name: 'id',
-      render: () => <Input allowClear placeholder="请输入id" />,
+      render: () => <Input allowClear placeholder="请输入Id" />,
     },
     {
       label: '角色名称',
       name: 'name',
-      render: () => <Input allowClear placeholder="请输入名称" />,
+      render: () => <Input allowClear placeholder="请输入角色名称" />,
     },
     {
       label: '角色权限',
@@ -106,7 +106,7 @@ function RoleList() {
       rules: [
         { required: true, message: '请输入角色名称' },
       ],
-      render: () => <Input allowClear placeholder="请输入名称" />,
+      render: () => <Input allowClear placeholder="请输入角色名称" />,
     },
     {
       label: '角色权限',

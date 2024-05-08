@@ -17,27 +17,27 @@ function ResumeList() {
     {
       label: '职业',
       name: 'occupation',
-      render: () => <Input allowClear placeholder="请输入名称" />,
+      render: () => <Input allowClear placeholder="请输入职业" />,
     },
     {
       label: '地址',
       name: 'address',
-      render: () => <Input allowClear placeholder="请输入描述" />,
+      render: () => <Input allowClear placeholder="请输入地址" />,
     },
     {
       label: '联系电话',
       name: 'phone',
-      render: () => <Input allowClear placeholder="请输入描述" />,
+      render: () => <Input allowClear placeholder="请输入联系电话" />,
     },
     {
       label: '邮箱',
       name: 'email',
-      render: () => <Input allowClear placeholder="请输入描述" />,
+      render: () => <Input allowClear placeholder="请输入邮箱" />,
     },
     {
       label: '个人总结',
       name: 'summary',
-      render: () => <Input allowClear placeholder="请输入描述" />,
+      render: () => <Input allowClear placeholder="请输入个人总结" />,
     },
     {
       label: '创建时间',

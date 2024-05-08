@@ -17,27 +17,27 @@ function JobList() {
     {
       label: '职位名称',
       name: 'jobName',
-      render: () => <Input allowClear placeholder="请输入名称" />,
+      render: () => <Input allowClear placeholder="请输入职位名称" />,
     },
     {
       label: '工作地址',
       name: 'address',
-      render: () => <Input allowClear placeholder="请输入描述" />,
+      render: () => <Input allowClear placeholder="请输入工作地址" />,
     },
     {
       label: '空缺',
       name: 'headCount',
-      render: () => <Input allowClear placeholder="请输入描述" />,
+      render: () => <Input allowClear placeholder="请输入空缺" />,
     },
     {
       label: '工作描述',
       name: 'jobDescription',
-      render: () => <Input allowClear placeholder="请输入描述" />,
+      render: () => <Input allowClear placeholder="请输入工作描述" />,
     },
     {
       label: '工作要求',
       name: 'jobRequirements',
-      render: () => <Input allowClear placeholder="请输入描述" />,
+      render: () => <Input allowClear placeholder="请输入工作要求" />,
     },
     {
       label: '是否全职',
@@ -45,7 +45,7 @@ function JobList() {
       render: () => (
         <Select
           allowClear
-          placeholder="请输入"
+          placeholder="请选择是否全职"
           options={[
             { value: false, label: '否' },
             { value: true, label: '是' },
@@ -59,7 +59,7 @@ function JobList() {
       render: () => (
         <Select
           allowClear
-          placeholder="请输入"
+          placeholder="请选择是否线上工作"
           options={[
             { value: false, label: '否' },
             { value: true, label: '是' },
@@ -185,14 +185,13 @@ function JobList() {
       title: '状态',
       dataIndex: 'isFrozen',
       key: 'isFrozen',
-
       render: (value: number) => {
         return value ? '禁用中' : '启用中'
       },
     },
     {
       title: '操作',
-
+      key: 'operation',
       render: (_, record: any) => {
         return (
           <Fragment>

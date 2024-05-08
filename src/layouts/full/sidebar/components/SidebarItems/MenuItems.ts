@@ -2,7 +2,6 @@ import {
   IconAperture,
   IconLayoutDashboard
 } from '@tabler/icons'
-
 import uniqueId from 'lodash-es/uniqueId'
 
 const getMenuItems = (permissions: string | string[], isAdmin: boolean) => {
@@ -67,7 +66,6 @@ const getMenuItems = (permissions: string | string[], isAdmin: boolean) => {
         },
       ],
     },
-
     {
       navlabel: true,
       subheader: '用户运营',
