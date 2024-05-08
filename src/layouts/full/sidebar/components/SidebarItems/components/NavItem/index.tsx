@@ -49,7 +49,7 @@ function NavItem({ item, level, pathDirect, onClick }) {
         target={item.external ? '_blank' : ''}
         onClick={onClick}
       >
-        <ListItemIcon
+        {/* <ListItemIcon
           sx={{
             minWidth: '36px',
             p: '3px 0',
@@ -57,7 +57,7 @@ function NavItem({ item, level, pathDirect, onClick }) {
           }}
         >
           {itemIcon}
-        </ListItemIcon>
+        </ListItemIcon> */}
         <ListItemText>
           <>{item.title}</>
         </ListItemText>

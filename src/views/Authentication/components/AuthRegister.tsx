@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom'
 import { useUserStore } from 'src/store/user'
 import CustomTextField from '../../../components/forms/theme-elements/CustomTextField'
 
-function AuthRegister({ title, subtitle, subtext }) {
+function AuthRegister({ subtitle }) {
   const userStore = useUserStore()
 
   const navigate = useNavigate()
@@ -80,16 +80,9 @@ function AuthRegister({ title, subtitle, subtext }) {
 
   return (
     <>
-      {title
-        ? (
-          <Typography fontWeight="700" variant="h2" mb={1}>
-            {title}
-          </Typography>
-          )
-        : null}
-
-      {subtext}
-
+      <Typography fontWeight="700" variant="h2" mb={1} align='center'>
+        注册
+      </Typography>
       <Box>
         <Stack mb={3}>
           <Typography
@@ -106,11 +99,12 @@ function AuthRegister({ title, subtitle, subtext }) {
             variant="outlined"
             fullWidth
             onChange={(event: Parameters<
-            NonNullable<ComponentProps<'input'>['onChange']>
-          >[0]) => {
+              NonNullable<ComponentProps<'input'>['onChange']>
+            >[0]) => {
               setPhone(event.target.value)
               return event
             }}
+            placeholder="请输入手机号"
           />
 
           <Typography
@@ -120,6 +114,7 @@ function AuthRegister({ title, subtitle, subtext }) {
             htmlFor="password"
             mb="5px"
             mt="25px"
+
           >
             密码
           </Typography>
@@ -128,11 +123,12 @@ function AuthRegister({ title, subtitle, subtext }) {
             variant="outlined"
             fullWidth
             onChange={(event: Parameters<
-            NonNullable<ComponentProps<'input'>['onChange']>
-          >[0]) => {
+              NonNullable<ComponentProps<'input'>['onChange']>
+            >[0]) => {
               setPassword(event.target.value)
               return event
             }}
+            placeholder="请输入密码"
           />
 
           <Typography
@@ -150,11 +146,12 @@ function AuthRegister({ title, subtitle, subtext }) {
             variant="outlined"
             fullWidth
             onChange={(event: Parameters<
-            NonNullable<ComponentProps<'input'>['onChange']>
-          >[0]) => {
+              NonNullable<ComponentProps<'input'>['onChange']>
+            >[0]) => {
               setConfirmPassword(event.target.value)
               return event
             }}
+            placeholder="请再次输入密码"
           />
 
           <Typography
@@ -181,11 +178,12 @@ function AuthRegister({ title, subtitle, subtext }) {
               variant="outlined"
               sx={{ flex: 1 }}
               onChange={(event: Parameters<
-              NonNullable<ComponentProps<'input'>['onChange']>
-            >[0]) => {
+                NonNullable<ComponentProps<'input'>['onChange']>
+              >[0]) => {
                 setCaptcha(event.target.value)
                 return event
               }}
+              placeholder="请输入验证码"
             />
             <Button onClick={GetVerificationCode} disabled={countdown > 0}>
               {countdown > 0 ? `重新发送(${countdown})` : '获取验证码'}

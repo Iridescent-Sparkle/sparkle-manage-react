@@ -8,14 +8,14 @@ import {
   Menu,
   MenuItem,
 } from '@mui/material'
-import { IconMail, IconUser } from '@tabler/icons'
+import { IconLock, IconUser } from '@tabler/icons'
 import { Input, message } from 'antd'
 import { ComponentProps, useEffect, useState } from 'react'
 import ProfileImg from 'src/assets/images/profile/user-1.jpg'
 import { Router } from 'src/routes/Router'
 import { useUserStore } from 'src/store/user'
-import AddAndEditModal from '../../../components/AddAndEditModal/index'
-import ChangeAvatar from './components/ChangeAvatar'
+import AddAndEditModal from '../../../../components/AddAndEditModal/index'
+import ChangeAvatar from './ChangeAvatar'
 
 function Profile() {
   const [anchorEl2, setAnchorEl2] = useState(null)
@@ -123,9 +123,9 @@ function Profile() {
         url: '/admin/user/resetPassword',
       })
 
-      // Router.replace('/auth/login')
+      Router.replace('/auth/login')
 
-      // window.location.reload()
+      window.location.reload()
     } catch (error: any) {
       error.data && message.error(error.data)
     }
@@ -176,20 +176,20 @@ function Profile() {
           },
         }}
       >
-        <AddAndEditModal title="用户信息" data={userStore.userInfo} formItems={profileFormItems} onEdit={onEditProfile} onClick={handlePopoverClose}>
+        <AddAndEditModal title="信息" data={userStore.userInfo} formItems={profileFormItems} onEdit={onEditProfile} onClick={handlePopoverClose}>
           <MenuItem >
             <ListItemIcon>
               <IconUser width={20} />
             </ListItemIcon>
-            <ListItemText>我的信息</ListItemText>
+            <ListItemText>修改信息</ListItemText>
           </MenuItem>
         </AddAndEditModal>
-        <AddAndEditModal title="用户信息" formItems={resetPasswordFormItems} onAdd={onResetPassword}>
+        <AddAndEditModal title="密码" formItems={resetPasswordFormItems} onAdd={onResetPassword}>
           <MenuItem>
             <ListItemIcon>
-              <IconMail width={20} />
+              <IconLock width={20} />
             </ListItemIcon>
-            <ListItemText>我的账户</ListItemText>
+            <ListItemText>修改密码</ListItemText>
           </MenuItem>
         </AddAndEditModal>
         <Box mt={1} py={1} px={2}>

@@ -40,7 +40,7 @@ const ChangeAvatar = (props: Props) => {
 
   const beforeUpload = async (file: File) => {
     const client = await initOSSClient()
-    const data = await client.put(`admin-avatar/${userStore.userInfo.username}/${file.name}`, file)
+    const data = await client.put(`sparkle-admin/admin-avatar/${userStore.userInfo.username}/${file.name}`, file)
     onChange?.(data.url)
   }
 

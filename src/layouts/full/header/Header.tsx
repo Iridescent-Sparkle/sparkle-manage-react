@@ -1,7 +1,7 @@
 import { AppBar, Box, IconButton, Stack, Toolbar, styled } from '@mui/material'
 import { IconMenu } from '@tabler/icons'
 import type { MouseEventHandler } from 'react'
-import Profile from './Profile'
+import Profile from './components/Profile'
 
 function Header(props: { toggleMobileSidebar: MouseEventHandler<HTMLButtonElement> | undefined }) {
   const AppBarStyled = styled(AppBar)(({ theme }) => ({

@@ -10,7 +10,7 @@ import { useNavigate } from 'react-router-dom'
 import { useUserStore } from 'src/store/user'
 import CustomTextField from '../../../components/forms/theme-elements/CustomTextField'
 
-function AuthLogin({ title, subtitle, subtext }) {
+function AuthLogin({ subtitle }) {
   const navigate = useNavigate()
 
   const userStore = useUserStore()
@@ -52,16 +52,9 @@ function AuthLogin({ title, subtitle, subtext }) {
 
   return (
     <Fragment>
-      {title
-        ? (
-          <Typography fontWeight="700" variant="h2" mb={1}>
-            {title}
-          </Typography>
-        )
-        : null}
-
-      {subtext}
-
+      <Typography fontWeight="700" variant="h2" mb={1} align='center'>
+        登录
+      </Typography>
       <Stack>
         <Box>
           <Typography

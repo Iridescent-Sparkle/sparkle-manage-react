@@ -29,8 +29,8 @@ export const getRoutes = (permissions: string[], isAdmin: boolean) => {
       path: '/',
       element: <FullLayout />,
       children: [
-        { path: '/', element: <Navigate to="/admin-user-list" />, code: 'menu_admin_user_list' },
-        // { path: '/dashboard', element: <Dashboard />, code: 'menu_dashboard' },
+        { path: '/', element: <Navigate to="/dashboard" />, code: 'menu_dashboard' },
+        { path: '/dashboard', element: <Dashboard />, code: 'menu_dashboard' },
         { path: '/welfare-label', element: <WelfareLabel />, code: 'menu_welfare_label' },
         { path: '/occupational-classification', element: <OccupationalClassification />, code: 'menu_occupational_classification' },
         { path: '/menu-permission', element: <MenuPermission />, code: 'menu_menu_permission' },
