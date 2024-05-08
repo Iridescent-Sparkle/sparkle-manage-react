@@ -4,18 +4,17 @@ FROM node:18-alpine3.18 as build
 WORKDIR /app
 
 COPY package.json .
-COPY pnpm-workspace.yaml .
-COPY packages/** ./packages/
+COPY yarn.lock .
 
 RUN npm config set registry https://registry.npmmirror.com
 
-RUN npm install -g pnpm
+RUN npm install -g yarn
 
-RUN pnpm install -r
+RUN yarn install -r
 
 COPY . .
 
-RUN pnpm run build
+RUN yarn run build
 
 # deploy-stage
 FROM nginx:stable-alpine as deploy
