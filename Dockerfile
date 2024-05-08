@@ -8,8 +8,6 @@ COPY yarn.lock .
 
 RUN npm config set registry https://registry.npmmirror.com
 
-RUN npm install -g yarn
-
 RUN yarn install -r
 
 COPY . .
