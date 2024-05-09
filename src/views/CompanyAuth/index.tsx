@@ -174,7 +174,7 @@ function CompanyAuth() {
         return (
           <Fragment>
             <AddAndEditModal
-              title="用户"
+              title="审核状态"
               formItems={formItems}
               onEdit={onEdit}
               data={record}
@@ -190,7 +190,7 @@ function CompanyAuth() {
               onClick={() => {
                 Modal.confirm({
                   title: '提示',
-                  content: '确定删除当前数据?',
+                  content: '确定删除当前企业认证数据?',
                   onOk: async () => {
                     await $.post({
                       id: record.id,

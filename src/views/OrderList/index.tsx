@@ -269,7 +269,7 @@ function OrderList() {
         return (
           <Visible visible={record.trade_status === 'TRADE_SUCCESS'}>
             <AddAndEditModal
-              title="权限"
+              title="订单信息"
               formItems={formItems}
               onEdit={onEdit}
               data={record}

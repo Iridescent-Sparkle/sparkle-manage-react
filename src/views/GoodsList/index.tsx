@@ -190,7 +190,7 @@ function GoodsList() {
         return (
           <Fragment>
             <AddAndEditModal
-              title="商品"
+              title="商品信息"
               formItems={formItems}
               onEdit={onEdit}
               data={record}
@@ -206,7 +206,7 @@ function GoodsList() {
               onClick={() => {
                 Modal.confirm({
                   title: '提示',
-                  content: '确定修改数据状态?',
+                  content: '确定修改商品状态?',
                   onOk: async () => {
                     await $.post({
                       isFrozen: !record.isFrozen,
@@ -227,7 +227,7 @@ function GoodsList() {
               onClick={() => {
                 Modal.confirm({
                   title: '提示',
-                  content: '确定删除当前数据?',
+                  content: '确定删除当前商品信息?',
                   onOk: async () => {
                     await $.post({
                       id: record.id,
@@ -272,7 +272,7 @@ function GoodsList() {
         }}
         searchAddButton={(
           <AddAndEditModal
-            title="商品"
+            title="商品信息"
             formItems={formItems}
             onAdd={onAdd}
             onEdit={onEdit}

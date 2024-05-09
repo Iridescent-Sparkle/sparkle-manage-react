@@ -170,7 +170,7 @@ function ResumeList() {
               onClick={() => {
                 Modal.confirm({
                   title: '提示',
-                  content: '确定修改数据状态?',
+                  content: '确定修改简历状态?',
                   onOk: async () => {
                     await $.post({
                       isFrozen: !record.isFrozen,

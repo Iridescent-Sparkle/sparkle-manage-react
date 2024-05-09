@@ -202,7 +202,7 @@ function AdminUserList() {
               onClick={() => {
                 Modal.confirm({
                   title: '提示',
-                  content: '确定修改数据状态?',
+                  content: '确定修改用户状态?',
                   onOk: async () => {
                     await $.post({
                       isFrozen: !record.isFrozen,

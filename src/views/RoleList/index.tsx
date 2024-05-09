@@ -183,7 +183,7 @@ function RoleList() {
         return (
           <Fragment>
             <RoleAddAndEditModal
-              title="权限"
+              title="角色信息"
               formItems={formItems}
               onAdd={onAdd}
               onEdit={onEdit}
@@ -200,7 +200,7 @@ function RoleList() {
               onClick={() => {
                 Modal.confirm({
                   title: '提示',
-                  content: '确定修改数据状态?',
+                  content: '确定修改角色状态?',
 
                   onOk: async () => {
                     await $.post({
@@ -222,7 +222,7 @@ function RoleList() {
               onClick={() => {
                 Modal.confirm({
                   title: '提示',
-                  content: '确定修改数据状态?',
+                  content: '确定删除当前角色信息?',
                   onOk: async () => {
                     await $.post({
                       isFrozen: !record.isFrozen,
@@ -267,7 +267,7 @@ function RoleList() {
         }}
         searchAddButton={(
           <RoleAddAndEditModal
-            title="权限"
+            title="角色信息"
             formItems={formItems}
             onAdd={onAdd}
             onEdit={onEdit}

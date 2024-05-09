@@ -156,7 +156,7 @@ function WelfareLabel() {
               onClick={() => {
                 Modal.confirm({
                   title: '提示',
-                  content: '确定修改数据状态?',
+                  content: '确定修改福利标签状态?',
                   onOk: async () => {
                     await $.post({
                       isFrozen: !record.isFrozen,
@@ -177,7 +177,7 @@ function WelfareLabel() {
               onClick={() => {
                 Modal.confirm({
                   title: '提示',
-                  content: '确定删除当前数据?',
+                  content: '确定删除当前福利标签?',
                   onOk: async () => {
                     await $.post({
                       id: record.id,

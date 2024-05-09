@@ -123,7 +123,7 @@ function MenuPermissions() {
         return (
           <Fragment>
             <AddAndEditModal
-              title="权限"
+              title="权限信息"
               formItems={formItems}
               onAdd={onAdd}
               onEdit={onEdit}
@@ -140,7 +140,7 @@ function MenuPermissions() {
               onClick={() => {
                 Modal.confirm({
                   title: '提示',
-                  content: '确定删除当前数据?',
+                  content: '确定删除当前权限信息?',
                   onOk: async () => {
                     await $.post({
                       id: record.id,
@@ -184,7 +184,7 @@ function MenuPermissions() {
         }}
         searchAddButton={(
           <AddAndEditModal
-            title="权限"
+            title="权限信息"
             formItems={formItems}
             onAdd={onAdd}
             onEdit={onEdit}

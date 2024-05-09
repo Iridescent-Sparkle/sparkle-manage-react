@@ -85,7 +85,7 @@ function UserList() {
       render: (_: any, record: any) => {
         return (
           <RoleAddAndEditModal
-            title="权限"
+            title="交易控制策略"
             formItems={formItems}
             onEdit={onEdit}
             data={record}

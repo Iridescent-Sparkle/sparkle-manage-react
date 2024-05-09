@@ -140,7 +140,7 @@ function OccupationalClassification() {
         return (
           <Fragment>
             <AddAndEditModal
-              title="福利标签"
+              title="职业分类"
               formItems={formItems}
               onEdit={onEdit}
               data={record}
@@ -156,7 +156,7 @@ function OccupationalClassification() {
               onClick={() => {
                 Modal.confirm({
                   title: '提示',
-                  content: '确定修改数据状态?',
+                  content: '确定修改职业分类状态?',
                   onOk: async () => {
                     await $.post({
                       isFrozen: !record.isFrozen,
@@ -177,7 +177,7 @@ function OccupationalClassification() {
               onClick={() => {
                 Modal.confirm({
                   title: '提示',
-                  content: '确定删除当前数据?',
+                  content: '确定删除当前职业分类?',
                   onOk: async () => {
                     await $.post({
                       id: record.id,
