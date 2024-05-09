@@ -81,7 +81,7 @@ export class Request {
 }
 
 export const request = new Request({
-  baseURL: 'http://localhost:5173/api',
+  baseURL: import.meta.env.VITE_API_BASE_URL,
 })
 
 window.$ = {
