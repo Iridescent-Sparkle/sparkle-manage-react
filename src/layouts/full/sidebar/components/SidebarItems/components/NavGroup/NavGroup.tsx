@@ -1,6 +1,6 @@
 import { ListSubheader, styled } from '@mui/material'
 
-function NavGroup({ item }) {
+function NavGroup({ item }: { item: any }) {
   const ListSubheaderStyle = styled(props => <ListSubheader disableSticky {...props} />)(
     ({ theme }) => ({
       ...theme.typography.overline,

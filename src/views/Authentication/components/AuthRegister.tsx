@@ -1,13 +1,13 @@
 import { Box, Button, Typography } from '@mui/material'
 import { Stack } from '@mui/system'
 import { message } from 'antd'
-import type { ComponentProps } from 'react'
+import type { ComponentProps, ReactNode } from 'react'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useUserStore } from 'src/store/user'
-import CustomTextField from '../../../components/forms/theme-elements/CustomTextField'
+import CustomTextField from '../../../components/Forms/theme-elements/CustomTextField'
 
-function AuthRegister({ subtitle }) {
+function AuthRegister({ subtitle }: { subtitle: ReactNode }) {
   const userStore = useUserStore()
 
   const navigate = useNavigate()

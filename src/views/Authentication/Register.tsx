@@ -1,11 +1,11 @@
 import { Box, Card, Grid, Stack, Typography } from '@mui/material'
 import { Link } from 'react-router-dom'
-import PageContainer from 'src/components/container/PageContainer'
+import PageContainer from 'src/components/Container/PageContainer'
 import AuthRegister from './components/AuthRegister'
 
 function Register() {
   return (
-    <PageContainer title="Register" description="this is Register page">
+    <PageContainer title="注册" description="注册页面">
       <Box
         sx={{
           'position': 'relative',
@@ -33,18 +33,10 @@ function Register() {
             alignItems="center"
           >
             <Card elevation={9} sx={{ p: 4, zIndex: 1, width: '100%', maxWidth: '500px' }}>
-              <Box display="flex" alignItems="center" justifyContent="center">
-                {/* <Logo /> */}
-              </Box>
               <AuthRegister
-                subtext={(
-                  <Typography variant="subtitle1" textAlign="center" color="textSecondary" mb={1}>
-                    {/* 您的社交活动 */}
-                  </Typography>
-                )}
                 subtitle={(
                   <Stack direction="row" justifyContent="center" spacing={1} mt={3}>
-                    <Typography color="textSecondary" variant="h6" fontWeight="400">
+                    <Typography color="textSecondary" fontWeight="400">
                       已经有帐户?
                     </Typography>
                     <Typography

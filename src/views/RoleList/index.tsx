@@ -4,6 +4,7 @@ import dayjs from 'dayjs'
 import { Fragment, useEffect, useRef, useState } from 'react'
 import ProTable from 'src/components/ProTable/index.tsx'
 import type { ActionType } from 'src/components/ProTable/typing'
+import PageContainer from 'src/components/Container/PageContainer.tsx'
 import RoleAddAndEditModal from '../../components/AddAndEditModal/index.tsx'
 
 function RoleList() {
@@ -244,36 +245,39 @@ function RoleList() {
   ]
 
   return (
-    <ProTable
-      actionRef={actionRef}
-      columns={columns}
-      search={search}
-      scroll={{ x: 'max-content' }}
-      rowKey="id"
-      pagination={{
-        pageSize: 15,
-        current: 1,
-      }}
-      sticky={{
-        offsetHeader: 0,
-        offsetScroll: 0,
-      }}
-      request={async (params) => {
-        return await $.post(params, {
-          url: '/admin/role/all',
-        })
-      }}
-      searchAddButton={(
-        <RoleAddAndEditModal
-          title="权限"
-          formItems={formItems}
-          onAdd={onAdd}
-          onEdit={onEdit}
-        >
-          <Button type="primary">新增</Button>
-        </RoleAddAndEditModal>
-      )}
-    />
+    <PageContainer title="角色列表" description="角色列表页面">
+      <ProTable
+        actionRef={actionRef}
+        columns={columns}
+        search={search}
+        scroll={{ x: 'max-content' }}
+        rowKey="id"
+        pagination={{
+          pageSize: 15,
+          current: 1,
+        }}
+        sticky={{
+          offsetHeader: 0,
+          offsetScroll: 0,
+        }}
+        request={async (params) => {
+          return await $.post(params, {
+            url: '/admin/role/all',
+          })
+        }}
+        searchAddButton={(
+          <RoleAddAndEditModal
+            title="权限"
+            formItems={formItems}
+            onAdd={onAdd}
+            onEdit={onEdit}
+          >
+            <Button type="primary">新增</Button>
+          </RoleAddAndEditModal>
+        )}
+      />
+    </PageContainer>
+
   )
 }
 

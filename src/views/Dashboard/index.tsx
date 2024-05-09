@@ -1,5 +1,5 @@
 import { Box, Grid } from '@mui/material'
-import PageContainer from 'src/components/container/PageContainer'
+import PageContainer from 'src/components/Container/PageContainer'
 import MonthlyEarnings from './components/MonthlyEarnings'
 import ProductPerformance from './components/ProductPerformance'
 import RecentTransactions from './components/RecentTransactions'
@@ -8,7 +8,7 @@ import YearlyBreakup from './components/YearlyBreakup'
 
 function Dashboard() {
   return (
-    <PageContainer title="Dashboard" description="this is Dashboard">
+    <PageContainer title="看板" description="看板页面">
       <Box>
         <Grid container spacing={3}>
           <Grid item xs={12} lg={8}>

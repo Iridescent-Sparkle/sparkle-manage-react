@@ -10,7 +10,17 @@ function DashboardCard({
   headtitle,
   headsubtitle,
   middlecontent,
-}: any) {
+}: {
+  title: string
+  subtitle: string
+  children: React.ReactNode
+  action: React.ReactNode
+  footer: React.ReactNode
+  cardheading: React.ReactNode
+  headtitle: string
+  headsubtitle: string
+  middlecontent: React.ReactNode
+}) {
   return (
     <Card
       sx={{ padding: 0 }}

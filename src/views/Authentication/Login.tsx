@@ -1,11 +1,11 @@
 import { Box, Card, Grid, Stack, Typography } from '@mui/material'
 import { Link } from 'react-router-dom'
-import PageContainer from 'src/components/container/PageContainer'
+import PageContainer from 'src/components/Container/PageContainer'
 import AuthLogin from './components/AuthLogin'
 
-function Login2() {
+function Login() {
   return (
-    <PageContainer title="Login" description="this is Login page">
+    <PageContainer title="登录" description="登录页面">
       <Box
         sx={{
           'position': 'relative',
@@ -33,20 +33,9 @@ function Login2() {
             alignItems="center"
           >
             <Card elevation={9} sx={{ p: 4, zIndex: 1, width: '100%', maxWidth: '500px' }}>
-              <Box display="flex" alignItems="center" justifyContent="center">
-                {/* <Logo /> */}
-              </Box>
               <AuthLogin
-                subtext={(
-                  <Typography variant="subtitle1" textAlign="center" color="textSecondary" mb={1}>
-                    {/* 您的社交活动 */}
-                  </Typography>
-                )}
                 subtitle={(
                   <Stack direction="row" spacing={1} justifyContent="center" mt={3}>
-                    <Typography color="textSecondary" variant="h6" fontWeight="500">
-                      {/* 现代化的新手? */}
-                    </Typography>
                     <Typography
                       component={Link}
                       to="/auth/register"
@@ -55,6 +44,7 @@ function Login2() {
                         textDecoration: 'none',
                         color: 'primary.main',
                       }}
+
                     >
                       创建帐户
                     </Typography>
@@ -69,4 +59,4 @@ function Login2() {
   )
 }
 
-export default Login2
+export default Login

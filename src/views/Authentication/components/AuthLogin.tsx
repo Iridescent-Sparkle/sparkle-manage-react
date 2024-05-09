@@ -5,12 +5,13 @@ import {
   Typography,
 } from '@mui/material'
 import { message } from 'antd'
+import type { ReactNode } from 'react'
 import { Fragment, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useUserStore } from 'src/store/user'
-import CustomTextField from '../../../components/forms/theme-elements/CustomTextField'
+import CustomTextField from '../../../components/Forms/theme-elements/CustomTextField'
 
-function AuthLogin({ subtitle }) {
+function AuthLogin({ subtitle }: { subtitle: ReactNode }) {
   const navigate = useNavigate()
 
   const userStore = useUserStore()

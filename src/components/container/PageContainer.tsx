@@ -1,6 +1,7 @@
+import type { ReactNode } from 'react'
 import { Helmet } from 'react-helmet'
 
-function PageContainer({ title, description, children }: any) {
+function PageContainer({ title, description, children }: { title: string, description: string, children: ReactNode }) {
   return (
     <div>
       <Helmet>

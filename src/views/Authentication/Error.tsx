@@ -14,13 +14,13 @@ function Error() {
       <Container maxWidth="md">
         <img src={ErrorImg} alt="404" style={{ width: '100%', maxWidth: '500px' }} />
         <Typography align="center" variant="h1" mb={4}>
-          Opps!!!
+          噢!!!
         </Typography>
         <Typography align="center" variant="h4" mb={4}>
-          This page you are looking for could not be found.
+          找不到您正在寻找的页面。
         </Typography>
         <Button color="primary" variant="contained" component={Link} to="/" disableElevation>
-          Go Back to Home
+          返回首页
         </Button>
       </Container>
     </Box>

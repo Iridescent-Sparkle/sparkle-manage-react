@@ -3,7 +3,7 @@ import { useTheme } from '@mui/material/styles'
 import { IconArrowUpLeft } from '@tabler/icons'
 import Chart from 'react-apexcharts'
 
-import DashboardCard from '../../../components/shared/DashboardCard'
+import DashboardCard from '../../../components/Shared/DashboardCard'
 
 function YearlyBreakup() {
   // chart color

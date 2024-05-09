@@ -1,10 +1,10 @@
 import { Box, List } from '@mui/material'
 import { useLocation } from 'react-router'
 import { Fragment } from 'react/jsx-runtime'
+import { useUserStore } from 'src/store/user/index.ts'
 import getMenuItems from './MenuItems.ts'
 import NavGroup from './components/NavGroup/NavGroup.tsx'
 import NavItem from './components/NavItem/index.tsx'
-import { useUserStore } from 'src/store/user/index.ts'
 
 function SidebarItems() {
   const { pathname } = useLocation()

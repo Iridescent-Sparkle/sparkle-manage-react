@@ -4,6 +4,7 @@ import dayjs from 'dayjs'
 import { Fragment, useRef } from 'react'
 import ProTable from 'src/components/ProTable/index.tsx'
 import type { ActionType } from 'src/components/ProTable/typing'
+import PageContainer from 'src/components/Container/PageContainer'
 
 function UserList() {
   const actionRef = useRef<ActionType>(null)
@@ -139,26 +140,29 @@ function UserList() {
   ]
 
   return (
-    <ProTable
-      actionRef={actionRef}
-      columns={columns}
-      search={search}
-      scroll={{ x: 'max-content' }}
-      rowKey="id"
-      pagination={{
-        pageSize: 15,
-        current: 1,
-      }}
-      sticky={{
-        offsetHeader: 0,
-        offsetScroll: 0,
-      }}
-      request={async (params) => {
-        return await $.post(params, {
-          url: '/admin/custom-user/all',
-        })
-      }}
-    />
+    <PageContainer title="用户列表" description="C端用户列表页面">
+      <ProTable
+        actionRef={actionRef}
+        columns={columns}
+        search={search}
+        scroll={{ x: 'max-content' }}
+        rowKey="id"
+        pagination={{
+          pageSize: 15,
+          current: 1,
+        }}
+        sticky={{
+          offsetHeader: 0,
+          offsetScroll: 0,
+        }}
+        request={async (params) => {
+          return await $.post(params, {
+            url: '/admin/custom-user/all',
+          })
+        }}
+      />
+    </PageContainer>
+
   )
 }
 

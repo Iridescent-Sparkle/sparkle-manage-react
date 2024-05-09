@@ -8,7 +8,7 @@ import {
   TableRow,
   Typography,
 } from '@mui/material'
-import DashboardCard from '../../../components/shared/DashboardCard'
+import DashboardCard from '../../../components/Shared/DashboardCard'
 
 const products = [
   {

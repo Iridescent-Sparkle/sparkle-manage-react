@@ -1,18 +1,14 @@
 import { NavLink } from 'react-router-dom'
-// mui imports
 import {
   List,
   ListItem,
-  ListItemIcon,
   ListItemText,
   styled,
   useTheme,
 } from '@mui/material'
 
-function NavItem({ item, level, pathDirect, onClick }) {
-  const Icon = item.icon
+function NavItem({ item, level, pathDirect, onClick }: { item: any, level: number, pathDirect: string, onClick: () => void }) {
   const theme = useTheme()
-  const itemIcon = <Icon stroke={1.5} size="1.3rem" />
 
   const ListItemStyled = styled(ListItem)(() => ({
     'whiteSpace': 'nowrap',
@@ -49,15 +45,6 @@ function NavItem({ item, level, pathDirect, onClick }) {
         target={item.external ? '_blank' : ''}
         onClick={onClick}
       >
-        {/* <ListItemIcon
-          sx={{
-            minWidth: '36px',
-            p: '3px 0',
-            color: 'inherit',
-          }}
-        >
-          {itemIcon}
-        </ListItemIcon> */}
         <ListItemText>
           <>{item.title}</>
         </ListItemText>

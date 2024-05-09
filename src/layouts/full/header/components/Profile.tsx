@@ -10,8 +10,8 @@ import {
 } from '@mui/material'
 import { IconLock, IconUser } from '@tabler/icons'
 import { Input, message } from 'antd'
-import { ComponentProps, useEffect, useState } from 'react'
-import ProfileImg from 'src/assets/images/profile/user-1.jpg'
+import type { ComponentProps } from 'react'
+import { useEffect, useState } from 'react'
 import { Router } from 'src/routes/Router'
 import { useUserStore } from 'src/store/user'
 import AddAndEditModal from '../../../../components/AddAndEditModal/index'
@@ -44,7 +44,7 @@ function Profile() {
     {
       label: '头像',
       name: 'avatar',
-      render: () => <ChangeAvatar />
+      render: () => <ChangeAvatar />,
     },
   ]
 
@@ -71,10 +71,18 @@ function Profile() {
       rules: [
         { required: true, message: '请输入验证码' },
       ],
-      render: () => <Input allowClear placeholder="请输入验证码" suffix={<Button onClick={getVerificationCode} disabled={countdown > 0}>
-        {countdown > 0 ? `重新发送(${countdown})` : '获取验证码'}
-      </Button>} />,
-    }
+      render: () => (
+        <Input
+          allowClear
+          placeholder="请输入验证码"
+          suffix={(
+            <Button onClick={getVerificationCode} disabled={countdown > 0}>
+              {countdown > 0 ? `重新发送(${countdown})` : '获取验证码'}
+            </Button>
+          )}
+        />
+      ),
+    },
   ]
 
   const getVerificationCode = async () => {
@@ -126,7 +134,8 @@ function Profile() {
       Router.replace('/auth/login')
 
       window.location.reload()
-    } catch (error: any) {
+    }
+    catch (error: any) {
       error.data && message.error(error.data)
     }
   }
@@ -154,8 +163,7 @@ function Profile() {
         onClick={handlePopoverOpen}
       >
         <Avatar
-          src={userStore.userInfo.avatar || ProfileImg}
-          alt={ProfileImg}
+          src={userStore.userInfo.avatar}
           sx={{
             width: 35,
             height: 35,
@@ -177,7 +185,7 @@ function Profile() {
         }}
       >
         <AddAndEditModal title="信息" data={userStore.userInfo} formItems={profileFormItems} onEdit={onEditProfile} onClick={handlePopoverClose}>
-          <MenuItem >
+          <MenuItem>
             <ListItemIcon>
               <IconUser width={20} />
             </ListItemIcon>

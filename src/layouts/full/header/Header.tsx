@@ -13,7 +13,7 @@ function Header(props: { toggleMobileSidebar: MouseEventHandler<HTMLButtonElemen
       minHeight: '70px',
     },
   }))
-  
+
   const ToolbarStyled = styled(Toolbar)(({ theme }) => ({
     width: '100%',
     color: theme.palette.text.secondary,

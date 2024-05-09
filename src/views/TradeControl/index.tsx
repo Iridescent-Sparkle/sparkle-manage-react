@@ -1,9 +1,10 @@
 import type { TableColumnsType } from 'antd'
 import { Button, Input, Select } from 'antd'
 import { useRef } from 'react'
-import { default as RoleAddAndEditModal } from 'src/components/AddAndEditModal/index.tsx'
+import RoleAddAndEditModal from 'src/components/AddAndEditModal/index.tsx'
 import ProTable from 'src/components/ProTable/index.tsx'
 import type { ActionType } from 'src/components/ProTable/typing'
+import PageContainer from 'src/components/Container/PageContainer'
 
 function UserList() {
   const actionRef = useRef<ActionType>(null)
@@ -99,25 +100,28 @@ function UserList() {
   ]
 
   return (
-    <ProTable
-      actionRef={actionRef}
-      columns={columns}
-      scroll={{ x: 'max-content' }}
-      rowKey="id"
-      pagination={{
-        pageSize: 15,
-        current: 1,
-      }}
-      sticky={{
-        offsetHeader: 0,
-        offsetScroll: 0,
-      }}
-      request={async (params) => {
-        return await $.post(params, {
-          url: '/admin/trade-control/all',
-        })
-      }}
-    />
+    <PageContainer title="交易控制" description="交易控制页面">
+      <ProTable
+        actionRef={actionRef}
+        columns={columns}
+        scroll={{ x: 'max-content' }}
+        rowKey="id"
+        pagination={{
+          pageSize: 15,
+          current: 1,
+        }}
+        sticky={{
+          offsetHeader: 0,
+          offsetScroll: 0,
+        }}
+        request={async (params) => {
+          return await $.post(params, {
+            url: '/admin/trade-control/all',
+          })
+        }}
+      />
+    </PageContainer>
+
   )
 }
 

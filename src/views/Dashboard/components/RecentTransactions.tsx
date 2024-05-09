@@ -9,7 +9,7 @@ import {
   timelineOppositeContentClasses,
 } from '@mui/lab'
 import { Link, Typography } from '@mui/material'
-import DashboardCard from '../../../components/shared/DashboardCard'
+import DashboardCard from '../../../components/Shared/DashboardCard'
 
 function RecentTransactions() {
   return (

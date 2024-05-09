@@ -2,7 +2,7 @@ import { MenuItem, Select } from '@mui/material'
 import { useTheme } from '@mui/material/styles'
 import React from 'react'
 import Chart from 'react-apexcharts'
-import DashboardCard from '../../../components/shared/DashboardCard'
+import DashboardCard from '../../../components/Shared/DashboardCard'
 
 function SalesOverview() {
   // select

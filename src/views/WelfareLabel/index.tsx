@@ -5,6 +5,7 @@ import { Fragment, useRef } from 'react'
 import AddAndEditModal from 'src/components/AddAndEditModal'
 import ProTable from 'src/components/ProTable/index.tsx'
 import type { ActionType } from 'src/components/ProTable/typing'
+import PageContainer from 'src/components/Container/PageContainer'
 
 function WelfareLabel() {
   const actionRef = useRef<ActionType>(null)
@@ -199,36 +200,39 @@ function WelfareLabel() {
   ]
 
   return (
-    <ProTable
-      actionRef={actionRef}
-      columns={columns}
-      search={search}
-      scroll={{ x: 'max-content' }}
-      rowKey="id"
-      pagination={{
-        pageSize: 15,
-        current: 1,
-      }}
-      sticky={{
-        offsetHeader: 0,
-        offsetScroll: 0,
-      }}
-      request={async (params) => {
-        return await $.post(params, {
-          url: '/boss/bonus/all',
-        })
-      }}
-      searchAddButton={(
-        <AddAndEditModal
-          title="福利标签"
-          formItems={formItems}
-          onAdd={onAdd}
-          onEdit={onEdit}
-        >
-          <Button type="primary">新增</Button>
-        </AddAndEditModal>
-      )}
-    />
+    <PageContainer title="福利标签" description="福利标签页面">
+      <ProTable
+        actionRef={actionRef}
+        columns={columns}
+        search={search}
+        scroll={{ x: 'max-content' }}
+        rowKey="id"
+        pagination={{
+          pageSize: 15,
+          current: 1,
+        }}
+        sticky={{
+          offsetHeader: 0,
+          offsetScroll: 0,
+        }}
+        request={async (params) => {
+          return await $.post(params, {
+            url: '/boss/bonus/all',
+          })
+        }}
+        searchAddButton={(
+          <AddAndEditModal
+            title="福利标签"
+            formItems={formItems}
+            onAdd={onAdd}
+            onEdit={onEdit}
+          >
+            <Button type="primary">新增</Button>
+          </AddAndEditModal>
+        )}
+      />
+    </PageContainer>
+
   )
 }
 

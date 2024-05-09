@@ -2,12 +2,13 @@ import OSS from 'ali-oss'
 import { Image, Upload } from 'antd'
 import ImgCrop from 'antd-img-crop'
 import { useUserStore } from 'src/store/user'
-type Props = {
+
+interface Props {
   value?: string
   onChange?: (url: string) => void
 }
 
-const initOSSClient = async () => {
+async function initOSSClient() {
   const { data } = await $.get({}, {
     url: '/user/sts',
   })
@@ -24,16 +25,16 @@ const initOSSClient = async () => {
       return {
         accessKeyId: data.accessKeyId,
         accessKeySecret: data.accessKeySecret,
-        stsToken: data.stsToken
+        stsToken: data.stsToken,
       }
     },
     refreshSTSTokenInterval: 300000,
-    bucket: 'sparkle-cdn'
-  });
+    bucket: 'sparkle-cdn',
+  })
   return client
 }
 
-const ChangeAvatar = (props: Props) => {
+function ChangeAvatar(props: Props) {
   const { value, onChange } = props
 
   const userStore = useUserStore()
@@ -46,10 +47,10 @@ const ChangeAvatar = (props: Props) => {
 
   return (
     <ImgCrop>
-      <Upload showUploadList={false} beforeUpload={beforeUpload} listType="picture-card" maxCount={1} accept='.png, .jpg, .jpeg' >
+      <Upload showUploadList={false} beforeUpload={beforeUpload} listType="picture-card" maxCount={1} accept=".png, .jpg, .jpeg">
         <Image src={value || userStore.userInfo.avatar} preview={false}></Image>
       </Upload>
-    </ImgCrop >
+    </ImgCrop>
   )
 }
 

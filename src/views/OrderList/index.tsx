@@ -7,6 +7,7 @@ import AddAndEditModal from 'src/components/AddAndEditModal'
 import ProTable from 'src/components/ProTable/index.tsx'
 import type { ActionType } from 'src/components/ProTable/typing'
 import Visible from 'src/components/Visible'
+import PageContainer from 'src/components/Container/PageContainer'
 
 function OrderList() {
   const actionRef = useRef<ActionType>(null)
@@ -286,26 +287,29 @@ function OrderList() {
   ]
 
   return (
-    <ProTable
-      actionRef={actionRef}
-      columns={columns}
-      search={search}
-      scroll={{ x: 'max-content' }}
-      rowKey="id"
-      pagination={{
-        pageSize: 15,
-        current: 1,
-      }}
-      sticky={{
-        offsetHeader: 0,
-        offsetScroll: 0,
-      }}
-      request={async (params) => {
-        return await $.post(params, {
-          url: '/boss/order/all',
-        })
-      }}
-    />
+    <PageContainer title="订单列表" description="订单列表页面">
+      <ProTable
+        actionRef={actionRef}
+        columns={columns}
+        search={search}
+        scroll={{ x: 'max-content' }}
+        rowKey="id"
+        pagination={{
+          pageSize: 15,
+          current: 1,
+        }}
+        sticky={{
+          offsetHeader: 0,
+          offsetScroll: 0,
+        }}
+        request={async (params) => {
+          return await $.post(params, {
+            url: '/boss/order/all',
+          })
+        }}
+      />
+    </PageContainer>
+
   )
 }
 

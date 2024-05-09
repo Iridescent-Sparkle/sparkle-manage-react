@@ -1,7 +1,7 @@
-import { createBrowserHistory } from 'history';
-import { lazy } from 'react';
-import { Navigate } from 'react-router-dom';
-import Loadable from '../layouts/full/shared/loadable/Loadable';
+import { createBrowserHistory } from 'history'
+import { lazy } from 'react'
+import { Navigate } from 'react-router-dom'
+import Loadable from '../layouts/full/shared/loadable/Loadable'
 
 const FullLayout = Loadable(lazy(() => import('../layouts/full/FullLayout')))
 const BlankLayout = Loadable(lazy(() => import('../layouts/blank/BlankLayout')))
@@ -23,14 +23,14 @@ const UserList = Loadable(lazy(() => import('../views/UserList')))
 const GoodsList = Loadable(lazy(() => import('../views/GoodsList')))
 const CompanyAuth = Loadable(lazy(() => import('../views/CompanyAuth')))
 
-export const getRoutes = (permissions: string[], isAdmin: boolean) => {
+export function getRoutes(permissions: string[], isAdmin: boolean) {
   const routes = [
     {
       path: '/',
       element: <FullLayout />,
       children: [
-        { path: '/', element: <Navigate to="/dashboard" />, code: 'menu_dashboard' },
-        { path: '/dashboard', element: <Dashboard />, code: 'menu_dashboard' },
+        { path: '/', element: <Navigate to="/admin-user-list" />, code: 'menu_admin_user_list' },
+        // { path: '/dashboard', element: <Dashboard />, code: 'menu_dashboard' },
         { path: '/welfare-label', element: <WelfareLabel />, code: 'menu_welfare_label' },
         { path: '/occupational-classification', element: <OccupationalClassification />, code: 'menu_occupational_classification' },
         { path: '/menu-permission', element: <MenuPermission />, code: 'menu_menu_permission' },
@@ -57,15 +57,13 @@ export const getRoutes = (permissions: string[], isAdmin: boolean) => {
       ],
     },
   ]
-  
-  if (isAdmin) {
+
+  if (isAdmin)
     return routes
-  }
 
   routes[0].children = routes[0].children.filter(item => permissions?.includes(item.code!))
   return routes
 }
-
 
 export const Router = createBrowserHistory({
   window,
