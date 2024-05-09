@@ -2,10 +2,9 @@ import type { TableColumnsType } from 'antd'
 import { Button, DatePicker, Input, Modal, message } from 'antd'
 import dayjs from 'dayjs'
 import { Fragment, useRef } from 'react'
-import { Document, Page } from 'react-pdf'
+import PageContainer from 'src/components/Container/PageContainer'
 import ProTable from 'src/components/ProTable/index.tsx'
 import type { ActionType } from 'src/components/ProTable/typing'
-import PageContainer from 'src/components/Container/PageContainer'
 
 function ResumeList() {
   const actionRef = useRef<ActionType>(null)
@@ -131,9 +130,7 @@ function ResumeList() {
       render: (value) => {
         return value
           ? (
-            <Document file={value}>
-              <Page pageNumber={1} />
-            </Document>
+            <a href={value.accessUrl}>下载</a>
             )
           : '-'
       },
