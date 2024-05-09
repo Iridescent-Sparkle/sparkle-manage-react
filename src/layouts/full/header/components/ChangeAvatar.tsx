@@ -9,7 +9,7 @@ type Props = {
 
 const initOSSClient = async () => {
   const { data } = await $.get({}, {
-    url: '/admin/user/sts',
+    url: '/user/sts',
   })
 
   const client = new OSS({
@@ -19,7 +19,7 @@ const initOSSClient = async () => {
     stsToken: data.securityToken,
     refreshSTSToken: async () => {
       const { data } = await $.get({}, {
-        url: '/admin/user/sts',
+        url: '/user/sts',
       })
       return {
         accessKeyId: data.accessKeyId,
