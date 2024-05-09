@@ -4,7 +4,6 @@ import type { ActionType } from './typing'
 
 /**
  * 获取用户的 action 信息
- *
  * @param actionRef
  * @param counter
  * @param onCleanSelected
@@ -43,7 +42,6 @@ export function useActionType(
       await action?.reset?.()
       await action?.reload()
     },
-    // @ts-expect-error
     dataSource: action?.dataSource,
     clearSelected: () => props.onCleanSelected(),
     setPageInfo: rest => action.setPageInfo(rest),

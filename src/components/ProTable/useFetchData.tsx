@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { useEffect, useRef, useState } from 'react'
 import { useDeepCompareEffect } from '../../hooks/useDeepCompareEffect'
-import { isDef } from '../utils/is'
+import { isDef } from '../../utils/is'
 import type { PageInfo, UseFetchDataAction, UseFetchProps } from './typing'
 import { getQueryVariable, usePrevious } from './utils'
 

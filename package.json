@@ -37,7 +37,6 @@
     "react-router": "^6.23.0",
     "react-router-dom": "^6.23.0",
     "react-spring": "^9.7.3",
-    "simplebar-react": "^3.2.5",
     "zustand": "^4.5.2"
   },
   "devDependencies": {

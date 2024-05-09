@@ -1,6 +1,6 @@
 import type { DependencyList } from 'react'
 import { useEffect, useRef } from 'react'
-import { isDeepEqualReact } from '../components/utils/isDeepEqualReact'
+import { isDeepEqualReact } from '../utils/isDeepEqualReact'
 
 export const isDeepEqual = (a: any, b: any, ignoreKeys?: string[]) => isDeepEqualReact(a, b, ignoreKeys)
 

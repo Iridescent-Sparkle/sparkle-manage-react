@@ -45,12 +45,11 @@ export function isDeepEqualReact(a: any, b: any, ignoreKeys?: string[], debug?: 
     }
 
     if (ArrayBuffer.isView(a) && ArrayBuffer.isView(b)) {
-      // @ts-expect-error
       length = a.length
-      // @ts-expect-error
+
       if (length != b.length)
         return false
-      // @ts-expect-error
+
       for (i = length; i-- !== 0;) {
         if (a[i] !== b[i])
           return false

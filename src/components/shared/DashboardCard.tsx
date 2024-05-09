@@ -10,7 +10,7 @@ function DashboardCard({
   headtitle,
   headsubtitle,
   middlecontent,
-}) {
+}: any) {
   return (
     <Card
       sx={{ padding: 0 }}

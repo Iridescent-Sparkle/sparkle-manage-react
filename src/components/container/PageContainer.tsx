@@ -1,6 +1,6 @@
 import { Helmet } from 'react-helmet'
 
-function PageContainer({ title, description, children }) {
+function PageContainer({ title, description, children }: any) {
   return (
     <div>
       <Helmet>

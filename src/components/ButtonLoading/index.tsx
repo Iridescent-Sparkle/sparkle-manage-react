@@ -11,7 +11,7 @@ function Index(props: ButtonProps) {
 
     setLoading(true)
     try {
-      await props?.onClick(e)
+      await props?.onClick?.(e)
     }
     finally {
       setLoading(false)
