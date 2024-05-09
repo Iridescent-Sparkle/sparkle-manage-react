@@ -106,7 +106,7 @@ function OccupationalClassification() {
       width: 100,
       key: 'categoryDescription',
       render: (value: string) => {
-        return value ? value : '-'
+        return value || '-'
       },
     },
     {
@@ -114,7 +114,6 @@ function OccupationalClassification() {
       dataIndex: 'createTime',
       key: 'createTime',
       render: (value: number) => {
-        console.log(value)
         return dayjs(value).format('YYYY-MM-DD HH:mm:ss')
       },
     },
@@ -226,7 +225,7 @@ function OccupationalClassification() {
           onAdd={onAdd}
           onEdit={onEdit}
         >
-          <Button type="primary" >新增</Button>
+          <Button type="primary">新增</Button>
         </AddAndEditModal>
       )}
     />

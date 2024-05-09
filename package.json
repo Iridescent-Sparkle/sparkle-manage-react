@@ -1,8 +1,9 @@
 {
   "name": "sparkle-manage-react",
-  "private": true,
-  "version": "0.0.0",
   "type": "module",
+  "version": "0.0.0",
+  "private": true,
+  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -41,6 +42,7 @@
   },
   "devDependencies": {
     "@antfu/eslint-config": "^2.17.0",
+    "@eslint-react/eslint-plugin": "^1.5.11",
     "@svgr/rollup": "^8.1.0",
     "@types/ali-oss": "^6.16.11",
     "@types/node": "^20.12.11",
@@ -53,12 +55,10 @@
     "@vitejs/plugin-react": "^4.2.1",
     "eslint": "^9.2.0",
     "eslint-plugin-format": "^0.1.1",
-    "eslint-plugin-react": "^7.34.1",
     "eslint-plugin-react-hooks": "^4.6.2",
     "eslint-plugin-react-refresh": "^0.4.6",
     "less": "^4.2.0",
     "typescript": "^5.4.5",
     "vite": "^5.2.11"
-  },
-  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
+  }
 }

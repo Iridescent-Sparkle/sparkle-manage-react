@@ -91,9 +91,8 @@ export function isDeepEqualReact(a: any, b: any, ignoreKeys?: string[], debug?: 
 
       if (!isDeepEqualReact(a[key], b[key], ignoreKeys, debug)) {
         if (debug)
-          console.log(key)
 
-        return false
+          return false
       }
     }
 

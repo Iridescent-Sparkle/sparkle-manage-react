@@ -3,7 +3,7 @@ import { Router } from 'src/routes/Router'
 import { create } from 'zustand'
 
 interface State {
-  token: string
+  accessToken: string
 }
 
 interface Action {
@@ -11,12 +11,12 @@ interface Action {
   setData: (params: Partial<State>) => void
   register: (params: { username: string, captcha: string, password: string }) => void
   login: (params: { username: string, password: string }) => void
-  logout: () => Promise<void>
+  logout: () => void
   userInfo: any
 }
 
 export const useUserStore = create<State & Action>(set => ({
-  token: '',
+  accessToken: '',
   userInfo: {
     id: 0,
     username: '',
@@ -43,31 +43,33 @@ export const useUserStore = create<State & Action>(set => ({
       url: 'admin/user/login',
     })
 
-    localStorage.setItem('token', loginRes.data.accessToken || '')
+    localStorage.setItem('accessToken', loginRes.data.accessToken || '')
+    localStorage.setItem('refreshToken', loginRes.data.refreshToken || '')
 
     return set((state) => {
       return {
         ...state,
-        token: loginRes.data.accessToken,
+        accessToken: loginRes.data.accessToken,
       }
     })
   },
-  logout: async () => {
-    await localStorage.setItem('token', '')
+  logout: () => {
+    localStorage.setItem('accessToken', '')
+    localStorage.setItem('refreshToken', '')
 
     Router.replace('/auth/login')
 
     window.location.reload()
     set(state => ({
       ...state,
-      token: '',
+      accessToken: '',
     }))
   },
 
   getUserInfo: async () => {
-    const token = localStorage.getItem('token') || ''
+    const accessToken = localStorage.getItem('accessToken') || ''
 
-    if (token) {
+    if (accessToken) {
       const userInfo = await $.get({}, {
         url: 'admin/user/info',
       })
@@ -76,10 +78,11 @@ export const useUserStore = create<State & Action>(set => ({
 
       return set(state => ({
         ...state,
-        token,
+        accessToken,
         userInfo: userInfo.data,
       }))
-    } else if (Router.location.pathname !== '/auth/login' && Router.location.pathname !== '/auth/register') {
+    }
+    else if (Router.location.pathname !== '/auth/login' && Router.location.pathname !== '/auth/register') {
       message.error('登录失效，请重新登录')
 
       Router.replace('/auth/login')

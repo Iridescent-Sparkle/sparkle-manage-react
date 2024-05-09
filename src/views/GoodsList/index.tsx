@@ -144,7 +144,6 @@ function GoodsList() {
       dataIndex: 'createTime',
       key: 'createTime',
       render: (value: number) => {
-        console.log(value)
         return dayjs(value).format('YYYY-MM-DD HH:mm:ss')
       },
     },
@@ -160,14 +159,21 @@ function GoodsList() {
       title: '默认展示',
       dataIndex: 'isDefault',
       key: 'isDefault',
-      render: (value: boolean) => <Switch value={value} checkedChildren="是" unCheckedChildren="否" onChange={async (value) => {
-        await $.post({
-          isDefault: value
-        }, {
-          url: '/boss/integral/update',
-        })
-        actionRef.current?.reload?.()
-      }} />,
+      render: (value: boolean) => (
+        <Switch
+          value={value}
+          checkedChildren="是"
+          unCheckedChildren="否"
+          onChange={async (value) => {
+            await $.post({
+              isDefault: value,
+            }, {
+              url: '/boss/integral/update',
+            })
+            actionRef.current?.reload?.()
+          }}
+        />
+      ),
     },
     {
       title: '状态',
@@ -269,7 +275,7 @@ function GoodsList() {
           onAdd={onAdd}
           onEdit={onEdit}
         >
-          <Button type="primary" >新增</Button>
+          <Button type="primary">新增</Button>
         </AddAndEditModal>
       )}
     />

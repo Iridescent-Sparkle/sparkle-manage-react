@@ -1,5 +1,5 @@
 import type { TableColumnsType } from 'antd'
-import { Button, DatePicker, Input, Modal, Select, message,Image } from 'antd'
+import { Button, DatePicker, Image, Input, Modal, Select, message } from 'antd'
 import dayjs from 'dayjs'
 import { Fragment, useEffect, useRef, useState } from 'react'
 import AddAndEditModal from 'src/components/AddAndEditModal'
@@ -25,7 +25,7 @@ function AdminUserList() {
       }
     }))
   }
-  
+
   useEffect(() => {
     getInitData()
   }, [])

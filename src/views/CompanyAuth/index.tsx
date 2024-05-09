@@ -8,7 +8,7 @@ import type { ActionType } from 'src/components/ProTable/typing'
 
 function CompanyAuth() {
   const actionRef = useRef<ActionType>(null)
-  
+
   const onEdit = async (params: Record<string, any>) => {
     await $.post(params, {
       url: '/boss/company/update',
@@ -89,8 +89,8 @@ function CompanyAuth() {
       rules: [
         {
           required: true,
-          message: '请选择审核状态'
-        }
+          message: '请选择审核状态',
+        },
       ],
       render: () => (
         <Select
@@ -159,9 +159,9 @@ function CompanyAuth() {
       key: 'status',
       render: (value) => {
         const STATUS_MAP = {
-          0: '待审核',
-          1: '审核通过',
-          '-1': '审核失败'
+          '0': '待审核',
+          '1': '审核通过',
+          '-1': '审核失败',
         } as Record<any, string>
 
         return STATUS_MAP[value]

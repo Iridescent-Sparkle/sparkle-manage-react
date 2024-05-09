@@ -5,13 +5,11 @@ import Chart from 'react-apexcharts'
 import DashboardCard from '../../../components/shared/DashboardCard'
 
 function MonthlyEarnings() {
-  // chart color
   const theme = useTheme()
   const secondary = theme.palette.secondary.main
   const secondarylight = '#f5fcff'
   const errorlight = '#fdede8'
 
-  // chart
   const optionscolumnchart = {
     chart: {
       type: 'area',

@@ -113,7 +113,7 @@ function ProTable(props: Props) {
   }
 
   const onTableChange = (pagination: any, filters: any, sorter: any, extra: any) => {
-    console.log(sorter, 'sorter')
+    // console.log(sorter, 'sorter')
     // action.setPageInfo({
     //   current: pagination.current,
     //   pageSize: pagination.pageSize,
@@ -127,11 +127,11 @@ function ProTable(props: Props) {
 
   const setProFilter = (value: any) => {
     // todo 后续进行拓展
-    console.log(value, 'filter')
+    // console.log(value, 'filter')
   }
   const setProSort = (value: any) => {
     // todo 后续进行拓展
-    console.log(value, 'sort')
+    // console.log(value, 'sort')
   }
 
   /** 绑定 action */

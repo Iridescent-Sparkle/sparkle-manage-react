@@ -8,7 +8,7 @@ import type { ActionType } from 'src/components/ProTable/typing'
 
 function MenuPermissions() {
   const actionRef = useRef<ActionType>(null)
-  
+
   const onAdd = async (params: Record<string, any>) => {
     await $.post(params, {
       url: '/admin/permission/create',
@@ -187,7 +187,7 @@ function MenuPermissions() {
           onAdd={onAdd}
           onEdit={onEdit}
         >
-          <Button type="primary" >新增</Button>
+          <Button type="primary">新增</Button>
         </AddAndEditModal>
       )}
     />

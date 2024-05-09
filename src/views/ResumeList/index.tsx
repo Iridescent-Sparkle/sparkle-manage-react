@@ -5,6 +5,7 @@ import { Fragment, useRef } from 'react'
 import { Document, Page } from 'react-pdf'
 import ProTable from 'src/components/ProTable/index.tsx'
 import type { ActionType } from 'src/components/ProTable/typing'
+
 function ResumeList() {
   const actionRef = useRef<ActionType>(null)
 
@@ -70,7 +71,7 @@ function ResumeList() {
       dataIndex: 'occupation',
       key: 'occupation',
       render: (value: string) => {
-        return value ? value : '-'
+        return value || '-'
       },
     },
     {
@@ -78,7 +79,7 @@ function ResumeList() {
       dataIndex: 'address',
       key: 'address',
       render: (value: string) => {
-        return value ? value : '-'
+        return value || '-'
       },
     },
     {
@@ -86,7 +87,7 @@ function ResumeList() {
       dataIndex: 'phone',
       key: 'phone',
       render: (value: string) => {
-        return value ? value : '-'
+        return value || '-'
       },
     },
     {
@@ -94,7 +95,7 @@ function ResumeList() {
       dataIndex: 'email',
       key: 'email',
       render: (value: string) => {
-        return value ? value : '-'
+        return value || '-'
       },
     },
     {
@@ -103,7 +104,7 @@ function ResumeList() {
       dataIndex: 'minSalary',
       key: 'minSalary',
       render: (value: string) => {
-        return value ? value : '-'
+        return value || '-'
       },
     },
     {
@@ -111,7 +112,7 @@ function ResumeList() {
       dataIndex: 'maxSalary',
       key: 'maxSalary',
       render: (value: string) => {
-        return value ? value : '-'
+        return value || '-'
       },
     },
     {
@@ -119,7 +120,7 @@ function ResumeList() {
       dataIndex: 'summary',
       key: 'summary',
       render: (value: string) => {
-        return value ? value : '-'
+        return value || '-'
       },
     },
     {
@@ -127,9 +128,13 @@ function ResumeList() {
       dataIndex: 'resume',
       key: 'resume',
       render: (value) => {
-        return value ? <Document file={value}>
-          <Page pageNumber={1} />
-        </Document> : '-'
+        return value
+          ? (
+            <Document file={value}>
+              <Page pageNumber={1} />
+            </Document>
+            )
+          : '-'
       },
     },
     {

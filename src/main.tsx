@@ -5,7 +5,6 @@ import { BrowserRouter } from 'react-router-dom'
 import '../src/api/index'
 import App from './App'
 
-
 const root = ReactDOM.createRoot(document.getElementById('root')!)
 
 root.render(
@@ -13,5 +12,5 @@ root.render(
     <BrowserRouter>
       <App />
     </BrowserRouter>
-  </Suspense>
+  </Suspense>,
 )

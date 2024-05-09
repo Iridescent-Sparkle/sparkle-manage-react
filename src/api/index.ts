@@ -3,9 +3,29 @@ import type { AxiosInstance, AxiosRequestConfig, CreateAxiosDefaults } from 'axi
 import axios from 'axios'
 import nprogress from 'nprogress'
 import 'nprogress/nprogress.css'
-
-import type { CustomConfig } from './type.d'
 import { Router } from 'src/routes/Router'
+import type { CustomConfig } from './type.d'
+
+interface PendingTask {
+  config: AxiosRequestConfig
+  resolve: Function
+}
+
+let refreshing = false
+
+const queue: PendingTask[] = []
+
+async function refreshToken() {
+  const { data } = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/admin/user/refresh`, {
+    params: {
+      refreshToken: localStorage.getItem('refreshToken'),
+    },
+  })
+
+  localStorage.setItem('accessToken', data.data.accessToken || '')
+  localStorage.setItem('refreshToken', data.data.refreshToken || '')
+  return data
+}
 
 export class Request {
   private readonly axios: AxiosInstance
@@ -24,29 +44,60 @@ export class Request {
     this.axios.interceptors.response.use((response) => {
       nprogress.done()
       return response
-    }, (error) => {
+    }, async (error) => {
       nprogress.done()
 
-      if (error.response.data.code === 401) {
-        message.error('登录失效，请重新登录')
-        
-        Router.replace('/auth/login')
+      const { data, config } = error.response
 
-        window.location.reload()
+      if (refreshing) {
+        return new Promise((resolve) => {
+          queue.push({
+            config,
+            resolve,
+          })
+        })
       }
 
-      return Promise.reject(error)
+      if (data.code === 401 && !config.url.includes('/admin/user/refresh')) {
+        refreshing = true
+
+        const data = await refreshToken()
+
+        refreshing = false
+
+        if (data.code === 200) {
+          queue.forEach(({ config, resolve }: any) => {
+            config.headers.Authorization = `Bearer ${localStorage.getItem('accessToken')}`
+            resolve(axios(config))
+          })
+          queue.length = 0
+          config.headers.Authorization = `Bearer ${localStorage.getItem('accessToken')}`
+          return axios(config)
+        }
+        else {
+          message.error('登录过期，请重新登录')
+
+          Router.replace('/auth/login')
+
+          window.location.reload()
+
+          return Promise.reject(data)
+        }
+      }
+      else {
+        return error.response
+      }
     })
   }
 
   private request<T extends Record<string, any>>(requestConfig: AxiosRequestConfig, customConfig: CustomConfig = { showMsg: false }) {
-    const token = localStorage.getItem('token')
+    const accessToken = localStorage.getItem('accessToken')
 
     return new Promise<T>((resolve, reject) => {
       this.axios<T>({
         ...requestConfig,
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${accessToken}`,
         },
       }).then((res) => {
         if (!String(res.data.code).startsWith('20')) {

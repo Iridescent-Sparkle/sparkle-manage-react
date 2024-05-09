@@ -1,6 +1,6 @@
 import type { TableColumnsType } from 'antd'
 import { Button, DatePicker, Input, InputNumber, message } from 'antd'
-import { FormInstance } from 'antd/lib'
+import type { FormInstance } from 'antd/lib'
 import dayjs from 'dayjs'
 import { useRef } from 'react'
 import AddAndEditModal from 'src/components/AddAndEditModal'
@@ -36,7 +36,7 @@ function OrderList() {
         isConsume: true,
       }, {
         url: '/boss/consume/create',
-      })
+      }),
     ])
 
     actionRef.current?.reload?.()
@@ -82,12 +82,12 @@ function OrderList() {
     const passback_params = JSON.parse(params.passback_params)
 
     const { data } = await $.post({
-      userId: passback_params.user_id
+      userId: passback_params.user_id,
     }, {
       url: '/user/info',
     })
 
-    const userIntegral = parseInt(data.integral, 10)
+    const userIntegral = Number.parseInt(data.integral, 10)
 
     const diffIntegral = userIntegral - passback_params.integral
 
@@ -125,10 +125,10 @@ function OrderList() {
         rules: [
           {
             required: true,
-            message: '请输入退款金额'
-          }
+            message: '请输入退款金额',
+          },
         ],
-        render: (_: any, data: any) => <InputNumber precision={2} max={parseInt(data.receipt_amount, 10)} placeholder="请输入退款金额" />,
+        render: (_: any, data: any) => <InputNumber precision={2} max={Number.parseInt(data.receipt_amount, 10)} placeholder="请输入退款金额" />,
       },
       {
         label: '退款原因',
@@ -136,8 +136,8 @@ function OrderList() {
         rules: [
           {
             required: true,
-            message: '请输入退款原因'
-          }
+            message: '请输入退款原因',
+          },
         ],
         render: () => <Input.TextArea maxLength={200} allowClear placeholder="请输入退款原因" />,
       },
@@ -166,7 +166,7 @@ function OrderList() {
       title: '通知时间',
       dataIndex: 'notify_time',
       key: 'notify_time',
-      render: (value) => value ? dayjs(value).format('YYYY-MM-DD HH:mm:ss') : '-'
+      render: value => value ? dayjs(value).format('YYYY-MM-DD HH:mm:ss') : '-',
     },
     {
       title: '通知类型',
@@ -198,62 +198,62 @@ function OrderList() {
       dataIndex: 'total_amount',
       key: 'total_amount',
       width: 100,
-      render: (value) => value ? `${value}元` : '-'
+      render: value => value ? `${value}元` : '-',
     },
     {
       title: '实收金额',
       dataIndex: 'receipt_amount',
       key: 'receipt_amount',
       width: 100,
-      render: (value) => value ? `${value}元` : '-'
+      render: value => value ? `${value}元` : '-',
     },
     {
       title: '付款金额',
       dataIndex: 'buyer_pay_amount',
       key: 'buyer_pay_amount',
       width: 100,
-      render: (value) => value ? `${value}元` : '-'
+      render: value => value ? `${value}元` : '-',
     },
     {
       title: '总退款金额',
       dataIndex: 'refund_fee',
       key: 'refund_fee',
       width: 120,
-      render: (value) => value ? `${value}元` : '-'
+      render: value => value ? `${value}元` : '-',
     },
     {
       title: '实际退款金额',
       dataIndex: 'send_back_fee',
       key: 'send_back_fee',
       width: 120,
-      render: (value) => value ? `${value}元` : '-'
+      render: value => value ? `${value}元` : '-',
     },
     {
       title: '交易创建时间',
       dataIndex: 'gmt_create',
       key: 'gmt_create',
       width: 120,
-      render: (value) => value ? dayjs(value).format('YYYY-MM-DD HH:mm:ss') : '-'
+      render: value => value ? dayjs(value).format('YYYY-MM-DD HH:mm:ss') : '-',
     },
     {
       title: '交易付款时间',
       dataIndex: 'gmt_payment',
       key: 'gmt_payment',
-      render: (value) => value ? dayjs(value).format('YYYY-MM-DD HH:mm:ss') : '-'
+      render: value => value ? dayjs(value).format('YYYY-MM-DD HH:mm:ss') : '-',
     },
     {
       title: '交易退款时间',
       dataIndex: 'gmt_refund',
       key: 'gmt_refund',
       width: 120,
-      render: (value) => value ? dayjs(value).format('YYYY-MM-DD HH:mm:ss') : '-'
+      render: value => value ? dayjs(value).format('YYYY-MM-DD HH:mm:ss') : '-',
     },
     {
       title: '交易结束时间',
       dataIndex: 'gmt_close',
       key: 'gmt_close',
       width: 120,
-      render: (value) => value ? dayjs(value).format('YYYY-MM-DD HH:mm:ss') : '-'
+      render: value => value ? dayjs(value).format('YYYY-MM-DD HH:mm:ss') : '-',
     },
     {
       title: '支付金额信息',

@@ -2,7 +2,7 @@ import {
   Box,
   Button,
   Stack,
-  Typography
+  Typography,
 } from '@mui/material'
 import { message } from 'antd'
 import { Fragment, useState } from 'react'
@@ -35,7 +35,8 @@ function AuthLogin({ subtitle }) {
       }, {
         replace: true,
       })
-    } catch (error: any) {
+    }
+    catch (error: any) {
       error.data && message.error(error.data)
     }
   }
@@ -52,7 +53,7 @@ function AuthLogin({ subtitle }) {
 
   return (
     <Fragment>
-      <Typography fontWeight="700" variant="h2" mb={1} align='center'>
+      <Typography fontWeight="700" variant="h2" mb={1} align="center">
         登录
       </Typography>
       <Stack>

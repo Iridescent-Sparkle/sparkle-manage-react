@@ -172,7 +172,7 @@ function RoleList() {
     },
     {
       title: '操作',
- 
+
       render: (_, record: any) => {
         const formatRecord = {
           ...record,
@@ -270,7 +270,7 @@ function RoleList() {
           onAdd={onAdd}
           onEdit={onEdit}
         >
-          <Button type="primary" >新增</Button>
+          <Button type="primary">新增</Button>
         </RoleAddAndEditModal>
       )}
     />

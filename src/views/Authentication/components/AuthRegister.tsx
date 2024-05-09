@@ -39,7 +39,6 @@ function AuthRegister({ subtitle }) {
   useEffect(() => {
     let timer: number
     if (countdown > 0) {
-      console.log(countdown)
       timer = setTimeout(() => {
         setCountdown(countdown - 1)
       }, 1000)
@@ -80,7 +79,7 @@ function AuthRegister({ subtitle }) {
 
   return (
     <>
-      <Typography fontWeight="700" variant="h2" mb={1} align='center'>
+      <Typography fontWeight="700" variant="h2" mb={1} align="center">
         注册
       </Typography>
       <Box>

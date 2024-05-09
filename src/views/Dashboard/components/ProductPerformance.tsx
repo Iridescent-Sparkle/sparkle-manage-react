@@ -144,7 +144,8 @@ function ProductPerformance() {
                 </TableCell>
                 <TableCell align="right">
                   <Typography variant="h6">
-                    ${product.budget}
+                    $
+                    {product.budget}
                     k
                   </Typography>
                 </TableCell>

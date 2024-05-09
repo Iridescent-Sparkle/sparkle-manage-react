@@ -17,7 +17,7 @@ const PageWrapper = styled('div')(() => ({
   flexDirection: 'column',
   zIndex: 1,
   backgroundColor: 'transparent',
-  overflow: 'auto'
+  overflow: 'auto',
 }))
 
 function FullLayout() {

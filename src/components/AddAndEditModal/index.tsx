@@ -1,4 +1,5 @@
-import { Col, Form, FormInstance, Modal } from 'antd'
+import type { FormInstance } from 'antd'
+import { Col, Form, Modal } from 'antd'
 import type { ReactElement } from 'react'
 import { Fragment, useState } from 'react'
 import type { Item } from 'src/components/ProTable/Search'
@@ -8,7 +9,6 @@ interface Props {
   data?: Record<string, any>
   children: ReactElement
   formItems: Item[] | ((form: FormInstance, params?: Record<string, any>) => Promise<Item[] | undefined>)
-
   onRefresh?: () => void
   onClick?: () => void
   onAdd?: (params: Record<string, any>) => void
@@ -52,11 +52,11 @@ function AddAndEditModal(props: Props) {
   const getListData = async () => {
     let formList = [] as Item[]
 
-    if (formItems instanceof Function) {
+    if (formItems instanceof Function)
       formList = await formItems(form, data) || []
-    } else {
+    else
       formList = formItems
-    }
+
     setFormList(formList)
   }
 
@@ -66,26 +66,8 @@ function AddAndEditModal(props: Props) {
       <Modal open={visible} title={data ? `修改${title}` : `新增${title}`} onCancel={handleModalClose} onOk={handleConfirmClick} destroyOnClose>
         <Form form={form}>
           {
-            formItems instanceof Function ? formList.map((item: any) => {
-              const shouldUpdate = item.shouldUpdate || false
-
-              return (
-                <Col key={item.name}>
-                  {shouldUpdate
-                    ? (
-                      <Form.Item shouldUpdate={true} noStyle>
-                        {item.render}
-                      </Form.Item>
-                    )
-                    : (
-                      <Form.Item label={item.label} labelCol={{ span: 4 }} name={item.name} initialValue={item.initialValue} rules={item.rules}>
-                        {item.render(form, data)}
-                      </Form.Item>
-                    )}
-                </Col>
-              )
-            }) :
-              formItems.map((item: any) => {
+            formItems instanceof Function
+              ? formList.map((item: any) => {
                 const shouldUpdate = item.shouldUpdate || false
 
                 return (
@@ -95,12 +77,31 @@ function AddAndEditModal(props: Props) {
                         <Form.Item shouldUpdate={true} noStyle>
                           {item.render}
                         </Form.Item>
-                      )
+                        )
                       : (
                         <Form.Item label={item.label} labelCol={{ span: 4 }} name={item.name} initialValue={item.initialValue} rules={item.rules}>
                           {item.render(form, data)}
                         </Form.Item>
-                      )}
+                        )}
+                  </Col>
+                )
+              })
+              : formItems.map((item: any) => {
+                const shouldUpdate = item.shouldUpdate || false
+
+                return (
+                  <Col key={item.name}>
+                    {shouldUpdate
+                      ? (
+                        <Form.Item shouldUpdate={true} noStyle>
+                          {item.render}
+                        </Form.Item>
+                        )
+                      : (
+                        <Form.Item label={item.label} labelCol={{ span: 4 }} name={item.name} initialValue={item.initialValue} rules={item.rules}>
+                          {item.render(form, data)}
+                        </Form.Item>
+                        )}
                   </Col>
                 )
               })

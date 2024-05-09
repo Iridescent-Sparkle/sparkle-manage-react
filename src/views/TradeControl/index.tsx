@@ -19,13 +19,11 @@ function UserList() {
     label: 'Id',
     name: 'id',
     render: () => <Input disabled placeholder="请输入Id" />,
-  },
-  {
+  }, {
     label: '端',
     name: 'channel',
     render: () => <Input disabled placeholder="请输入端" />,
-  },
-  {
+  }, {
     label: '是否限制',
     name: 'isLimit',
     rules: [
@@ -41,8 +39,7 @@ function UserList() {
         ]}
       />
     ),
-  },
-  {
+  }, {
     label: '起始版本',
     name: 'startVersion',
     rules: [
@@ -50,8 +47,7 @@ function UserList() {
       { pattern: /^(\d+)\.(\d+)\.(\d+)$/, message: '请输入正确的版本号' },
     ],
     render: () => <Input placeholder="请输入起始版本" />,
-  },
-  {
+  }, {
     label: '终止版本',
     name: 'endVersion',
     rules: [
@@ -59,8 +55,7 @@ function UserList() {
       { pattern: /^(\d+)\.(\d+)\.(\d+)$/, message: '请输入正确的版本号' },
     ],
     render: () => <Input placeholder="请输入终止版本" />,
-  },
-  ]
+  }]
 
   const columns: TableColumnsType<Record<string, any>> = [
     {
@@ -94,7 +89,7 @@ function UserList() {
             onEdit={onEdit}
             data={record}
           >
-            <Button type="link" >
+            <Button type="link">
               修改
             </Button>
           </RoleAddAndEditModal>

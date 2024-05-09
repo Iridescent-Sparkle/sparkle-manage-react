@@ -106,7 +106,7 @@ function WelfareLabel() {
       width: 100,
       key: 'bonusDescription',
       render: (value: string) => {
-        return value ? value : '-'
+        return value || '-'
       },
     },
     {
@@ -114,7 +114,6 @@ function WelfareLabel() {
       dataIndex: 'createTime',
       key: 'createTime',
       render: (value: number) => {
-        console.log(value)
         return dayjs(value).format('YYYY-MM-DD HH:mm:ss')
       },
     },
@@ -226,7 +225,7 @@ function WelfareLabel() {
           onAdd={onAdd}
           onEdit={onEdit}
         >
-          <Button type="primary" >新增</Button>
+          <Button type="primary">新增</Button>
         </AddAndEditModal>
       )}
     />
