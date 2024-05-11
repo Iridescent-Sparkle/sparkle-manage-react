@@ -94,7 +94,7 @@ function Profile() {
     const { data } = await $.get({
       phone: userStore.userInfo.username,
     }, {
-      url: '/user/register-smsCode',
+      url: 'admin/user/register-smsCode',
     })
 
     setCountdown(data.countDown)

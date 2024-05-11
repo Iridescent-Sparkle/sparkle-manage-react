@@ -30,7 +30,7 @@ function AuthRegister({ subtitle }: { subtitle: ReactNode }) {
     const { data } = await $.get({
       phone,
     }, {
-      url: '/user/register-smsCode',
+      url: 'admin/user/register-smsCode',
     })
 
     setCountdown(data.countDown)
