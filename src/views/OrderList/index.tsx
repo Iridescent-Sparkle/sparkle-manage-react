@@ -34,7 +34,7 @@ function OrderList() {
         userId: passback_params.user_id,
         integral: refundIntergal,
         type: 'refund',
-        isConsume: true,
+        isConsume: false,
       }, {
         url: '/boss/consume/create',
       }),
