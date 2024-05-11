@@ -3,9 +3,9 @@ import { Button, DatePicker, Image, Input, Modal, Select, message } from 'antd'
 import dayjs from 'dayjs'
 import { Fragment, useRef } from 'react'
 import AddAndEditModal from 'src/components/AddAndEditModal'
+import PageContainer from 'src/components/Container/PageContainer'
 import ProTable from 'src/components/ProTable/index.tsx'
 import type { ActionType } from 'src/components/ProTable/typing'
-import PageContainer from 'src/components/Container/PageContainer'
 
 function CompanyAuth() {
   const actionRef = useRef<ActionType>(null)
@@ -100,6 +100,7 @@ function CompanyAuth() {
           options={[
             { value: 1, label: '审核通过' },
             { value: -1, label: '审核失败' },
+            { value: 0, label: '待审核' },
           ]}
         />
       ),
@@ -111,6 +112,8 @@ function CompanyAuth() {
       title: 'Id',
       dataIndex: 'id',
       key: 'id',
+      fixed: 'left',
+      width: 80,
     },
     {
       title: '公司名称',
@@ -137,6 +140,7 @@ function CompanyAuth() {
       title: '公司描述',
       dataIndex: 'companyDesc',
       key: 'companyDesc',
+      width: 800,
     },
     {
       title: '创建时间',
@@ -158,6 +162,7 @@ function CompanyAuth() {
       title: '审核状态',
       dataIndex: 'status',
       key: 'status',
+      width: 200,
       render: (value) => {
         const STATUS_MAP = {
           '0': '待审核',
@@ -170,6 +175,7 @@ function CompanyAuth() {
     },
     {
       title: '操作',
+      fixed: 'right',
       render: (_, record: any) => {
         return (
           <Fragment>

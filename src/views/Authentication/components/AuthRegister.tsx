@@ -127,6 +127,7 @@ function AuthRegister({ subtitle }: { subtitle: ReactNode }) {
               setPassword(event.target.value)
               return event
             }}
+            type="password"
             placeholder="请输入密码"
           />
 
@@ -150,6 +151,7 @@ function AuthRegister({ subtitle }: { subtitle: ReactNode }) {
               setConfirmPassword(event.target.value)
               return event
             }}
+            type="password"
             placeholder="请再次输入密码"
           />
 
