@@ -93,7 +93,7 @@ function JobList() {
       title: 'Id',
       dataIndex: 'id',
       key: 'id',
-
+      width: 80,
     },
     {
       title: '职位名称',
@@ -135,16 +135,6 @@ function JobList() {
       title: '空缺',
       dataIndex: 'headCount',
       key: 'headCount',
-    },
-    {
-      title: '网站',
-      dataIndex: 'website',
-      key: 'website',
-    },
-    {
-      title: '关于',
-      dataIndex: 'companyDescription',
-      key: 'companyDescription',
     },
     {
       title: '全职',

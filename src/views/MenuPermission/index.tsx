@@ -90,6 +90,7 @@ function MenuPermissions() {
       title: 'id',
       dataIndex: 'id',
       key: 'id',
+      width: 80,
     },
     {
       title: '权限代码',

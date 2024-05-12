@@ -65,6 +65,7 @@ function ResumeList() {
       title: 'Id',
       dataIndex: 'id',
       key: 'id',
+      width: 80,
     },
     {
       title: '职业',
@@ -131,7 +132,7 @@ function ResumeList() {
         return value
           ? (
             <a href={value.accessUrl}>下载</a>
-            )
+          )
           : '-'
       },
     },

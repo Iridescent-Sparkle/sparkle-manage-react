@@ -146,10 +146,12 @@ function AdminUserList() {
       title: '角色权限',
       dataIndex: 'roles',
       key: 'roles',
-      render: (value) => {
-        return value?.map((item: any) => {
-          return <div key={item.id}>{item.name}</div>
-        })
+      render: (value, record) => {
+        return record.isAdmin
+          ? '超级管理员'
+          : value?.map((item: any) => {
+            return <div key={item.id}>{item.name}</div>
+          })
       },
     },
     {

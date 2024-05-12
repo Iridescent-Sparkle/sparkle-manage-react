@@ -61,9 +61,10 @@ function UserList() {
 
   const columns: TableColumnsType<Record<string, any>> = [
     {
-      title: 'id',
+      title: 'Id',
       dataIndex: 'id',
       key: 'id',
+      width: 80,
     },
     {
       title: '手机号',
